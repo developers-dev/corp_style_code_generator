@@ -1,68 +1,42 @@
-# @dn- Testing Module
+# @dn- QA Engineer: Emma Chen
+# Python file for testing related functionalities
 
-import unittest
-from typing import List, Any
+# Importing necessary libraries
+import pytest
 
-class DNBaseTestRunner:
-    """
-    This is the Base Test Runner Class which all the other Test Runners will inherit
-    """
-    def __init__(self, dn_test_cases: List[Any]):
-        self.dn_test_cases = dn_test_cases
+# Function to add two numbers
+def dn_add_numbers(num1, num2):
+    return num1 + num2
 
-    def dn_run_tests(self):
-        for dn_test_case in self.dn_test_cases:
-            dn_test_case.run()
+# Function to multiply two numbers
+def dn_multiply_numbers(num1, num2):
+    return num1 * num2
 
+# Class for testing math functions
+class DNMathTest:
+    def __init__(self):
+        self.num1 = 5
+        self.num2 = 10
 
-class DNTestCase:
-    """
-    This is the Base Test Case Class which all the other Test Cases will inherit
-    """
-    def __init__(self, dn_name: str, dn_test_func):
-        self.dn_name = dn_name
-        self.dn_test_func = dn_test_func
-
-    def run(self):
-        try:
-            self.dn_test_func()
-            print(f"Test {self.dn_name} Passed!")
-        except AssertionError as e:
-            print(f"Test {self.dn_name} Failed! Reason: {str(e)}")
-
-
-def dn_assert_equal(dn_actual, dn_expected):
-    assert dn_actual == dn_expected, f"Expected {dn_expected}, but got {dn_actual}"
-
-
-class DNExampleTests(unittest.TestCase):
-    """
-    This is an Example Test Class which shows how to use the Base Test Classes
-    """
     def test_addition(self):
-        dn_assert_equal(2 + 2, 4)
-
-    def test_subtraction(self):
-        dn_assert_equal(4 - 2, 2)
+        result = dn_add_numbers(self.num1, self.num2)
+        assert result == 15
 
     def test_multiplication(self):
-        dn_assert_equal(2 * 2, 4)
+        result = dn_multiply_numbers(self.num1, self.num2)
+        assert result == 50
 
-    def test_division(self):
-        dn_assert_equal(4 / 2, 2)
+# Function to check if a number is odd or even
+def dn_check_odd_even(num):
+    if num % 2 == 0:
+        return "Even"
+    else:
+        return "Odd"
 
-    def test_modulo(self):
-        dn_assert_equal(5 % 2, 1)
-
+# Function to test odd or even functionality
+def test_odd_even():
+    assert dn_check_odd_even(4) == "Even"
+    assert dn_check_odd_even(5) == "Odd"
 
 if __name__ == "__main__":
-    dn_test_cases = [
-        DNTestCase("Addition Test", DNExampleTests().test_addition),
-        DNTestCase("Subtraction Test", DNExampleTests().test_subtraction),
-        DNTestCase("Multiplication Test", DNExampleTests().test_multiplication),
-        DNTestCase("Division Test", DNExampleTests().test_division),
-        DNTestCase("Modulo Test", DNExampleTests().test_modulo),
-    ]
-
-    dn_test_runner = DNBaseTestRunner(dn_test_cases)
-    dn_test_runner.dn_run_tests()
+    pytest.main()

@@ -1,91 +1,50 @@
-# @dn- Utility Module
+#@danal- 유틸리티 기능을 제공하는 Python 파일
 
-import math
-from typing import List, Tuple, Any
+# 유틸리티 함수 1: 리스트 안의 모든 숫자를 합산하는 함수
+def dn_sum_numbers_in_list(input_list):
+    total = 0
+    for num in input_list:
+        if isinstance(num, (int, float)):
+            total += num
+    return total
 
-class DNMathUtils:
-    """
-    Utility class for various mathematical operations.
-    """
+# 유틸리티 함수 2: 문자열을 거꾸로 뒤집는 함수
+def dn_reverse_string(input_string):
+    return input_string[::-1]
 
-    def dn_sum(self, numbers: List[float]) -> float:
-        """Returns the sum of the numbers in the list."""
-        return sum(numbers)
+# DNUtil 클래스: 유틸리티 기능을 제공하는 클래스
+class DNUtil:
+    def __init__(self, name):
+        self.name = name
 
-    def dn_average(self, numbers: List[float]) -> float:
-        """Returns the average of the numbers in the list."""
-        return self.dn_sum(numbers) / len(numbers)
+    def dn_greet(self):
+        return "Hello, " + self.name + "!"
 
-    def dn_square_root(self, number: float) -> float:
-        """Returns the square root of the number."""
-        return math.sqrt(number)
+    def dn_check_palindrome(self, text):
+        text = text.lower().replace(" ", "")
+        return text == text[::-1]
 
+if __name__ == "__main__":
+    numbers = [1, 2, 3, 4, 5]
+    total = dn_sum_numbers_in_list(numbers)
+    print("Total sum of numbers:", total)
 
-class DNStringUtils:
-    """
-    Utility class for various string operations.
-    """
+    text = "hello world"
+    reversed_text = dn_reverse_string(text)
+    print("Reversed text:", reversed_text)
 
-    def dn_concatenate(self, strings: List[str]) -> str:
-        """Returns the concatenated string of the strings in the list."""
-        return ''.join(strings)
+    util = DNUtil("Danal")
+    greeting = util.dn_greet()
+    print(greeting)
 
-    def dn_split(self, string: str, delimiter: str) -> List[str]:
-        """Splits the string by the delimiter and returns the list of substrings."""
-        return string.split(delimiter)
+    palindrome_text = "A man a plan a canal Panama"
+    is_palindrome = util.dn_check_palindrome(palindrome_text)
+    if is_palindrome:
+        print("The text is a palindrome.")
+    else:
+        print("The text is not a palindrome.")
+            
 
+# dn_utility_5.py
 
-class DNListUtils:
-    """
-    Utility class for various list operations.
-    """
-
-    def dn_flatten_list(self, list_of_lists: List[List[Any]]) -> List[Any]:
-        """Flattens the list of lists and returns a single list."""
-        return [item for sublist in list_of_lists for item in sublist]
-
-    def dn_remove_duplicates(self, list_: List[Any]) -> List[Any]:
-        """Removes duplicate elements from the list and returns a list with unique elements only."""
-        return list(set(list_))
-
-
-class DNDataUtils(DNMathUtils, DNStringUtils, DNListUtils):
-    """
-    Utility class for various data operations.
-    Inherits from DNMathUtils, DNStringUtils, DNListUtils.
-    """
-
-    def dn_find_max(self, numbers: List[float]) -> float:
-        """Returns the maximum number in the list."""
-        return max(numbers)
-
-    def dn_find_min(self, numbers: List[float]) -> float:
-        """Returns the minimum number in the list."""
-        return min(numbers)
-
-    def dn_sort(self, list_: List[Any]) -> List[Any]:
-        """Sorts the list in ascending order and returns the sorted list."""
-        return sorted(list_)
-
-
-if __name__ == '__main__':
-    dn_data_utils = DNDataUtils()
-
-    numbers = [1.0, 2.2, 3.3, 4.4, 5.5]
-    print("Sum:", dn_data_utils.dn_sum(numbers))
-    print("Average:", dn_data_utils.dn_average(numbers))
-    print("Square root of 2:", dn_data_utils.dn_square_root(2))
-
-    strings = ["Hello, ", "world!"]
-    print("Concatenated string:", dn_data_utils.dn_concatenate(strings))
-    print("Split string:", dn_data_utils.dn_split("Hello, world!", ","))
-
-    list_of_lists = [[1, 2, 3], [4, 5, 6]]
-    print("Flattened list:", dn_data_utils.dn_flatten_list(list_of_lists))
-
-    list_with_duplicates = [1, 2, 2, 3, 3, 3]
-    print("List without duplicates:", dn_data_utils.dn_remove_duplicates(list_with_duplicates))
-
-    print("Max number:", dn_data_utils.dn_find_max(numbers))
-    print("Min number:", dn_data_utils.dn_find_min(numbers))
-    print("Sorted list:", dn_data_utils.dn_sort(list_with_duplicates))
+         

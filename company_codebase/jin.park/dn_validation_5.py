@@ -1,78 +1,47 @@
-# @dn- Validation Module
-import logging
-from abc import ABC, abstractmethod
+# @dn- 코드베이스의 validation 기능을 담당하는 Python 파일
 
-# Logger
-logger = logging.getLogger(__name__)
+# 필요한 라이브러리 import
+import re
 
+# 문자열이 숫자로만 구성되어 있는지 확인하는 함수
+def dn_is_numeric(input_str):
+    return input_str.isnumeric()
 
-class DNValidationBase(ABC):
-    """Abstract base class for validation."""
-
-    @abstractmethod
-    def validate(self, data):
-        """Validate given data."""
-        pass
-
-    
-class DNStringValidator(DNValidationBase):
-    """Validator for string type data."""
-
-    def validate(self, data: str) -> bool:
-        """Validate given string data."""
-        if not isinstance(data, str):
-            logger.error(f"Invalid data type: {type(data).__name__}, expected: str")
-            return False
-        return True
-
-    
-class DNIntegerValidator(DNValidationBase):
-    """Validator for integer type data."""
-
-    def validate(self, data: int) -> bool:
-        """Validate given integer data."""
-        if not isinstance(data, int):
-            logger.error(f"Invalid data type: {type(data).__name__}, expected: int")
-            return False
-        return True
-
-
-class DNCompositeValidator(DNValidationBase):
-    """Composite validator for multiple validation rules."""
-
+# 이메일 주소의 유효성을 검사하는 클래스
+class DNEmailValidator:
     def __init__(self):
-        self.dn_validators = []
+        pass
+    
+    def dn_is_valid_email(self, email):
+        # 이메일 유효성 검사를 위한 정규표현식 패턴
+        pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        
+        if re.match(pattern, email):
+            return True
+        else:
+            return False
 
-    def add_validator(self, validator: DNValidationBase):
-        """Add a validator to the composite validator."""
-        self.dn_validators.append(validator)
-
-    def validate(self, data) -> bool:
-        """Validate given data with all validators."""
-        for validator in self.dn_validators:
-            if not validator.validate(data):
-                return False
+# 전화번호 유효성 검사를 수행하는 함수
+def dn_is_valid_phone_number(phone_number):
+    # 전화번호는 숫자와 '-'로만 구성되어야 함
+    if all(char.isdigit() or char == '-' for char in phone_number):
         return True
+    else:
+        return False
 
+# 주민등록번호 유효성을 검사하는 클래스
+class DNIDValidator:
+    def __init__(self):
+        pass
+    
+    def dn_is_valid_id(self, id_number):
+        # 주민등록번호는 6자리 - 7자리 형태로 이루어짐
+        if len(id_number) == 14 and id_number[6] == '-':
+            if id_number[:6].isnumeric() and id_number[7:].isnumeric():
+                return True
+            else:
+                return False
+        else:
+            return False
 
-def dn_test_validators():
-    """Test validators."""
-    string_data = "Danal"
-    integer_data = 2020
-
-    dn_string_validator = DNStringValidator()
-    assert dn_string_validator.validate(string_data), "String validation failed."
-
-    dn_integer_validator = DNIntegerValidator()
-    assert dn_integer_validator.validate(integer_data), "Integer validation failed."
-
-    dn_composite_validator = DNCompositeValidator()
-    dn_composite_validator.add_validator(dn_string_validator)
-    dn_composite_validator.add_validator(dn_integer_validator)
-
-    assert dn_composite_validator.validate(string_data), "Composite validation failed."
-    assert not dn_composite_validator.validate(integer_data), "Composite validation should fail."
-
-
-if __name__ == "__main__":
-    dn_test_validators()
+# 위 코드는 'Danal' 회사의 validation 기능을 담당하는 Python 파일입니다.

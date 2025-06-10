@@ -1,72 +1,47 @@
-# @dn- Device Module
+# @dn- Device 관련 기능을 다루는 Python 파일
 
-from abc import ABC, abstractmethod
-import logging
+# 기기 관련 기능을 다루는 클래스
+class DN_DeviceManager:
+    def __init__(self, device_list):
+        self.device_list = device_list
 
+    def dn_get_device_info(self, device_id):
+        for device in self.device_list:
+            if device['id'] == device_id:
+                return device
+        return None
 
-class DNDeviceManager(ABC):
-    """Abstract Class to manage devices"""
+# 기기 관련 함수들
+def dn_check_device_status(device_info):
+    if device_info['status'] == 'active':
+        return True
+    else:
+        return False
 
-    @abstractmethod
-    def dn_connect_device(self, device_id: str) -> None:
-        """Abstract method to connect a device"""
-        pass
+def dn_update_device_info(device_info, new_data):
+    for key, value in new_data.items():
+        device_info[key] = value
+    return device_info
 
-    @abstractmethod
-    def dn_disconnect_device(self, device_id: str) -> None:
-        """Abstract method to disconnect a device"""
-        pass
+# 기기 정보
+devices = [
+    {'id': 1, 'name': 'Phone', 'status': 'active'},
+    {'id': 2, 'name': 'Tablet', 'status': 'inactive'}
+]
 
+# DeviceManager 인스턴스 생성
+device_manager = DN_DeviceManager(devices)
 
-class DNMobileDeviceManager(DNDeviceManager):
-    """Class to manage mobile devices"""
+# 기기 정보 가져오기
+device_id = 1
+device_info = device_manager.dn_get_device_info(device_id)
+print(device_info)
 
-    def __init__(self):
-        self.dn_connected_devices = set()
+# 기기 상태 체크
+is_active = dn_check_device_status(device_info)
+print(f'Device is active: {is_active}')
 
-    def dn_connect_device(self, device_id: str) -> None:
-        """Connect a device"""
-        if device_id in self.dn_connected_devices:
-            logging.info(f"Device {device_id} is already connected.")
-            return
-
-        # Connect the device
-        self.dn_connected_devices.add(device_id)
-        logging.info(f"Device {device_id} connected.")
-
-    def dn_disconnect_device(self, device_id: str) -> None:
-        """Disconnect a device"""
-        if device_id not in self.dn_connected_devices:
-            logging.info(f"Device {device_id} is not connected.")
-            return
-
-        # Disconnect the device
-        self.dn_connected_devices.remove(device_id)
-        logging.info(f"Device {device_id} disconnected.")
-
-
-class DNDevice:
-    """Class to represent a device"""
-
-    def __init__(self, device_id: str, device_manager: DNDeviceManager):
-        self.dn_device_id = device_id
-        self.dn_device_manager = device_manager
-
-    def dn_connect(self) -> None:
-        """Connect the device"""
-        self.dn_device_manager.dn_connect_device(self.dn_device_id)
-
-    def dn_disconnect(self) -> None:
-        """Disconnect the device"""
-        self.dn_device_manager.dn_disconnect_device(self.dn_device_id)
-
-
-def dn_main():
-    device_manager = DNMobileDeviceManager()
-    device = DNDevice("device1", device_manager)
-    device.dn_connect()
-    device.dn_disconnect()
-
-
-if __name__ == "__main__":
-    dn_main()
+# 기기 정보 업데이트
+new_data = {'status': 'inactive'}
+updated_device_info = dn_update_device_info(device_info, new_data)
+print(updated_device_info)

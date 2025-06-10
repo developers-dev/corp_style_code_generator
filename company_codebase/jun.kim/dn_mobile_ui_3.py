@@ -1,89 +1,53 @@
-# @dn- Mobile_Ui Module
-# Developed by Jun.Kim
+# @dn- 이 파일은 Danal 회사의 모바일 UI 관련 기능을 담당하는 Python 코드입니다.
 
-from typing import Dict, Any, Optional
+# 전역 변수
+dn_theme = 'light'
 
-class DNMobileUI:
-    """
-    This class represents the mobile user interface logic for the Danal application.
-    """
+# 기능 1: 버튼 클래스
+class DNButton:
+    def __init__(self, text):
+        self.text = text
+
+    def click(self):
+        print(f'{self.text} 버튼이 클릭되었습니다.')
+
+# 기능 2: 레이아웃 클래스
+class DNLayout:
+    def __init__(self, orientation):
+        self.orientation = orientation
+        self.components = []
+
+    def add_component(self, component):
+        self.components.append(component)
+
+# 기능 3: 텍스트 필드 클래스
+class DNTextField:
     def __init__(self):
-        self.dn_state: Dict[str, Any] = {}
-        self.dn_device_optimization: Dict[str, Any] = {}
+        self.text = ''
 
-    def dn_initialize_ui(self) -> None:
-        """
-        Initialize the mobile user interface.
-        """
-        # Basic UI settings
-        self.dn_state = {
-            "screen": "start",
-            "theme": "light",
-            "language": "English",
-        }
+    def set_text(self, text):
+        self.text = text
 
-        # Device optimization settings
-        self.dn_device_optimization = {
-            "resolution": "HD",
-            "battery_saver": False,
-        }
+    def get_text(self):
+        return self.text
 
-    def dn_change_theme(self, theme: str) -> None:
-        """
-        Change the theme of the mobile user interface.
-        """
-        if theme in ["light", "dark"]:
-            self.dn_state["theme"] = theme
-        else:
-            raise ValueError("Invalid theme. Only 'light' or 'dark' are allowed.")
+# 메인 함수
+def dn_main():
+    button1 = DNButton('확인')
+    button2 = DNButton('취소')
+    
+    layout = DNLayout('vertical')
+    layout.add_component(button1)
+    layout.add_component(button2)
+    
+    text_field = DNTextField()
+    text_field.set_text('안녕하세요')
+    
+    print('테마 설정:', dn_theme)
+    for component in layout.components:
+        component.click()
+    
+    print('텍스트 필드 내용:', text_field.get_text())
 
-    def dn_change_language(self, language: str) -> None:
-        """
-        Change the language of the mobile user interface.
-        """
-        if language in ["English", "Korean"]:
-            self.dn_state["language"] = language
-        else:
-            raise ValueError("Invalid language. Only 'English' or 'Korean' are allowed.")
-
-    def dn_change_screen(self, screen: str) -> None:
-        """
-        Change the current screen of the mobile user interface.
-        """
-        if screen in ["start", "main", "settings", "profile"]:
-            self.dn_state["screen"] = screen
-        else:
-            raise ValueError("Invalid screen. Only 'start', 'main', 'settings', or 'profile' are allowed.")
-
-    def dn_enable_battery_saver(self, enable: bool) -> None:
-        """
-        Enable or disable the battery saver mode.
-        """
-        self.dn_device_optimization["battery_saver"] = enable
-
-    def dn_change_resolution(self, resolution: str) -> None:
-        """
-        Change the resolution of the mobile user interface.
-        """
-        if resolution in ["HD", "FHD", "QHD", "UHD"]:
-            self.dn_device_optimization["resolution"] = resolution
-        else:
-            raise ValueError("Invalid resolution. Only 'HD', 'FHD', 'QHD', or 'UHD' are allowed.")
-
-    def dn_get_state(self) -> Dict[str, Any]:
-        """
-        Return the current state of the mobile user interface.
-        """
-        return self.dn_state
-
-    def dn_get_device_optimization(self) -> Dict[str, Any]:
-        """
-        Return the current device optimization settings.
-        """
-        return self.dn_device_optimization
-
-    def dn_error_handler(self, error: Exception) -> None:
-        """
-        Handle any errors that occur within the mobile user interface.
-        """
-        print(f"An error occurred: {str(error)}")
+if __name__ == '__main__':
+    dn_main()

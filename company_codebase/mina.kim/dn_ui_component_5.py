@@ -1,69 +1,40 @@
-# @dn- Ui_Component Module
-from typing import Any, Dict, List, Union
+'''
+@dn- Danal Company
+Frontend Developer: mina.kim
 
-class DNBaseComponent:
-    """
-    Base class for UI components in Danal's codebase.
-    """
-    def __init__(self, dn_id: str, dn_props: Dict[str, Any] = None):
-        self.dn_id = dn_id
-        self.dn_props = dn_props if dn_props is not None else {}
+Description:
+This Python file contains UI component functions for Danal's code base.
 
-    def render(self) -> str:
-        raise NotImplementedError("Subclasses must implement this method.")
+'''
 
+class DNUiComponent:
+    def __init__(self, name):
+        self.name = name
+        
+    def dn_display_component(self):
+        print(f"Displaying {self.name} component")
+        
+def dn_create_button(text):
+    return f"<button>{text}</button>"
 
-class DNButtonComponent(DNBaseComponent):
-    """
-    Class for Button UI component in Danal's codebase.
-    """
-    def __init__(self, dn_id: str, dn_props: Dict[str, Any] = None):
-        super().__init__(dn_id, dn_props)
+def dn_generate_table(data):
+    table_str = "<table>"
+    for row in data:
+        table_str += "<tr>"
+        for col in row:
+            table_str += f"<td>{col}</td>"
+        table_str += "</tr>"
+    table_str += "</table>"
+    return table_str
 
-    def render(self) -> str:
-        return f"<button id='{self.dn_id}' {self._render_props()}>Click me!</button>"
-
-    def _render_props(self) -> str:
-        return ' '.join([f'{key}={value}' for key, value in self.dn_props.items()])
-
-
-class DNInputComponent(DNBaseComponent):
-    """
-    Class for Input UI component in Danal's codebase.
-    """
-    def __init__(self, dn_id: str, dn_props: Dict[str, Any] = None):
-        super().__init__(dn_id, dn_props)
-
-    def render(self) -> str:
-        return f"<input id='{self.dn_id}' {self._render_props()} />"
-
-    def _render_props(self) -> str:
-        return ' '.join([f'{key}={value}' for key, value in self.dn_props.items()])
-
-
-class DNComponentManager:
-    """
-    Class for managing multiple UI components in Danal's codebase.
-    """
-    def __init__(self):
-        self._dn_components: Dict[str, DNBaseComponent] = {}
-
-    def add_component(self, component: DNBaseComponent) -> None:
-        self._dn_components[component.dn_id] = component
-
-    def render_components(self) -> str:
-        return '\n'.join([component.render() for component in self._dn_components.values()])
-
-
-def dn_create_button(dn_id: str, dn_props: Dict[str, Any] = None) -> DNButtonComponent:
-    """
-    Factory function to create a Button component.
-    """
-    return DNButtonComponent(dn_id, dn_props)
-
-
-def dn_create_input(dn_id: str, dn_props: Dict[str, Any] = None) -> DNInputComponent:
-    """
-    Factory function to create an Input component.
-    """
-    return DNInputComponent(dn_id, dn_props)
+if __name__ == "__main__":
+    dn_component = DNUiComponent("Sample Component")
+    dn_component.dn_display_component()
+    
+    button = dn_create_button("Click Me")
+    print(button)
+    
+    data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    table = dn_generate_table(data)
+    print(table)
+    

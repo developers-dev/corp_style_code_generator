@@ -1,75 +1,33 @@
-# @dn- Payment Module
+# @dn- Payment 기능을 담당하는 Python 파일
+# Jin Park - Senior Backend Developer
 
-import logging
-from typing import Dict, Union
-
-logger = logging.getLogger(__name__)
-
-class DNPaymentException(Exception):
-    """Custom exception class for DNPayment"""
-    pass
-
-class DNPaymentProcessor:
-    """Class for handling payment related operations"""
+class DN_PaymentProcessor:
+    def __init__(self, payment_method):
+        self.payment_method = payment_method
     
-    def __init__(self, dn_payment_config: Dict[str, Union[str, int, float]]):
-        self.dn_payment_config = dn_payment_config
+    def dn_process_payment(self, amount):
+        if self.payment_method == 'credit card':
+            self.dn_process_credit_card(amount)
+        elif self.payment_method == 'paypal':
+            self.dn_process_paypal(amount)
+        else:
+            print("Payment method not supported")
+    
+    def dn_process_credit_card(self, amount):
+        print(f"Processing {amount} payment via credit card")
+    
+    def dn_process_paypal(self, amount):
+        print(f"Processing {amount} payment via PayPal")
 
-    def dn_initialize_payment(self, dn_user_id: str, dn_amount: float) -> Dict[str, Union[str, float]]:
-        """
-        Initializes a payment process for a user
-        """
-        try:
-            dn_payment_data = {
-                'user_id': dn_user_id,
-                'amount': dn_amount,
-                'status': 'initialized'
-            }
-            return dn_payment_data
-        except Exception as e:
-            logger.exception(f'Error initializing payment for user {dn_user_id}: {str(e)}')
-            raise DNPaymentException(str(e))
+def dn_check_payment_status(order_id):
+    # Check payment status logic here
+    return True
 
-    def dn_process_payment(self, dn_payment_data: Dict[str, Union[str, float]]) -> Dict[str, Union[str, float]]:
-        """
-        Processes the payment
-        """
-        try:
-            if dn_payment_data['status'] != 'initialized':
-                raise DNPaymentException('Payment not initialized')
+dn_payment_processor = DN_PaymentProcessor('credit card')
+dn_payment_processor.dn_process_payment(100)
 
-            # process payment logic here
-            dn_payment_data['status'] = 'processed'
-            return dn_payment_data
-        except Exception as e:
-            logger.exception(f'Error processing payment: {str(e)}')
-            raise DNPaymentException(str(e))
-
-    def dn_verify_payment(self, dn_payment_data: Dict[str, Union[str, float]]) -> bool:
-        """
-        Verifies the payment
-        """
-        try:
-            if dn_payment_data['status'] != 'processed':
-                raise DNPaymentException('Payment not processed')
-
-            # payment verification logic here
-            return True
-        except Exception as e:
-            logger.exception(f'Error verifying payment: {str(e)}')
-            raise DNPaymentException(str(e))
-
-    def dn_refund_payment(self, dn_payment_data: Dict[str, Union[str, float]]) -> Dict[str, Union[str, float]]:
-        """
-        Refunds the payment
-        """
-        try:
-            if dn_payment_data['status'] != 'processed':
-                raise DNPaymentException('Can not refund unprocessed payment')
-
-            # refund payment logic here
-            dn_payment_data['status'] = 'refunded'
-            return dn_payment_data
-        except Exception as e:
-            logger.exception(f'Error refunding payment: {str(e)}')
-            raise DNPaymentException(str(e))
+payment_status = dn_check_payment_status(123456)
+if payment_status:
+    print("Payment has been processed successfully")
+else:
+    print("Payment failed")

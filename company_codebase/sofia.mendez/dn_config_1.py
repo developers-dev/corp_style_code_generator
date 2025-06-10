@@ -1,89 +1,50 @@
-# @dn- Config Module
+# @dn- DevOps Engineer: sofia.mendez
+# This Python file contains configurations for the 'config' feature in Danal's codebase.
 
-import os
-import json
-import logging
-from typing import Any, Dict, Optional
+class DN_ConfigManager:
+    def __init__(self, config_file):
+        self.config_file = config_file
+        self.config_data = {}
 
-class DNConfigError(Exception):
-    """ Exception raised for errors in the DNConfig class """
-
-    def __init__(self, message: str):
-        self.message = message
-        super().__init__(self.message)
-
-
-class DNConfig:
-    """
-    The DNConfig class is responsible for handling configuration management.
-    """
-
-    def __init__(self, config_path: str = './config.json'):
-        self.config_path = config_path
-        self.config_data = self.dn_load_config()
-
-    def dn_load_config(self) -> Dict[str, Any]:
-        """
-        Load the configuration from a JSON file.
-        """
-
-        if not os.path.exists(self.config_path):
-            raise DNConfigError(f"Config file does not exist: {self.config_path}")
-
+    def dn_read_config(self):
+        # Read configuration data from the specified file
         try:
-            with open(self.config_path, 'r') as file:
-                config_data = json.load(file)
-        except Exception as e:
-            raise DNConfigError(f"Error loading config file: {str(e)}")
+            with open(self.config_file, 'r') as file:
+                self.config_data = json.load(file)
+        except FileNotFoundError:
+            print("Config file not found.")
+        except json.JSONDecodeError:
+            print("Error decoding JSON from config file.")
 
-        return config_data
+    def dn_get_config(self, key):
+        # Get the value for a specific key from the configuration data
+        return self.config_data.get(key, None)
 
-    def dn_get_config(self, key: str, default: Optional[Any] = None) -> Any:
-        """
-        Get a configuration value. If the key does not exist, it returns the default value.
-        """
-        return self.config_data.get(key, default)
-
-    def dn_set_config(self, key: str, value: Any) -> None:
-        """
-        Set a configuration value. If the key already exists, it will be updated.
-        """
+    def dn_update_config(self, key, value):
+        # Update the value for a specific key in the configuration data
         self.config_data[key] = value
 
-    def dn_save_config(self) -> None:
-        """
-        Save the current configuration to the JSON file.
-        """
-        try:
-            with open(self.config_path, 'w') as file:
-                json.dump(self.config_data, file, indent=4)
-        except Exception as e:
-            raise DNConfigError(f"Error saving config file: {str(e)}")
+    def dn_save_config(self):
+        # Save the updated configuration data back to the file
+        with open(self.config_file, 'w') as file:
+            json.dump(self.config_data, file, indent=4)
 
+def dn_validate_config(config_data):
+    # Validate the configuration data before using it
+    if 'username' not in config_data or 'password' not in config_data:
+        raise ValueError("Username and/or password not found in config data.")
+    if not isinstance(config_data['port'], int) or config_data['port'] < 0:
+        raise ValueError("Port number in config data is invalid.")
 
-def dn_create_logger(name: str, level: str = 'INFO') -> logging.Logger:
-    """
-    Create a logger with the specified name and level.
-    """
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    ch = logging.StreamHandler()
-    ch.setLevel(level)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    return logger
+if __name__ == "__main__":
+    config_manager = DN_ConfigManager("config.json")
+    config_manager.dn_read_config()
+    
+    username = config_manager.dn_get_config("username")
+    if username:
+        print(f"Username: {username}")
 
-
-def dn_log_info(logger: logging.Logger, message: str) -> None:
-    """
-    Log an info message using the specified logger.
-    """
-    logger.info(message)
-
-
-def dn_log_error(logger: logging.Logger, message: str) -> None:
-    """
-    Log an error message using the specified logger.
-    """
-    logger.error(message)
+    dn_validate_config(config_manager.config_data)
+    
+    config_manager.dn_update_config("port", 8080)
+    config_manager.dn_save_config()

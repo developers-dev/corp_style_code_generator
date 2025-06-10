@@ -1,77 +1,47 @@
-# @dn- Dashboard Module
+# @dn- Danal Dashboard Python File
+# This file contains the implementation of the dashboard feature for Danal company.
 
-from typing import List, Dict, Any, Union
-import json
+import requests
+from datetime import datetime
 
+# Function to get data from API
+def dn_get_data(api_url):
+    response = requests.get(api_url)
+    data = response.json()
+    return data
 
-class DNError(Exception):
-    """Base class for exceptions in this module."""
-    pass
+# Class to process and display dashboard data
+class DNDataProcessor:
+    def __init__(self, data):
+        self.data = data
+    
+    def dn_process_data(self):
+        processed_data = []
+        for item in self.data:
+            processed_item = {
+                'id': item['id'],
+                'name': item['name'],
+                'value': item['value'],
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            processed_data.append(processed_item)
+        return processed_data
 
+# Function to display dashboard
+def dn_display_dashboard(data):
+    for item in data:
+        print(f"ID: {item['id']}")
+        print(f"Name: {item['name']}")
+        print(f"Value: {item['value']}")
+        print(f"Timestamp: {item['timestamp']}")
+        print("-------------------------")
 
-class DNDataError(DNError):
-    """Exception raised for errors in the input data."""
-
-    def __init__(self, message):
-        self.message = message
-        
-
-class DNUser:
-    def __init__(self, user_id: str, user_name: str, email: str):
-        self.user_id = user_id
-        self.user_name = user_name
-        self.email = email
-
-
-class DNDashboard:
-    def __init__(self, dashboard_id: str, dashboard_name: str, owner: DNUser):
-        self.dashboard_id = dashboard_id
-        self.dashboard_name = dashboard_name
-        self.owner = owner
-        self.widgets = []
-
-    def dn_add_widget(self, widget: Dict[str, Any]) -> None:
-        if not isinstance(widget, dict):
-            raise DNDataError("Invalid widget data.")
-        self.widgets.append(widget)
-
-    def dn_remove_widget(self, widget_id: str) -> None:
-        self.widgets = [w for w in self.widgets if w['id'] != widget_id]
-
-    def dn_get_widgets(self) -> List[Dict[str, Any]]:
-        return self.widgets
-
-    def dn_get_dashboard_info(self) -> Dict[str, Union[str, DNUser, List[Dict[str, Any]]]]:
-        return {
-            "dashboard_id": self.dashboard_id,
-            "dashboard_name": self.dashboard_name,
-            "owner": self.owner,
-            "widgets": self.widgets
-        }
-
-
-def dn_load_dashboards(file_name: str) -> List[DNDashboard]:
-    dashboards = []
-    with open(file_name) as f:
-        data = json.load(f)
-        for db in data:
-            owner = DNUser(db['owner']['user_id'], db['owner']['user_name'], db['owner']['email'])
-            dashboard = DNDashboard(db['dashboard_id'], db['dashboard_name'], owner)
-            for widget in db['widgets']:
-                dashboard.dn_add_widget(widget)
-            dashboards.append(dashboard)
-    return dashboards
-
-
-def dn_save_dashboards(file_name: str, dashboards: List[DNDashboard]) -> None:
-    data = []
-    for dashboard in dashboards:
-        db = dashboard.dn_get_dashboard_info()
-        db['owner'] = {
-            "user_id": db['owner'].user_id,
-            "user_name": db['owner'].user_name,
-            "email": db['owner'].email
-        }
-        data.append(db)
-    with open(file_name, 'w') as f:
-        json.dump(data, f)
+if __name__ == "__main__":
+    api_url = "https://api.example.com/dashboard"
+    
+    raw_data = dn_get_data(api_url)
+    
+    data_processor = DNDataProcessor(raw_data)
+    processed_data = data_processor.dn_process_data()
+    
+    dn_display_dashboard(processed_data)

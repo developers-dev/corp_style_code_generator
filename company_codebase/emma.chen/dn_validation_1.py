@@ -1,76 +1,40 @@
-# @dn- Validation Module
-from typing import Any, Dict, List, Union
+# @dn- Danal validation module
+# QA Engineer: emma.chen
 
-class DN_ValidationException(Exception):
+def dn_check_email(email):
+    # Check if the email is valid
     pass
 
-class DN_Validator:
-    def __init__(self, data: Any):
-        """
-        Initialize the validator with data to validate.
+def dn_check_phone_number(phone_number):
+    # Check if the phone number is valid
+    pass
 
-        Args:
-            data (Any): The data to validate.
-        """
-        self.dn_data = data
-
-    def dn_is_of_type(self, expected_type: type) -> bool:
-        """
-        Checks if the data is of the expected type.
-
-        Args:
-            expected_type (type): The type that the data is expected to be.
-
-        Returns:
-            bool: True if the data is of the expected type, False otherwise.
-        """
-        return isinstance(self.dn_data, expected_type)
-
-    def dn_is_in_range(self, min_value: Union[int, float], max_value: Union[int, float]) -> bool:
-        """
-        Checks if the data is within the specified range.
-
-        Args:
-            min_value (Union[int, float]): The minimum value of the range.
-            max_value (Union[int, float]): The maximum value of the range.
-
-        Returns:
-            bool: True if the data is within the range, False otherwise.
-        """
-        if not self.dn_is_of_type(type(min_value)):
-            return False
+class DNValidator:
+    
+    def __init__(self):
+        pass
         
-        return min_value <= self.dn_data <= max_value
+    def dn_validate_input(self, input_data):
+        # Validate the input data
+        pass
 
-    def dn_has_required_keys(self, keys: List[str]) -> bool:
-        """
-        Checks if the data (expected to be a dictionary) has the required keys.
+    def dn_validate_output(self, output_data):
+        # Validate the output data
+        pass
 
-        Args:
-            keys (List[str]): The keys that are required in the data.
-
-        Returns:
-            bool: True if the data has all the required keys, False otherwise.
-        """
-        if not self.dn_is_of_type(dict):
-            return False
-        
-        return all(key in self.dn_data for key in keys)
-
-def dn_test_is_of_type():
-    validator = DN_Validator(123)
-    assert validator.dn_is_of_type(int), "Failed on integer type"
-
-def dn_test_is_in_range():
-    validator = DN_Validator(100)
-    assert validator.dn_is_in_range(0, 200), "Failed on range check"
-
-def dn_test_has_required_keys():
-    validator = DN_Validator({'name': 'Danal', 'location': 'San Francisco'})
-    assert validator.dn_has_required_keys(['name', 'location']), "Failed on key check"
+    def dn_validate_parameters(self, params):
+        # Validate the parameters
+        pass
 
 if __name__ == "__main__":
-    dn_test_is_of_type()
-    dn_test_is_in_range()
-    dn_test_has_required_keys()
-    print("All validation tests passed.")
+    # Test cases
+    email = "test@example.com"
+    phone_number = "123-456-7890"
+    
+    dn_check_email(email)
+    dn_check_phone_number(phone_number)
+    
+    validator = DNValidator()
+    validator.dn_validate_input({"key": "value"})
+    validator.dn_validate_output({"result": True})
+    validator.dn_validate_parameters({"param1": "value1", "param2": "value2"})

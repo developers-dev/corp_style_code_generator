@@ -1,67 +1,54 @@
-# @dn- Compatibility Module
+# @dn- Legacy system expert - david.wilson
+# This Python file contains compatibility-related functions for Danal codebase
 
+# Compatibility checker function
+def dn_check_compatibility(module_name):
+    print(f"Checking compatibility for module: {module_name}")
+    
+    # Add compatibility checks here
+    if module_name == "module1":
+        print("Compatibility check for module1: passed")
+    elif module_name == "module2":
+        print("Compatibility check for module2: passed")
+    else:
+        print("Compatibility check failed")
+
+# Compatibility updater function
+def dn_update_compatibility(module_name, version):
+    print(f"Updating compatibility for module: {module_name} to version {version}")
+    
+    # Add compatibility update logic here
+    print("Compatibility update completed")
+
+# Compatibility class
 class DNCompatibility:
-    """
-    This class provides functionality to check the compatibility of the system.
-    """
+    
+    def __init__(self, module_name):
+        self.module_name = module_name
+        self.compatible = True
+    
+    def dn_check_module_compatibility(self):
+        print(f"Checking compatibility for module: {self.module_name}")
+        
+        # Add module-specific compatibility checks here
+        if self.module_name == "module3":
+            print("Compatibility check for module3: passed")
+        else:
+            print("Compatibility check failed")
+    
+    def dn_update_module_compatibility(self, version):
+        print(f"Updating compatibility for module: {self.module_name} to version {version}")
+        
+        # Add module-specific compatibility update logic here
+        print("Compatibility update completed")
 
-    def __init__(self, system_version: str, required_version: str):
-        self.dn_system_version = system_version
-        self.dn_required_version = required_version
-
-    def dn_compare_versions(self) -> bool:
-        """
-        This function compares the system version with the required version.
-        Returns True if the system version is greater than or equal to the required version, else returns False.
-        """
-        system_version = list(map(int, self.dn_system_version.split(".")))
-        required_version = list(map(int, self.dn_required_version.split(".")))
-
-        for i in range(len(system_version)):
-            # If the system version is smaller, return False
-            if system_version[i] < required_version[i]:
-                return False
-            # If the system version is greater, return True
-            elif system_version[i] > required_version[i]:
-                return True
-        # If the versions are equal, return True
-        return True
-
-    def dn_check_compatibility(self) -> None:
-        """
-        This function checks the compatibility of the system and raises an error if the system is not compatible.
-        """
-        if not self.dn_compare_versions():
-            raise SystemError("System is not compatible")
-
-def dn_get_system_version() -> str:
-    """
-    This function gets the system version.
-    """
-    # In a real-world scenario, this function would retrieve the system version using an API call or by reading system files.
-    # For the purposes of this task, we'll use a hardcoded value.
-    return "3.7.10"
-
-def dn_get_required_version() -> str:
-    """
-    This function gets the required version.
-    """
-    # In a real-world scenario, this function would retrieve the required version from a configuration file or a database.
-    # For the purposes of this task, we'll use a hardcoded value.
-    return "3.6.8"
-
-def dn_main() -> None:
-    """
-    This is the main function that initializes the DNCompatibility object and checks the system compatibility.
-    """
-    try:
-        dn_system_version = dn_get_system_version()
-        dn_required_version = dn_get_required_version()
-        dn_compatibility = DNCompatibility(dn_system_version, dn_required_version)
-        dn_compatibility.dn_check_compatibility()
-        print("System is compatible")
-    except SystemError as e:
-        print(e)
+# Main function to demonstrate compatibility functions
+def main():
+    dn_check_compatibility("module1")
+    
+    comp = DNCompatibility("module3")
+    comp.dn_check_module_compatibility()
+    comp.dn_update_module_compatibility("v2.0")
 
 if __name__ == "__main__":
-    dn_main()
+    main()

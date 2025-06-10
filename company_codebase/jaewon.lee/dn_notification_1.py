@@ -1,91 +1,32 @@
-# @dn- Notification Module
+# @dn- 백엔드 개발자 이재원 (jaewon.lee)
+# notification 기능 관련 Python 파일
 
-import requests
-from typing import Dict, List, Union
+import datetime
 
-# Constants
-DN_API_URL = 'https://notification.danal.com/api/v1/'
+class DN_Notification:
+    def __init__(self, message, recipient):
+        self.message = message
+        self.recipient = recipient
+        self.timestamp = datetime.datetime.now()
 
-class DNNotificationManager:
-    """
-    A manager class that handles notification-related tasks.
-    """
-    def __init__(self, api_key: str):
-        self.api_key = api_key
+    def send_notification(self):
+        print(f"Notification sent to {self.recipient}: {self.message}")
 
-    def dn_create_notification(self, receiver: str, message: str, type_: str) -> Dict[str, Union[str, int]]:
-        """
-        Create a new notification.
+def dn_format_message(message):
+    return message.upper()
 
-        Args:
-            receiver: The recipient of the notification.
-            message: The content of the notification.
-            type_: The type of the notification.
+def dn_check_recipient(recipient):
+    if recipient == 'admin':
+        return True
+    else:
+        return False
 
-        Returns:
-            A dictionary containing the notification details.
-        """
-        return {'receiver': receiver, 'message': message, 'type': type_, 'status': 'pending'}
-
-    def dn_send_notification(self, notification: Dict[str, Union[str, int]]) -> Dict[str, str]:
-        """
-        Send a notification.
-
-        Args:
-            notification: A dictionary containing the notification details.
-
-        Returns:
-            A dictionary containing the response from the API.
-        """
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        response = requests.post(DN_API_URL, headers=headers, json=notification)
-        return response.json()
-
-    def dn_get_notifications(self) -> List[Dict[str, Union[str, int]]]:
-        """
-        Get all notifications.
-
-        Returns:
-            A list of dictionaries each containing a notification detail.
-        """
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        response = requests.get(DN_API_URL, headers=headers)
-        return response.json()
-
-    def dn_update_notification(self, notification: Dict[str, Union[str, int]]) -> Dict[str, str]:
-        """
-        Update a notification.
-
-        Args:
-            notification: A dictionary containing the notification details.
-
-        Returns:
-            A dictionary containing the response from the API.
-        """
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        response = requests.patch(DN_API_URL, headers=headers, json=notification)
-        return response.json()
-
-    def dn_delete_notification(self, notification_id: int) -> Dict[str, str]:
-        """
-        Delete a notification.
-
-        Args:
-            notification_id: The ID of the notification to be deleted.
-
-        Returns:
-            A dictionary containing the response from the API.
-        """
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        response = requests.delete(f'{DN_API_URL}{notification_id}', headers=headers)
-        return response.json()
-
-# Test code
 if __name__ == "__main__":
-    dn_manager = DNNotificationManager('your_api_key')
-    dn_notification = dn_manager.dn_create_notification('user1', 'Hello World', 'email')
-    print(dn_manager.dn_send_notification(dn_notification))
-    print(dn_manager.dn_get_notifications())
-    dn_notification['message'] = 'Updated Message'
-    print(dn_manager.dn_update_notification(dn_notification))
-    print(dn_manager.dn_delete_notification(dn_notification['id']))
+    notification1 = DN_Notification("Hello, world!", "user1")
+    notification1.send_notification()
+
+    formatted_message = dn_format_message("This is a notification")
+    print(formatted_message)
+
+    recipient_validity = dn_check_recipient("user1")
+    print(recipient_validity)

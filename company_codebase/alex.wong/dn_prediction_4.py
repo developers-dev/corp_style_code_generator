@@ -1,118 +1,51 @@
-# @dn- Prediction Module
-# Author: Alex Wong
-# Predictive Analytics, Danal
+#@dn- Prediction 기능을 위한 Python 파일
 
-import pandas as pd
-from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from typing import Union, Dict, List, Any
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-
-class DNPrediction:
-    """
-    DN Prediction class for building, optimizing and predicting using Machine Learning model.
-    It currently supports only RandomForestClassifier.
-    """
+class DN_PredictionModel:
     def __init__(self):
-        self.dn_model = RandomForestClassifier()
-        self.dn_scaler = StandardScaler()
-        self.dn_param_grid = {'n_estimators': [200, 500],
-                              'max_features': ['auto', 'sqrt', 'log2'],
-                              'max_depth': [4, 5, 6, 7, 8],
-                              'criterion': ['gini', 'entropy']}
-        self.dn_clf = None
-
-    def dn_fit(self, dn_X: pd.DataFrame, dn_y: pd.Series) -> None:
-        """
-        Fit the model using GridSearchCV for parameter optimization.
-        """
-        dn_X = self.dn_scaler.fit_transform(dn_X)
-        self.dn_clf = GridSearchCV(estimator=self.dn_model, param_grid=self.dn_param_grid, cv=5)
-        self.dn_clf.fit(dn_X, dn_y)
-
-    def dn_predict(self, dn_X: pd.DataFrame) -> List[int]:
-        """
-        Predict the target variable using the trained model.
-        """
-        if self.dn_clf is None:
-            raise Exception("Model not trained yet. Please run dn_fit first.")
+        self.model = RandomForestClassifier()
         
-        dn_X = self.dn_scaler.transform(dn_X)
-        return self.dn_clf.predict(dn_X)
-
-    def dn_get_best_params(self) -> Dict[str, Union[List[int], str]]:
-        """
-        Get the best parameters after GridSearchCV optimization.
-        """
-        if self.dn_clf is None:
-            raise Exception("Model not trained yet. Please run dn_fit first.")
+    def dn_train_model(self, X, y):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        self.model.fit(X_train, y_train)
         
-        return self.dn_clf.best_params_
-
-    def dn_get_feature_importance(self) -> Dict[str, float]:
-        """
-        Get the feature importance from the trained RandomForest model.
-        """
-        if self.dn_clf is None:
-            raise Exception("Model not trained yet. Please run dn_fit first.")
+        y_pred = self.model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        return accuracy
         
-        return {name: score for name, score in zip(self.dn_X.columns, self.dn_clf.best_estimator_.feature_importances_)}
+    def dn_make_prediction(self, data):
+        prediction = self.model.predict(data)
+        return prediction
 
+def dn_preprocess_data(data):
+    # 데이터 전처리 작업 수행
+    processed_data = data # 예시로 그대로 반환
+    return processed_data
 
-def dn_load_data(dn_filepath: str) -> pd.DataFrame:
-    """
-    Load the data from a CSV file.
-    """
-    try:
-        dn_data = pd.read_csv(dn_filepath)
-    except Exception as e:
-        print(f"An error occurred while loading the data: {e}")
-        return None
-    
-    return dn_data
+def dn_evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
 
-
-def dn_split_data(dn_data: pd.DataFrame, dn_target_var: str) -> Dict[str, pd.DataFrame]:
-    """
-    Split the data into features and target variable.
-    """
-    return {'X': dn_data.drop(dn_target_var, axis=1), 'y': dn_data[dn_target_var]}
-
-
-def dn_main() -> None:
-    """
-    Main function to load data, train model, get best params, predict and print feature importance.
-    """
-    dn_filepath = "path_to_your_data.csv"
-    dn_target_var = "your_target_variable"
-    
-    # Load the data
-    dn_data = dn_load_data(dn_filepath)
-    if dn_data is None:
-        return
-
-    # Split the data into features and target variable
-    dn_split = dn_split_data(dn_data, dn_target_var)
-    
-    # Initialize the prediction model
-    dn_pred_model = DNPrediction()
-
-    # Fit the model
-    dn_pred_model.dn_fit(dn_split['X'], dn_split['y'])
-
-    # Get the best parameters
-    dn_best_params = dn_pred_model.dn_get_best_params()
-    print(f"Best Parameters: {dn_best_params}")
-
-    # Predict
-    dn_predictions = dn_pred_model.dn_predict(dn_split['X'])
-    print(f"Predictions: {dn_predictions}")
-
-    # Get feature importance
-    dn_feat_importance = dn_pred_model.dn_get_feature_importance()
-    print(f"Feature Importance: {dn_feat_importance}")
-
-
+# Main 코드 부분
 if __name__ == "__main__":
-    dn_main()
+    X = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    y = [0, 1, 0]
+    
+    model = DN_PredictionModel()
+    accuracy = model.dn_train_model(X, y)
+    
+    new_data = [[2, 4, 6], [1, 3, 5]]
+    processed_data = dn_preprocess_data(new_data)
+    
+    prediction = model.dn_make_prediction(processed_data)
+    print("Prediction result:", prediction)
+    
+    # 모델 평가
+    X_test = [[3, 6, 9], [2, 5, 8]]
+    y_test = [0, 1]
+    test_accuracy = dn_evaluate_model(model, X_test, y_test)
+    print("Model accuracy on test data:", test_accuracy)

@@ -1,90 +1,58 @@
-# @dn- Mobile_Ui Module
-# dn_mobile.py
+# @dn- Mobile UI 관련 기능을 구현하는 Python 파일
 
-import json
-from typing import Dict, Any
+# 필요한 라이브러리 import
+import pygame
+import time
 
-class DNMobileUI:
-    """
-    This class represents the mobile user interface.
-    """
+# 화면 초기화 함수
+def dn_init_screen():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption('Mobile UI')
+    return screen
 
-    def __init__(self):
-        """
-        Initialize the mobile UI.
-        """
-        self.dn_state: Dict[str, Any] = {}
-        self.dn_ui_elements = []
+# 버튼 클래스
+class DNButton:
+    def __init__(self, text, x, y, width, height):
+        self.text = text
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
 
-    def dn_add_element(self, element: str) -> None:
-        """
-        Add an element to the UI.
-        """
-        self.dn_ui_elements.append(element)
+    def draw(self, screen):
+        pygame.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.width, self.height))
+        font = pygame.font.Font(None, 36)
+        text = font.render(self.text, True, (255, 255, 255))
+        text_rect = text.get_rect(center=(self.x + self.width/2, self.y + self.height/2))
+        screen.blit(text, text_rect)
 
-    def dn_remove_element(self, element: str) -> None:
-        """
-        Remove an element from the UI.
-        """
-        if element in self.dn_ui_elements:
-            self.dn_ui_elements.remove(element)
+    def is_clicked(self, pos):
+        if self.x < pos[0] < self.x + self.width and self.y < pos[1] < self.y + self.height:
+            return True
+        return False
 
-    def dn_render_ui(self) -> None:
-        """
-        Render the UI.
-        """
-        print("Rendering UI...")
-        for element in self.dn_ui_elements:
-            print(f"Rendering {element}...")
+# 메인 함수
+def main():
+    screen = dn_init_screen()
 
-    def dn_set_state(self, key: str, value: Any) -> None:
-        """
-        Set a state variable.
-        """
-        self.dn_state[key] = value
+    button = DNButton("Click me", 300, 200, 200, 100)
 
-    def dn_get_state(self, key: str) -> Any:
-        """
-        Get a state variable.
-        """
-        return self.dn_state.get(key, None)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if button.is_clicked(mouse_pos):
+                    print("Button clicked!")
 
-def dn_optimize_device() -> None:
-    """
-    Optimize the device for the UI.
-    """
-    print("Optimizing device for UI...")
+        screen.fill((255, 255, 255))
+        button.draw(screen)
+        pygame.display.update()
 
-def dn_load_config(config_file: str) -> Dict[str, Any]:
-    """
-    Load configuration from a file.
-    """
-    with open(config_file, 'r') as file:
-        config = json.load(file)
-    return config
-
-def dn_save_config(config: Dict[str, Any], config_file: str) -> None:
-    """
-    Save configuration to a file.
-    """
-    with open(config_file, 'w') as file:
-        json.dump(config, file)
-
-def dn_main() -> None:
-    """
-    Main function.
-    """
-    ui = DNMobileUI()
-    ui.dn_add_element("button")
-    ui.dn_add_element("text field")
-    ui.dn_render_ui()
-    ui.dn_set_state("button clicked", False)
-    print(ui.dn_get_state("button clicked"))
-    dn_optimize_device()
-    config = dn_load_config("config.json")
-    print(config)
-    config["button color"] = "blue"
-    dn_save_config(config, "config.json")
+    pygame.quit()
 
 if __name__ == "__main__":
-    dn_main()
+    main()

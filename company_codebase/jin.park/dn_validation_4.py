@@ -1,79 +1,44 @@
-# @dn- Validation Module
-import re
-import logging
-from typing import Any, Union
+# @dn- 백엔드 개발자 Jin Park
+# Validation 관련 기능을 위한 Python 파일
 
-# setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-class DNValidationError(Exception):
-    """Custom validation error"""
-    pass
-
-class DNValidator:
-    """DNValidator is a class for validating input data"""
+class DN_Validator:
     def __init__(self):
-        pass
+        self.rules = {}
 
-    @staticmethod
-    def dn_is_valid_email(dn_email: str) -> bool:
-        """
-        Checks if the given email is valid
-        :param dn_email: Email to check
-        :return: True if valid, False otherwise
-        """
-        if re.fullmatch(r"[^@]+@[^@]+\.[^@]+", dn_email):
-            return True
-        else:
-            return False
+    def add_rule(self, key, validation_func):
+        self.rules[key] = validation_func
 
-    @staticmethod
-    def dn_is_valid_password(dn_password: str) -> bool:
-        """
-        Checks if the given password is valid
-        :param dn_password: Password to check
-        :return: True if valid, False otherwise
-        """
-        # check the length of the password
-        if len(dn_password) < 8:
-            return False
-        # check if password contains at least one digit and one letter
-        if not (re.search(r'\d', dn_password) and re.search(r'\D', dn_password)):
-            return False
-        return True
+    def validate(self, data):
+        errors = {}
+        for key, rule in self.rules.items():
+            if not rule(data.get(key)):
+                errors[key] = f"{key} is invalid"
+        return errors
 
-def dn_validate_input(dn_input: Any, dn_validator: DNValidator, dn_validation_method: str) -> Union[bool, str]:
-    """
-    Validates the input data using the given validation method of DNValidator
-    :param dn_input: Input data to validate
-    :param dn_validator: DNValidator instance
-    :param dn_validation_method: Validation method of DNValidator
-    :return: True if the input data is valid, error message otherwise
-    """
+def dn_is_integer(value):
     try:
-        is_valid = getattr(dn_validator, dn_validation_method)(dn_input)
-        if not is_valid:
-            raise DNValidationError(f"Input '{dn_input}' is not valid.")
+        int(value)
         return True
-    except DNValidationError as e:
-        logger.error(e)
-        return str(e)
-    except Exception as e:
-        logger.error(e)
-        return "Unknown error occurred."
+    except ValueError:
+        return False
 
-def main():
-    dn_validator = DNValidator()
+def dn_is_email(value):
+    if "@" in value:
+        return True
+    return False
 
-    email = "jin.park@example.com"
-    print(dn_validate_input(email, dn_validator, "dn_is_valid_email"))
+def dn_min_length(length):
+    def validation_func(value):
+        if len(value) >= length:
+            return True
+        return False
+    return validation_func
 
-    password = "123abc"
-    print(dn_validate_input(password, dn_validator, "dn_is_valid_password"))
+validator = DN_Validator()
+validator.add_rule('age', dn_is_integer)
+validator.add_rule('email', dn_is_email)
+validator.add_rule('name', dn_min_length(5))
 
-    password = "123abcDEF"
-    print(dn_validate_input(password, dn_validator, "dn_is_valid_password"))
-
-if __name__ == "__main__":
-    main()
+data = {'age': '25', 'email': 'test@example.com', 'name': 'Jin'}
+errors = validator.validate(data)
+print(errors)

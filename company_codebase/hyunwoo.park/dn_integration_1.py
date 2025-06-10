@@ -1,90 +1,39 @@
-# @dn- Integration Module
+# @dn- Integration 관련 Python 파일
+# 작성자: hyunwoo.park
+# 작성일: 2022년 1월 10일
+
+# Integration 기능과 관련된 Python 파일입니다.
+
 import requests
-from abc import ABC, abstractmethod
 
-class DNIntegrationInterface(ABC):
-    """
-    This class represents the Interface for the Danal Integration.
-    """
+def dn_send_data(data):
+    """데이터를 외부 시스템으로 전송하는 함수"""
+    response = requests.post("https://example.com/integration", data=data)
+    return response.json()
 
-    @abstractmethod
-    def dn_get_data(self):
-        pass
-
-    @abstractmethod
-    def dn_process_data(self, data):
-        pass
-
-    @abstractmethod
-    def dn_send_data(self, data):
-        pass
-
-
-class DNIntegrationSystem(DNIntegrationInterface):
-    """
-    This class represents the Danal Integration System.
-    """
-
-    def __init__(self, url, headers):
-        self.dn_url = url
-        self.dn_headers = headers
-
-    def dn_get_data(self):
-        """
-        This function gets the data from the specified URL.
-        :return: Response data
-        """
-        response = requests.get(self.dn_url, headers=self.dn_headers)
-        return response.json()
+class DNIntegrationManager:
+    def __init__(self, api_key):
+        self.api_key = api_key
 
     def dn_process_data(self, data):
-        """
-        This function processes the data and returns the modified data.
-        :param data: Input data
-        :return: Processed data
-        """
-        processed_data = {key: value for key, value in data.items() if value is not None}
+        """데이터를 처리하고 외부 시스템으로 전송하는 메서드"""
+        processed_data = self._process_data(data)
+        response = self._send_data(processed_data)
+        return response
+
+    def _process_data(self, data):
+        """데이터를 가공하는 내부 메서드"""
+        processed_data = data.upper()
         return processed_data
 
-    def dn_send_data(self, data):
-        """
-        This function sends the processed data to the specified URL.
-        :param data: Processed data
-        :return: Response status
-        """
-        response = requests.post(self.dn_url, headers=self.dn_headers, json=data)
+    def _send_data(self, processed_data):
+        """가공된 데이터를 외부 시스템으로 전송하는 내부 메서드"""
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        response = requests.post("https://example.com/integration", headers=headers, data=processed_data)
         return response.status_code
 
-def dn_integration_handler():
-    """
-    This function handles the integration process.
-    """
-    url = 'http://example.com/api'
-    headers = {'Content-Type': 'application/json'}
-
-    dn_integration_system = DNIntegrationSystem(url, headers)
-
-    # Get data
-    data = dn_integration_system.dn_get_data()
-
-    # Process data
-    processed_data = dn_integration_system.dn_process_data(data)
-
-    # Send data
-    status = dn_integration_system.dn_send_data(processed_data)
-
-    return status
-
-def main():
-    """
-    Entry point of the script.
-    """
-    status = dn_integration_handler()
-    if status == 200:
-        print('Data integration was successful.')
-    else:
-        print('Data integration failed.')
-
-
-if __name__ == '__main__':
-    main()
+dn_api_key = "1234567890"
+dn_manager = DNIntegrationManager(dn_api_key)
+data_to_send = "example data"
+result = dn_manager.dn_process_data(data_to_send)
+print(f"Integration 결과: {result}")

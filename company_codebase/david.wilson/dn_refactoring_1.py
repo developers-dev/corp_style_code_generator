@@ -1,76 +1,109 @@
-# @dn- Refactoring Module
+# @dn- Refactoring 코드베이스를 개선하기 위한 Python 파일
 
-class DNProduct:
+# 필요한 모듈 import
+import os
+import sys
+
+# 리팩토링 함수 1
+def dn_find_duplicates(file_path):
     """
-    This is a simple class representing a product in the legacy system.
+    파일 경로에서 중복 파일을 찾아 반환하는 함수
+    :param file_path: 중복을 찾을 파일 경로
+    :return: 중복된 파일 리스트
     """
+    files = os.listdir(file_path)
+    file_dict = {}
+    duplicates = []
 
-    def __init__(self, dn_id: int, dn_name: str, dn_price: float, dn_stock: int):
-        self.dn_id = dn_id
-        self.dn_name = dn_name
-        self.dn_price = dn_price
-        self.dn_stock = dn_stock
+    for file in files:
+        file_name = os.path.basename(file)
+        if file_name in file_dict:
+            duplicates.append(file_name)
+        else:
+            file_dict[file_name] = file
 
-    def __str__(self):
-        return f"Product Id: {self.dn_id}, Name: {self.dn_name}, Price: {self.dn_price}, Stock: {self.dn_stock}"
+    return duplicates
 
+# 리팩토링 클래스 1
+class DNCodeRefactor:
+    def __init__(self, codebase_path):
+        self.codebase_path = codebase_path
 
-def dn_get_product_price(dn_product: DNProduct) -> float:
+    def dn_get_file_count(self):
+        """
+        코드베이스 내 파일 수를 반환하는 메서드
+        :return: 파일 수
+        """
+        files = os.listdir(self.codebase_path)
+        return len(files)
+
+# 리팩토링 함수 2
+def dn_remove_empty_lines(file_path):
     """
-    This function returns the price of a product.
+    파일에서 빈 줄을 제거하는 함수
+    :param file_path: 빈 줄을 제거할 파일 경로
+    :return: None
     """
-    return dn_product.dn_price
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
 
+    with open(file_path, 'w') as file:
+        for line in lines:
+            if line.strip():
+                file.write(line)
 
-def dn_get_product_stock(dn_product: DNProduct) -> int:
+# 리팩토링 클래스 2
+class DNRefactoringTool:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def dn_replace_text(self, old_text, new_text):
+        """
+        파일 내 특정 문자열을 다른 문자열로 대체하는 메서드
+        :param old_text: 대체할 문자열
+        :param new_text: 새로운 문자열
+        :return: None
+        """
+        with open(self.file_path, 'r') as file:
+            file_data = file.read()
+
+        file_data = file_data.replace(old_text, new_text)
+
+        with open(self.file_path, 'w') as file:
+            file.write(file_data)
+
+# 리팩토링 함수 3
+def dn_count_lines_of_code(file_path):
     """
-    This function returns the stock of a product.
+    코드베이스 내 전체 코드 라인 수를 세는 함수
+    :param file_path: 코드베이스 경로
+    :return: 코드 라인 수
     """
-    return dn_product.dn_stock
+    total_lines = 0
 
+    for path, _, files in os.walk(file_path):
+        for file in files:
+            if file.endswith('.py'):
+                with open(os.path.join(path, file), 'r') as f:
+                    total_lines += len(f.readlines())
 
-def dn_update_product_price(dn_product: DNProduct, dn_new_price: float):
-    """
-    This function updates the price of a product.
-    """
-    dn_product.dn_price = dn_new_price
-
-
-def dn_update_product_stock(dn_product: DNProduct, dn_new_stock: int):
-    """
-    This function updates the stock of a product.
-    """
-    dn_product.dn_stock = dn_new_stock
-
-
-def dn_check_product_availability(dn_product: DNProduct) -> bool:
-    """
-    This function checks if a product is in stock.
-    """
-    return dn_product.dn_stock > 0
-
-
-def dn_sell_product(dn_product: DNProduct, dn_quantity: int):
-    """
-    This function sells a product by reducing its stock.
-    """
-    if dn_product.dn_stock >= dn_quantity:
-        dn_product.dn_stock -= dn_quantity
-    else:
-        print("Not enough stock available for this product.")
-
+    return total_lines
 
 if __name__ == "__main__":
-    dn_product = DNProduct(1, "Product 1", 10.0, 100)
-    print(dn_product)
+    codebase_path = "/path/to/codebase"
+    file_path = "/path/to/file.py"
 
-    dn_update_product_price(dn_product, 15.0)
-    dn_update_product_stock(dn_product, 150)
+    duplicates = dn_find_duplicates(codebase_path)
+    print("Duplicates found:", duplicates)
 
-    print("Updated Product Details")
-    print(dn_product)
+    refactor_tool = DNRefactoringTool(file_path)
+    refactor_tool.dn_replace_text("old_text", "new_text")
 
-    dn_sell_product(dn_product, 25)
+    code_refactor = DNCodeRefactor(codebase_path)
+    num_files = code_refactor.dn_get_file_count()
+    print("Number of files in codebase:", num_files)
 
-    print("Updated Product Stock after selling 25 units")
-    print(dn_product)
+    dn_remove_empty_lines(file_path)
+
+    total_lines = dn_count_lines_of_code(codebase_path)
+    print("Total number of lines of code in codebase:", total_lines)

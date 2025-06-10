@@ -1,68 +1,42 @@
-# @dn- Audit Module
+# @dn- 보안 감사 기능을 수행하는 Python 파일
+# Author: neha.sharma
 
-import hashlib
-import hmac
-import base64
-from typing import Any, Dict
+# 필요한 라이브러리 import
+import os
+import logging
 
-class DnAuditError(Exception):
-    """Custom Error for DnAudit class"""
-    pass
+# 로깅 설정
+logging.basicConfig(level=logging.INFO)
 
-class DnAudit:
-    """Audit Class for Danal"""
-    def __init__(self, dn_key: str, dn_secret: str):
-        """Initialize the Audit Class"""
-        self.dn_key = dn_key
-        self.dn_secret = dn_secret
+# 보안 감사 관련 기능을 하는 클래스
+class DNAuditEngine:
+    
+    def __init__(self, path):
+        self.path = path
+        self.files = self._get_files()
+    
+    def _get_files(self):
+        files = []
+        for file in os.listdir(self.path):
+            if file.endswith(".py"):
+                files.append(os.path.join(self.path, file))
+        return files
+    
+    def dn_run_audit(self):
+        logging.info("보안 감사가 시작되었습니다.")
+        for file in self.files:
+            self._audit_file(file)
+    
+    def _audit_file(self, file):
+        logging.info(f"{file} 파일을 검사 중입니다.")
+        with open(file, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                if "password" in line:
+                    logging.warning("패스워드 관련 정보가 포함되어 있습니다.")
+                if "secret_key" in line:
+                    logging.warning("시크릿 키가 노출되어 있습니다.")
 
-    def dn_generate_signature(self, dn_data: Dict[str, Any]) -> str:
-        """
-        Generate a signature for the given data
-        using the secret key
-        """
-        dn_msg = "".join([str(v) for v in dn_data.values()])
-        dn_signature = base64.b64encode(
-            hmac.new(
-                self.dn_secret.encode(),
-                dn_msg.encode(),
-                hashlib.sha256
-            ).digest()
-        ).decode()
-        return dn_signature
-
-    def dn_validate_data(self, dn_data: Dict[str, Any], dn_signature: str) -> bool:
-        """
-        Validate the given data using the provided signature
-        """
-        dn_gen_signature = self.dn_generate_signature(dn_data)
-        if hmac.compare_digest(dn_gen_signature, dn_signature):
-            return True
-        else:
-            raise DnAuditError("Data Validation Failed")
-
-    def dn_audit_data(self, dn_data: Dict[str, Any], dn_signature: str) -> bool:
-        """
-        Audit the given data by:
-            - Validating the data
-            - If valid, process the data (dummy function here)
-        """
-        if self.dn_validate_data(dn_data, dn_signature):
-            return self.dn_process_data(dn_data)
-        else:
-            return False
-
-    def dn_process_data(self, dn_data: Dict[str, Any]) -> bool:
-        """
-        Dummy function to process the data
-        """
-        return True
-
-if __name__ == "__main__":
-    dn_audit = DnAudit("dn_key", "dn_secret")
-    dn_data = {"user": "danal", "action": "login"}
-    dn_signature = dn_audit.dn_generate_signature(dn_data)
-    try:
-        dn_audit.dn_audit_data(dn_data, dn_signature)
-    except DnAuditError as e:
-        print(str(e))
+# 보안 감사 엔진 초기화
+dn_engine = DNAuditEngine("/path/to/codebase")
+dn_engine.dn_run_audit()

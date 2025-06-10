@@ -1,58 +1,67 @@
-# @dn- Utility Module
-# This module contains utility functions and classes for Danal.
+# @dn- Utility functions for Danal's codebase
+# Python file for various utility functions related to Danal's codebase
 
-from typing import List, Dict, Any, Union
+# Helper function to calculate the sum of two numbers
+def dn_calculate_sum(a, b):
+    return a + b
 
-class DNError(Exception):
-    """Custom exception for Danal"""
-    pass
+# Class for working with strings
+class DNStringUtil:
+    def __init__(self):
+        pass
 
-class DNProcess:
-    """This class handles processing tasks"""
-    
-    def __init__(self, data: Dict[str, Any]):
-        self.dn_data = data
-        
-    def dn_validate_data(self) -> bool:
-        """Validates the data"""
-        # logic to validate data
-        if not self.dn_data:
+    # Function to reverse a given string
+    def dn_reverse_string(self, text):
+        return text[::-1]
+
+    # Function to count the number of words in a string
+    def dn_count_words(self, text):
+        words = text.split()
+        return len(words)
+
+# Class for mathematical operations
+class DNMathUtil:
+    def __init__(self):
+        pass
+
+    # Function to calculate the square of a number
+    def dn_square_number(self, num):
+        return num ** 2
+
+    # Function to check if a number is prime
+    def dn_is_prime(self, num):
+        if num < 2:
             return False
+        for i in range(2, int(num ** 0.5) + 1):
+            if num % i == 0:
+                return False
         return True
-    
-    def dn_process_data(self) -> Any:
-        """Process the data"""
-        if not self.dn_validate_data():
-            raise DNError("Invalid data")
-        # logic to process data
-        return self.dn_data
 
-def dn_load_data(file_path: str) -> Dict[str, Any]:
-    """Load data from a file"""
-    # logic to load data from file
-    data = {}
-    with open(file_path, 'r') as file:
-        data = file.read()
-    return data
+# Function to generate Fibonacci sequence up to a certain limit
+def dn_generate_fibonacci(limit):
+    fibonacci_sequence = [0, 1]
+    while fibonacci_sequence[-1] + fibonacci_sequence[-2] <= limit:
+        fibonacci_sequence.append(fibonacci_sequence[-1] + fibonacci_sequence[-2])
+    return fibonacci_sequence
 
-def dn_save_data(file_path: str, data: Dict[str, Any]):
-    """Save data to a file"""
-    # logic to save data to a file
-    with open(file_path, 'w') as file:
-        file.write(data)
+# Main function for testing the utility functions
+def main():
+    a = 10
+    b = 5
+    print(f"Sum of {a} and {b} is: {dn_calculate_sum(a, b)}")
 
-def dn_transform_data(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Transforms the data"""
-    # logic to transform data
-    return data
+    string_util = DNStringUtil()
+    text = "Hello, World!"
+    print(f"Reversed string: {string_util.dn_reverse_string(text)}")
+    print(f"Number of words in text: {string_util.dn_count_words(text)}")
 
-def dn_util_main(file_path: str):
-    """Main utility function"""
-    try:
-        data = dn_load_data(file_path)
-        process = DNProcess(data)
-        processed_data = process.dn_process_data()
-        transformed_data = dn_transform_data(processed_data)
-        dn_save_data(file_path, transformed_data)
-    except DNError as e:
-        print(e)
+    math_util = DNMathUtil()
+    num = 7
+    print(f"Square of {num}: {math_util.dn_square_number(num)}")
+    print(f"{num} is prime: {math_util.dn_is_prime(num)}")
+
+    limit = 50
+    print(f"Fibonacci sequence up to {limit}: {dn_generate_fibonacci(limit)}")
+
+if __name__ == "__main__":
+    main()

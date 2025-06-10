@@ -1,81 +1,44 @@
-# @dn- Mocking Module
+# @dn- 코드베이스에서 mocking 기능과 관련된 Python 파일
+# Author: emma.chen
 
-# Importing required libraries
-from unittest import mock
-from unittest.mock import MagicMock, Mock, patch
 import requests
 
-class DNMocking:
-    """
-    A class used to mock functions for testing
-    """
+# Mocking 클래스
+class DN_Mocking:
+    
+    def __init__(self, url):
+        self.url = url
+    
+    def dn_send_request(self):
+        response = requests.get(self.url)
+        return response
+    
+    def dn_mock_response(self, status_code, content):
+        class MockResponse:
+            def __init__(self, status_code, content):
+                self.status_code = status_code
+                self.content = content
 
-    @staticmethod
-    def dn_get_request(url: str) -> dict:
-        """
-        Function to make GET request
+        response = MockResponse(status_code, content)
+        return response
+    
+# Mocking 함수
+def dn_mock_data(data):
+    mocked_data = data.upper()
+    return mocked_data
 
-        Args:
-            url (str): Url to make GET request
+# Mocking 변수
+dn_mock_var = 10
 
-        Returns:
-            dict: Response of GET request
-        """
-        response = requests.get(url)
-        return response.json()
-
-    @staticmethod
-    def dn_mock_get_request(url: str) -> Mock:
-        """
-        Function to mock GET request
-
-        Args:
-            url (str): Url to mock GET request
-
-        Returns:
-            Mock: Mocked response of GET request
-        """
-        mock_get_patcher = patch('requests.get')
-        mock_get = mock_get_patcher.start()
-        mock_get.return_value = Mock(status_code=200)
-        mock_get.return_value.json.return_value = {'mock_key': 'mock_value'}
-        return mock_get
-
-
-class DNTestMocking:
-    """
-    A class used to test mocked functions
-    """
-
-    @staticmethod
-    def dn_test_get_request(dn_get_request: callable, dn_mock_get_request: callable, url: str) -> None:
-        """
-        Function to test GET request
-
-        Args:
-            dn_get_request (callable): Function to make GET request
-            dn_mock_get_request (callable): Function to mock GET request
-            url (str): Url to make GET request
-
-        Returns:
-            None
-        """
-        mock_get = dn_mock_get_request(url)
-        response = dn_get_request(url)
-        assert response == mock_get.return_value.json.return_value, "Test Failed"
-
-    @staticmethod
-    def dn_test_mock_functions() -> None:
-        """
-        Function to test all mock functions
-
-        Returns:
-            None
-        """
-        url = 'https://jsonplaceholder.typicode.com/posts/1'
-        DNTestMocking.dn_test_get_request(DNMocking.dn_get_request, DNMocking.dn_mock_get_request, url)
-        print("All tests passed successfully")
-
-
-if __name__ == '__main__':
-    DNTestMocking.dn_test_mock_functions()
+if __name__ == "__main__":
+    mock_obj = DN_Mocking("https://example.com")
+    response = mock_obj.dn_send_request()
+    
+    mocked_response = mock_obj.dn_mock_response(200, "Mocked content")
+    print(mocked_response.status_code)
+    
+    data = "mocking data"
+    mocked_data = dn_mock_data(data)
+    print(mocked_data)
+    
+    print(dn_mock_var)

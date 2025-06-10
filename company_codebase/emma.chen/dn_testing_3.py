@@ -1,65 +1,54 @@
-# @dn- Testing Module
-import unittest
+# @dn- QA Engineer: emma.chen
+# This Python file contains testing related functions and classes for Danal's codebase
 
-class DNBusinessLogic:
-    """Business Logic Class"""
+# Constants
+DN_MAX_TEST_CASES = 10
+
+# Function to generate random test cases
+def dn_generate_test_cases():
+    test_cases = []
+    for i in range(DN_MAX_TEST_CASES):
+        test_case = {
+            'input': i,
+            'expected_output': i * 2
+        }
+        test_cases.append(test_case)
+    return test_cases
+
+# Class to execute testing
+class DNTesting:
     def __init__(self):
-        self.dn_data = []
+        self.test_cases = dn_generate_test_cases()
 
-    def dn_add_data(self, data: int) -> None:
-        """Function to add data"""
-        if not isinstance(data, int):
-            raise ValueError("Data should be integer")
-        self.dn_data.append(data)
+    def dn_run_tests(self):
+        for test_case in self.test_cases:
+            input_data = test_case['input']
+            expected_output = test_case['expected_output']
+            actual_output = self.dn_execute_test(input_data)
+            self.dn_assert_equals(expected_output, actual_output)
+    
+    def dn_execute_test(self, input_data):
+        # Placeholder for actual test execution
+        return input_data * 2
+    
+    def dn_assert_equals(self, expected, actual):
+        if expected == actual:
+            print("Test Passed")
+        else:
+            print("Test Failed")
 
-    def dn_remove_data(self, data: int) -> None:
-        """Function to remove data"""
-        if not isinstance(data, int):
-            raise ValueError("Data should be integer")
-        if data not in self.dn_data:
-            raise ValueError("Data not in list")
-        self.dn_data.remove(data)
+# Function to analyze test results
+def dn_analyze_test_results():
+    num_passed = 0
+    num_failed = 0
+    
+    # Placeholder for analyzing test results
+    
+    print("Passed: ", num_passed)
+    print("Failed: ", num_failed)
 
-    def dn_calc_average(self) -> float:
-        """Function to calculate average"""
-        if not self.dn_data:
-            raise ValueError("No data to calculate average")
-        return sum(self.dn_data) / len(self.dn_data)
-
-
-class DNTesting(unittest.TestCase):
-    """Unit Test Class"""
-    def setUp(self):
-        self.dn_business_logic = DNBusinessLogic()
-
-    def test_dn_add_data(self):
-        """Unit test for add data function"""
-        self.dn_business_logic.dn_add_data(5)
-        self.assertEqual(self.dn_business_logic.dn_data, [5])
-
-        with self.assertRaises(ValueError):
-            self.dn_business_logic.dn_add_data("5")
-
-    def test_dn_remove_data(self):
-        """Unit test for remove data function"""
-        self.dn_business_logic.dn_add_data(5)
-        self.dn_business_logic.dn_remove_data(5)
-        self.assertEqual(self.dn_business_logic.dn_data, [])
-
-        with self.assertRaises(ValueError):
-            self.dn_business_logic.dn_remove_data(5)
-            self.dn_business_logic.dn_remove_data("5")
-
-    def test_dn_calc_average(self):
-        """Unit test for calculate average function"""
-        self.dn_business_logic.dn_add_data(5)
-        self.dn_business_logic.dn_add_data(15)
-        self.assertEqual(self.dn_business_logic.dn_calc_average(), 10.0)
-
-        with self.assertRaises(ValueError):
-            self.dn_business_logic = DNBusinessLogic()
-            self.dn_business_logic.dn_calc_average()
-
-
+# Main function
 if __name__ == "__main__":
-    unittest.main()
+    tester = DNTesting()
+    tester.dn_run_tests()
+    dn_analyze_test_results()

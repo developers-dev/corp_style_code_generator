@@ -1,65 +1,47 @@
-# @dn- Validation Module
+# @dn- 코드베이스에서 validation 기능을 처리하는 Python 파일입니다.
 
-import logging
-import re
-from typing import Any, Dict
+def dn_check_email(email):
+    """
+    이메일 형식이 올바른지 확인하는 함수
+    :param email: 확인할 이메일 주소
+    :return: True 또는 False
+    """
+    if '@' in email and '.' in email:
+        return True
+    else:
+        return False
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-class DNValidationError(Exception):
-    """Custom exception for validation errors"""
-    pass
-
-class DNValidation:
-    """Validation class for DN application"""
+class DN_Validator:
+    def __init__(self):
+        pass
     
-    def __init__(self, data: Dict[str, Any]) -> None:
-        self.data = data
-
-    def dn_validate(self) -> Dict[str, Any]:
-        """Main validation method"""
-        try:
-            self.dn_check_required_fields()
-            self.dn_check_email_format()
-            self.dn_check_phone_format()
-        except DNValidationError as e:
-            logger.error(f"Validation error: {str(e)}")
-            return {"status": "error", "message": str(e)}
+    def dn_check_password(self, password):
+        """
+        비밀번호 강도를 확인하는 함수
+        :param password: 확인할 비밀번호
+        :return: 강도에 따른 메시지 반환
+        """
+        if len(password) < 6:
+            return "비밀번호는 최소 6자 이상이어야 합니다."
+        elif not any(char.isdigit() for char in password):
+            return "숫자를 포함해야 합니다."
+        elif not any(char.islower() for char in password):
+            return "소문자를 포함해야 합니다."
+        elif not any(char.isupper() for char in password):
+            return "대문자를 포함해야 합니다."
         else:
-            return {"status": "success", "data": self.data}
+            return "강력한 비밀번호입니다."
 
-    def dn_check_required_fields(self) -> None:
-        """Checks if all required fields are present"""
-        required_fields = ["username", "email", "phone"]
-        for field in required_fields:
-            if field not in self.data:
-                raise DNValidationError(f"Missing required field: {field}")
+def dn_validate_input(input_data):
+    """
+    입력 데이터가 올바른 형식인지 확인하는 함수
+    :param input_data: 확인할 입력 데이터
+    :return: True 또는 False
+    """
+    if input_data.isalnum():
+        return True
+    else:
+        return False
 
-    def dn_check_email_format(self) -> None:
-        """Checks if email format is valid"""
-        email = self.data.get("email")
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            raise DNValidationError("Invalid email format")
-
-    def dn_check_phone_format(self) -> None:
-        """Checks if phone format is valid"""
-        phone = self.data.get("phone")
-        if not re.match(r"^\d{10}$", phone):
-            raise DNValidationError("Invalid phone number format")
-
-
-if __name__ == "__main__":
-    dn_validation = DNValidation({
-        "username": "jin.park",
-        "email": "jin.park@danal.com",
-        "phone": "0123456789"
-    })
-    print(dn_validation.dn_validate())
-
-    dn_validation = DNValidation({
-        "username": "jin.park",
-        "email": "invalid_email",
-        "phone": "0123456789"
-    })
-    print(dn_validation.dn_validate())
+# 추가적인 validation 관련 함수 또는 클래스 작성 가능
+# dn_validation_3.py 파일은 Danal의 코드베이스에 validation 기능을 추가하는 역할을 담당합니다.

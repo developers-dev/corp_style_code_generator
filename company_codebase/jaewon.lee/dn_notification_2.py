@@ -1,115 +1,57 @@
-# @dn- Notification Module
-# Notification related classes and functions
+# @dn- Notification 관련 기능을 제공하는 Python 파일
 
-from typing import List, Dict
+# 필요한 외부 라이브러리 import
+import requests
+import json
 
-class DNNotification:
-    """
-    A class to represent a Notification object
+# Notification을 전송하는 클래스
+class DN_NotificationSender:
+    def __init__(self, api_key):
+        self.api_key = api_key
 
-    Attributes
-    ----------
-    dn_recipient_id : str
-        The recipient user id of the notification
-    dn_message : str
-        The message of the notification
+    def send_notification(self, message, recipient):
+        payload = {
+            'message': message,
+            'recipient': recipient
+        }
 
-    Methods
-    -------
-    send_notification():
-        Sends the notification to the recipient
-    """
-    def __init__(self, dn_recipient_id: str, dn_message: str) -> None:
-        """
-        Constructs all the necessary attributes for the notification object.
+        headers = { 'Authorization': 'Bearer ' + self.api_key }
 
-        Parameters
-        ----------
-            dn_recipient_id : str
-                The recipient user id of the notification
-            dn_message : str
-                The message of the notification
-        """
-        self.dn_recipient_id = dn_recipient_id
-        self.dn_message = dn_message
+        response = requests.post('https://api.notification-service.com/send', data=json.dumps(payload), headers=headers)
 
-    def send_notification(self) -> None:
-        """
-        Sends the notification to the recipient
+        if response.status_code == 200:
+            return True
+        else:
+            return False
 
-        Returns
-        -------
-        None
-        """
-        # send notification logic goes here
-        print(f"Notification sent to {self.dn_recipient_id} with message: {self.dn_message}")
+# Notification을 받아 처리하는 클래스
+class DN_NotificationReceiver:
+    def __init__(self):
+        self.notifications = []
 
+    def receive_notification(self, notification):
+        self.notifications.append(notification)
 
-def dn_create_notification(dn_recipient_id: str, dn_message: str) -> DNNotification:
-    """
-    Creates a notification object
+    def process_notifications(self):
+        for notification in self.notifications:
+            print("Received notification: " + notification)
 
-    Parameters
-    ----------
-    dn_recipient_id : str
-        The recipient user id of the notification
-    dn_message : str
-        The message of the notification
+# Main 함수
+def dn_main():
+    api_key = 'your_api_key'
+    
+    # Notification Sender 사용 예시
+    sender = DN_NotificationSender(api_key)
+    if sender.send_notification('Hello world!', 'john.doe@example.com'):
+        print("Notification sent successfully!")
+    else:
+        print("Failed to send notification.")
 
-    Returns
-    -------
-    DNNotification
-        The created notification object
-    """
-    return DNNotification(dn_recipient_id, dn_message)
+    # Notification Receiver 사용 예시
+    receiver = DN_NotificationReceiver()
+    receiver.receive_notification('New message received')
+    receiver.receive_notification('Meeting reminder')
+    receiver.process_notifications()
 
-
-def dn_send_bulk_notifications(dn_notifications: List[DNNotification]) -> None:
-    """
-    Sends bulk notifications
-
-    Parameters
-    ----------
-    dn_notifications : list
-        The list of notification objects to be sent
-
-    Returns
-    -------
-    None
-    """
-    for notification in dn_notifications:
-        notification.send_notification()
-
-
-def dn_send_notification(dn_notification: DNNotification) -> None:
-    """
-    Sends a single notification
-
-    Parameters
-    ----------
-    dn_notification : DNNotification
-        The notification object to be sent
-
-    Returns
-    -------
-    None
-    """
-    dn_notification.send_notification()
-
-
-def dn_check_notification_status(dn_notification_id: str) -> Dict[str, str]:
-    """
-    Checks the status of a notification
-
-    Parameters
-    ----------
-    dn_notification_id : str
-        The id of the notification
-
-    Returns
-    -------
-    dict
-        The status of the notification
-    """
-    # check notification status logic goes here
-    return {"status": "sent"}
+if __name__ == "__main__":
+    dn_main()

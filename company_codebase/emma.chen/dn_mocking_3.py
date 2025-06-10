@@ -1,71 +1,63 @@
-# @dn- Mocking Module
+# @dn- Mocking 기능을 테스트하기 위한 Python 파일
+# Written by emma.chen
 
-import random
-from unittest import mock
+import requests
+import json
 
-class DNUser:
-    """ User class for Danal """
-    def __init__(self, name: str, age: int, email: str):
-        self.dn_name = name
-        self.dn_age = age
-        self.dn_email = email
+def dn_generate_mock_response():
+    mock_data = {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+    return json.dumps(mock_data)
 
-class DNBusinessLogic:
-    """ Business Logic class for Danal """
-    def __init__(self, dn_user: DNUser):
-        self.dn_user = dn_user
+class DNMocking:
+    def __init__(self, url):
+        self.url = url
+
+    def dn_get_data(self):
+        response = requests.get(self.url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return None
+
+    def dn_post_data(self, data):
+        response = requests.post(self.url, json=data)
+        return response.status_code
+
+def dn_mock_api_call(url):
+    mock_response = dn_generate_mock_response()
     
-    def verify_age(self) -> bool:
-        """ Verify if the user is 18 or older """
-        if self.dn_user.dn_age < 18:
-            raise ValueError("User is not old enough")
-        return True
+    class MockResponse:
+        def json(self):
+            return json.loads(mock_response)
+    
+    def mock_get(*args, **kwargs):
+        return MockResponse()
+    
+    def mock_post(*args, **kwargs):
+        class MockResponse:
+            def status_code(self):
+                return 201
+        
+        return MockResponse()
+    
+    if url == "https://example.com/get":
+        requests.get = mock_get
+    elif url == "https://example.com/post":
+        requests.post = mock_post
 
-    def verify_email(self) -> bool:
-        """ Verify if the email is valid """
-        if "@" not in self.dn_user.dn_email:
-            raise ValueError("Invalid email format")
-        return True
-
-def dn_mock_email_verification(dn_email: str) -> bool:
-    """ Mock function for email verification """
-    return dn_email == "test@email.com"
-
-def dn_mock_age_verification(dn_age: int) -> bool:
-    """ Mock function for age verification """
-    return dn_age >= 18
-
-def test_dn_business_logic():
-    """ Test function for DNBusinessLogic """
-    # Create a mock user
-    dn_user = DNUser("test", 20, "test@email.com")
-
-    # Create business logic object
-    dn_bl = DNBusinessLogic(dn_user)
-
-    # Mock the verification functions
-    dn_bl.verify_age = mock.MagicMock(side_effect=dn_mock_age_verification)
-    dn_bl.verify_email = mock.MagicMock(side_effect=dn_mock_email_verification)
-
-    # Test the age verification
-    assert dn_bl.verify_age() == True
-
-    # Test the email verification
-    assert dn_bl.verify_email() == True
-
-    # Test with invalid age
-    dn_user.dn_age = 17
-    try:
-        dn_bl.verify_age()
-    except ValueError as ve:
-        assert str(ve) == "User is not old enough"
-
-    # Test with invalid email
-    dn_user.dn_email = "invalid_email"
-    try:
-        dn_bl.verify_email()
-    except ValueError as ve:
-        assert str(ve) == "Invalid email format"
-
+# Main code
 if __name__ == "__main__":
-    test_dn_business_logic()
+    mock_url = "https://example.com/get"
+    dn_mock = DNMocking(url=mock_url)
+    dn_mock_api_call(url=mock_url)
+
+    data = dn_mock.dn_get_data()
+    print(data)
+
+    new_data = {"id": 2, "name": "Jane Smith", "email": "jane.smith@example.com"}
+    response_code = dn_mock.dn_post_data(data=new_data)
+    print(response_code)

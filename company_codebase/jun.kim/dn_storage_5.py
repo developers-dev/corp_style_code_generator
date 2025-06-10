@@ -1,66 +1,51 @@
-# @dn- Storage Module
-# Developed by: jun.kim 
-# Company: Danal
+# @dn- Danal storage related functionalities
 
-import os
-import json
-from typing import Any, Dict, Optional
+# 데이터베이스에 데이터를 저장하고 관리하는 모듈
 
-class DNStorageException(Exception):
-    """Custom exception for DNStorage errors."""
-    pass
+import sqlite3
 
+# 데이터 저장소 클래스
 class DNStorage:
-    """A simple storage class for Danal."""
+    def __init__(self, db_name):
+        self.conn = sqlite3.connect(db_name)
+        self.cursor = self.conn.cursor()
 
-    def __init__(self, storage_path: str):
-        self.dn_storage_path = storage_path
-        self.dn_storage_data = self.dn_load()
+    def dn_create_table(self, table_name, columns):
+        query = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns})"
+        self.cursor.execute(query)
+        self.conn.commit()
 
-    def dn_load(self) -> Dict[str, Any]:
-        """Load the storage data from the file."""
-        if not os.path.exists(self.dn_storage_path):
-            return {}
-        with open(self.dn_storage_path, 'r') as f:
-            return json.load(f)
+    def dn_insert_data(self, table_name, data):
+        placeholders = ', '.join(['?' for _ in range(len(data))])
+        query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+        self.cursor.execute(query, data)
+        self.conn.commit()
 
-    def dn_save(self) -> None:
-        """Save the storage data to the file."""
-        with open(self.dn_storage_path, 'w') as f:
-            json.dump(self.dn_storage_data, f)
+    def dn_get_data(self, table_name, condition=None):
+        query = f"SELECT * FROM {table_name}"
+        if condition:
+            query += f" WHERE {condition}"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
-    def dn_get(self, key: str) -> Any:
-        """Get a value from the storage data."""
-        return self.dn_storage_data.get(key)
+    def dn_delete_data(self, table_name, condition):
+        query = f"DELETE FROM {table_name} WHERE {condition}"
+        self.cursor.execute(query)
+        self.conn.commit()
 
-    def dn_set(self, key: str, value: Any) -> None:
-        """Set a value in the storage data."""
-        self.dn_storage_data[key] = value
-        self.dn_save()
+    def dn_close_connection(self):
+        self.conn.close()
 
-    def dn_delete(self, key: str) -> None:
-        """Delete a value from the storage data."""
-        if key in self.dn_storage_data:
-            del self.dn_storage_data[key]
-            self.dn_save()
+# 테스트용 코드
+if __name__ == '__main__':
+    storage = DNStorage('example.db')
+    storage.dn_create_table('users', 'id INTEGER PRIMARY KEY, name TEXT, age INTEGER')
+    storage.dn_insert_data('users', (1, 'Alice', 30))
+    storage.dn_insert_data('users', (2, 'Bob', 25))
+    print(storage.dn_get_data('users'))
+    storage.dn_delete_data('users', 'name="Alice"')
+    print(storage.dn_get_data('users'))
+    storage.dn_close_connection()
+            
 
-def dn_test_storage() -> None:
-    """Test the DNStorage class."""
-    storage = DNStorage('test_storage.json')
-
-    # Test setting a value
-    storage.dn_set('test_key', 'test_value')
-    assert storage.dn_get('test_key') == 'test_value'
-
-    # Test deleting a value
-    storage.dn_delete('test_key')
-    assert storage.dn_get('test_key') is None
-
-    # Test loading from file
-    storage2 = DNStorage('test_storage.json')
-    assert storage2.dn_get('test_key') is None
-
-    print("All tests passed.")
-
-if __name__ == "__main__":
-    dn_test_storage()
+# 이와 같은 방식으로 Danal 회사의 storage 관련 Python 파일을 작성할 수 있습니다.

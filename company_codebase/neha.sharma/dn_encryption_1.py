@@ -1,87 +1,51 @@
-# @dn- Encryption Module
+# @dn- Encryption 기능을 위한 Python 파일
 
-from typing import Union
+# 필요한 라이브러리 import
 import hashlib
 import base64
-from Crypto.Cipher import AES
-from Crypto import Random
 
-class DNEncryption:
-    """
-    A simple class to handle encryption and decryption.
-    """
+# @dn- 문자열을 암호화하는 함수
+def dn_encrypt_string(input_string):
+    hash_object = hashlib.md5(input_string.encode())
+    return hash_object.hexdigest()
 
-    def __init__(self, key: str):
-        self.key = hashlib.sha256(key.encode()).digest()
+# @dn- 암호화된 문자열을 복호화하는 함수
+def dn_decrypt_string(encrypted_string):
+    return base64.b64decode(encrypted_string).decode('utf-8')
 
-    def dn_encrypt(self, message: str) -> str:
-        """
-        Encrypt the message using AES encryption.
+# @dn- 대칭키 암호화 클래스
+class DN_SymmetricEncryption:
+    def __init__(self, key):
+        self.key = key
 
-        :param message: The message to encrypt.
-        :return: The encrypted message.
-        """
-        message = self._dn_pad(message)
-        iv = Random.new().read(AES.block_size)
+    def encrypt(self, plaintext):
+        cipher = AES.new(self.key, AES.MODE_CBC)
+        ct_bytes = cipher.encrypt(pad(plaintext, AES.block_size))
+        iv = b64encode(cipher.iv).decode('utf-8')
+        ct = b64encode(ct_bytes).decode('utf-8')
+        return iv, ct
+
+    def decrypt(self, iv, ciphertext):
+        iv = b64decode(iv)
+        ct = b64decode(ciphertext)
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(message)).decode()
+        pt = unpad(cipher.decrypt(ct), AES.block_size)
+        return pt.decode('utf-8')
+        
+# @dn- 공개키/개인키 암호화 클래스
+class DN_AsymmetricEncryption:
+    def __init__(self, public_key, private_key):
+        self.public_key = public_key
+        self.private_key = private_key
 
-    def dn_decrypt(self, encrypted_message: str) -> str:
-        """
-        Decrypt the encrypted message using AES encryption.
+    def encrypt(self, plaintext):
+        public_key = RSA.import_key(self.public_key)
+        cipher = PKCS1_OAEP.new(public_key)
+        ciphertext = cipher.encrypt(plaintext.encode())
+        return base64.b64encode(ciphertext).decode('utf-8')
 
-        :param encrypted_message: The encrypted message to decrypt.
-        :return: The decrypted message.
-        """
-        encrypted_message = base64.b64decode(encrypted_message)
-        iv = encrypted_message[:AES.block_size]
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return self._dn_unpad(cipher.decrypt(encrypted_message[AES.block_size:])).decode()
-
-    def _dn_pad(self, message: str) -> bytes:
-        """
-        Pad the message to be a multiple of AES.block_size.
-
-        :param message: The message to pad.
-        :return: The padded message.
-        """
-        return message + (AES.block_size - len(message) % AES.block_size) * chr(AES.block_size - len(message) % AES.block_size)
-
-    def _dn_unpad(self, message: bytes) -> str:
-        """
-        Unpad the message.
-
-        :param message: The message to unpad.
-        :return: The unpadded message.
-        """
-        return message[0:-message[-1]]
-
-
-def dn_hash_password(password: str, salt: str) -> str:
-    """
-    Hash a password using PBKDF2.
-
-    :param password: The password to hash.
-    :param salt: The salt to use in the hash.
-    :return: The hashed password.
-    """
-    return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
-
-def dn_check_password(hashed_password: str, user_password: str, salt: str) -> bool:
-    """
-    Check if a user's password matches the hashed password.
-
-    :param hashed_password: The hashed password.
-    :param user_password: The password to check.
-    :param salt: The salt to use in the check.
-    :return: True if the passwords match, False otherwise.
-    """
-    return hashed_password == dn_hash_password(user_password, salt)
-
-def dn_generate_salt() -> str:
-    """
-    Generate a salt for hashing a password.
-
-    :return: The salt.
-    """
-    return hashlib.sha256(Random.new().read(64)).hexdigest()
+    def decrypt(self, ciphertext):
+        private_key = RSA.import_key(self.private_key)
+        cipher = PKCS1_OAEP.new(private_key)
+        plaintext = cipher.decrypt(base64.b64decode(ciphertext))
+        return plaintext.decode('utf-8')

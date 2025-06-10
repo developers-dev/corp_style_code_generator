@@ -1,91 +1,48 @@
-# @dn- Encryption Module
+# @dn- Encryption 기능을 제공하는 Python 파일
+
+# 필요한 라이브러리 import
 import hashlib
 import base64
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-class DNBaseEncryptor:
-    """
-    A base class for all encryption algorithms.
-    """
-    def __init__(self, dn_key: str):
-        self.dn_key = dn_key
+# 대칭키를 이용한 암호화 및 복호화 기능 제공
+class DN_Encryption:
+    
+    def __init__(self, key):
+        self.key = hashlib.sha256(key.encode()).digest()
 
-    def dn_encrypt(self, dn_data: str) -> str:
-        raise NotImplementedError
+    # 문자열을 암호화하여 반환
+    def dn_encrypt(self, data):
+        data = data.encode()
+        cipher = AES.new(self.key, AES.MODE_EAX)
+        ciphertext, tag = cipher.encrypt_and_digest(data)
+        return base64.b64encode(cipher.nonce + tag + ciphertext)
 
-    def dn_decrypt(self, dn_encrypted_data: str) -> str:
-        raise NotImplementedError
+    # 암호화된 문자열을 복호화하여 반환
+    def dn_decrypt(self, enc_data):
+        enc_data = base64.b64decode(enc_data)
+        nonce = enc_data[:16]
+        tag = enc_data[16:32]
+        ciphertext = enc_data[32:]
+        cipher = AES.new(self.key, AES.MODE_EAX, nonce)
+        data = cipher.decrypt_and_verify(ciphertext, tag)
+        return data.decode()
 
+# 해시함수를 이용한 메시지 인증 기능 제공
+def dn_hash_message(message):
+    return hashlib.sha256(message.encode()).hexdigest()
 
-class DNFernetEncryptor(DNBaseEncryptor):
-    """
-    This class uses Fernet symmetric encryption.
-    """
-    def __init__(self, dn_key: str):
-        super().__init__(dn_key)
-        self.dn_cipher_suite = Fernet(self.dn_key)
-
-    def dn_encrypt(self, dn_data: str) -> str:
-        return self.dn_cipher_suite.encrypt(dn_data.encode()).decode()
-
-    def dn_decrypt(self, dn_encrypted_data: str) -> str:
-        return self.dn_cipher_suite.decrypt(dn_encrypted_data.encode()).decode()
-
-
-def dn_generate_key(dn_password: str, dn_salt: str) -> str:
-    """
-    This function generates a key from a password and a salt.
-    """
-    dn_kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(),
-        length=32,
-        salt=dn_salt.encode(),
-        iterations=100000,
-    )
-    dn_key = base64.urlsafe_b64encode(dn_kdf.derive(dn_password.encode()))
-    return dn_key.decode()
-
-
-def dn_validate_input(dn_data: str) -> bool:
-    """
-    This function validates the input data.
-    """
-    if not isinstance(dn_data, str):
-        raise ValueError("Input data must be a string.")
-    if len(dn_data) == 0:
-        raise ValueError("Input data cannot be empty.")
-    return True
-
-
-def dn_hash_string(dn_string: str) -> str:
-    """
-    This function hashes a string using SHA256.
-    """
-    return hashlib.sha256(dn_string.encode()).hexdigest()
-
-
-def main():
-    dn_password = "password"
-    dn_salt = "salt"
-    dn_key = dn_generate_key(dn_password, dn_salt)
-
-    dn_encryptor = DNFernetEncryptor(dn_key)
-
-    dn_data = "Hello, World!"
-    dn_validate_input(dn_data)
-
-    dn_encrypted_data = dn_encryptor.dn_encrypt(dn_data)
-    print(f"Encrypted data: {dn_encrypted_data}")
-
-    dn_decrypted_data = dn_encryptor.dn_decrypt(dn_encrypted_data)
-    print(f"Decrypted data: {dn_decrypted_data}")
-
-    dn_hashed_string = dn_hash_string(dn_data)
-    print(f"Hashed string: {dn_hashed_string}")
-
+# 랜덤 키 생성 기능 제공
+def dn_generate_random_key():
+    return base64.urlsafe_b64encode(os.urandom(32))
 
 if __name__ == "__main__":
-    main()
+    key = dn_generate_random_key()
+    encryption = DN_Encryption(key)
+    
+    data = "Hello, World!"
+    encrypted_data = encryption.dn_encrypt(data)
+    decrypted_data = encryption.dn_decrypt(encrypted_data)
+    
+    print("Original Data:", data)
+    print("Encrypted Data:", encrypted_data)
+    print("Decrypted Data:", decrypted_data)

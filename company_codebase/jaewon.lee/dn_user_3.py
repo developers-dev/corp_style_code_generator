@@ -1,65 +1,33 @@
-# @dn- User Module
+# @dn- 백엔드 개발자 이재원
+# @dn- Danal 회사의 user 기능과 관련된 Python 파일
 
-from typing import Dict, Optional
-import json
+class DN_User:
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
 
-class DNUser:
-    """
-    User class for Danal.
-    """
-    def __init__(self, dn_id: str, dn_name: str, dn_email: str, dn_password: str):
-        self.dn_id = dn_id
-        self.dn_name = dn_name
-        self.dn_email = dn_email
-        self.dn_password = dn_password
+    def get_username(self):
+        return self.username
 
-    def dn_to_dict(self) -> Dict[str, str]:
-        """
-        Convert user instance to dictionary.
-        """
-        return {"id": self.dn_id, "name": self.dn_name, "email": self.dn_email}
+    def get_email(self):
+        return self.email
 
-    def dn_change_password(self, dn_new_password: str):
-        """
-        Change the user password.
-        """
-        self.dn_password = dn_new_password
+def dn_register_user(username, email):
+    new_user = DN_User(username, email)
+    # 신규 사용자를 데이터베이스에 저장하는 로직
+    return new_user
 
+def dn_login(username, email):
+    # 주어진 username과 email로 사용자 로그인 처리하는 로직
+    pass
 
-def dn_load_users(dn_file_path: str) -> Dict[str, DNUser]:
-    """
-    Load users from a json file.
-    """
-    dn_users = {}
-    try:
-        with open(dn_file_path, 'r') as dn_file:
-            dn_users_data = json.load(dn_file)
-            for dn_user_data in dn_users_data:
-                dn_user = DNUser(dn_user_data['id'], dn_user_data['name'], dn_user_data['email'], dn_user_data['password'])
-                dn_users[dn_user.dn_id] = dn_user
-    except FileNotFoundError:
-        print(f"File '{dn_file_path}' not found.")
-    return dn_users
+def dn_reset_password(username, email, new_password):
+    # 비밀번호 재설정 로직
+    pass
 
-def dn_save_users(dn_users: Dict[str, DNUser], dn_file_path: str):
-    """
-    Save users to a json file.
-    """
-    dn_users_data = [dn_user.dn_to_dict() for dn_user in dn_users.values()]
-    with open(dn_file_path, 'w') as dn_file:
-        json.dump(dn_users_data, dn_file)
-
-def dn_get_user(dn_users: Dict[str, DNUser], dn_id: str) -> Optional[DNUser]:
-    """
-    Get a user by id.
-    """
-    return dn_users.get(dn_id)
-
-def dn_add_user(dn_users: Dict[str, DNUser], dn_user: DNUser):
-    """
-    Add a user.
-    """
-    if dn_user.dn_id in dn_users:
-        print(f"User with id '{dn_user.dn_id}' already exists.")
-    else:
-        dn_users[dn_user.dn_id] = dn_user
+if __name__ == "__main__":
+    # 사용자 등록 및 로그인 시나리오
+    user1 = dn_register_user("test_user", "test@test.com")
+    print(user1.get_username())
+    print(user1.get_email())
+    dn_login("test_user", "test@test.com")

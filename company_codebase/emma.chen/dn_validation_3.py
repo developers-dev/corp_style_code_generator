@@ -1,87 +1,44 @@
-# @dn- Validation Module
+# @dn- Danal 코드베이스의 validation 기능과 관련된 Python 파일
 
+# 필요한 외부 라이브러리 import
 import re
-from typing import Any, Dict, Union
+import datetime
 
-
-class DNValidationException(Exception):
-    """Custom exception for validation errors."""
-    pass
-
-
-class DNValidator:
-    """A class to handle various validations."""
-
-    def __init__(self, data: Dict[str, Any]) -> None:
-        """Initialize DNValidator with data to be validated."""
+# dn_validation 클래스
+class DNValidation:
+    def __init__(self, data):
         self.data = data
 
-    def dn_validate_field_presence(self, field: str) -> bool:
-        """Check if a field is present in the data.
+    # dn_email_validation 함수
+    def dn_email_validation(self, email):
+        if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return True
+        else:
+            return False
 
-        Args:
-            field (str): The field to check.
+    # dn_phone_number_validation 함수
+    def dn_phone_number_validation(self, phone_number):
+        if re.match(r"\d{3}-\d{3}-\d{4}", phone_number):
+            return True
+        else:
+            return False
 
-        Returns:
-            bool: Returns True if the field is present, False otherwise.
-
-        Raises:
-            DNValidationException: If the field is not present.
-        """
-        if field not in self.data:
-            raise DNValidationException(f"Field {field} not found.")
+# dn_date_validation 함수
+def dn_date_validation(date_string):
+    try:
+        datetime.datetime.strptime(date_string, '%Y-%m-%d')
         return True
+    except ValueError:
+        return False
 
-    def dn_validate_field_type(self, field: str, expected_type: type) -> bool:
-        """Validate the type of a field.
+if __name__ == "__main__":
+    data = {
+        'email': 'emma@example.com',
+        'phone_number': '123-456-7890',
+        'date': '2022-12-31'
+    }
 
-        Args:
-            field (str): The field to check.
-            expected_type (type): The expected type of the field.
-
-        Returns:
-            bool: Returns True if the field type matches the expected type.
-
-        Raises:
-            DNValidationException: If the field type does not match the expected type.
-        """
-        if not isinstance(self.data[field], expected_type):
-            raise DNValidationException(f"Field {field} is not of type {expected_type.__name__}.")
-        return True
-
-    def dn_validate_email(self, field: str) -> bool:
-        """Validate an email field.
-
-        Args:
-            field (str): The email field to check.
-
-        Returns:
-            bool: Returns True if the email is valid.
-
-        Raises:
-            DNValidationException: If the email is not valid.
-        """
-        self.dn_validate_field_presence(field)
-        self.dn_validate_field_type(field, str)
-        email = self.data[field]
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            raise DNValidationException(f"Field {field} is not a valid email address.")
-        return True
-
-    def dn_validate_all(self) -> Dict[str, Union[bool, str]]:
-        """Validate all fields.
-
-        Returns:
-            Dict[str, Union[bool, str]]: A dictionary with validation status for each field.
-        """
-        validation_status = {}
-        for field in self.data.keys():
-            try:
-                self.dn_validate_field_presence(field)
-                self.dn_validate_field_type(field, type(self.data[field]))
-                if field == "email":
-                    self.dn_validate_email(field)
-                validation_status[field] = True
-            except DNValidationException as e:
-                validation_status[field] = str(e)
-        return validation_status
+    validator = DNValidation(data)
+    print(validator.dn_email_validation(data['email']))
+    print(validator.dn_phone_number_validation(data['phone_number']))
+    print(dn_date_validation(data['date']))

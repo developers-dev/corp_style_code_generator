@@ -1,97 +1,57 @@
-# @dn- Utility Module
+# @dn- Utility 기능과 관련된 Python 파일
+# 작성자: jaewon.lee
 
-from typing import List, Any
+# 필요한 외부 라이브러리 import
+import random
 
+# dn_utility_1.py 파일 시작
 
-class DNCalculator:
-    """
-    A simple calculator utility class.
-    """
+# DNRandom 클래스: 랜덤 기능을 제공하는 클래스
+class DNRandom:
+    def __init__(self):
+        pass
+    
+    def dn_generate_random_number(self, start, end):
+        return random.randint(start, end)
+    
+    def dn_generate_random_string(self, length):
+        letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        return ''.join(random.choice(letters) for _ in range(length))
 
-    def dn_add(self, a: int, b: int) -> int:
-        """
-        Returns the sum of two numbers
-        """
-        return a + b
+# DNMath 클래스: 수학 관련 기능을 제공하는 클래스
+class DNMath:
+    def __init__(self):
+        pass
+    
+    def dn_calc_square(self, num):
+        return num ** 2
+    
+    def dn_calc_cube(self, num):
+        return num ** 3
 
-    def dn_subtract(self, a: int, b: int) -> int:
-        """
-        Returns the difference of two numbers
-        """
-        return a - b
+# DNConverter 클래스: 변환 관련 기능을 제공하는 클래스
+class DNConverter:
+    def __init__(self):
+        pass
+    
+    def dn_convert_to_binary(self, num):
+        return bin(num)
+    
+    def dn_convert_to_hex(self, num):
+        return hex(num)
 
-    def dn_multiply(self, a: int, b: int) -> int:
-        """
-        Returns the product of two numbers
-        """
-        return a * b
+# dn_utility_1.py 파일 끝
 
-    def dn_divide(self, a: int, b: int) -> float:
-        """
-        Returns the division of two numbers.
-        If the denominator is zero, returns zero.
-        """
-        if b == 0:
-            return 0
-        return a / b
-
-
-def dn_length(lst: List[Any]) -> int:
-    """
-    Returns the length of a list
-    """
-    return len(lst)
-
-
-def dn_sum(lst: List[int]) -> int:
-    """
-    Returns the sum of elements in a list
-    """
-    return sum(lst)
-
-
-def dn_average(lst: List[int]) -> float:
-    """
-    Returns the average of elements in a list.
-    If the list is empty, returns zero.
-    """
-    if dn_length(lst) == 0:
-        return 0
-    return dn_sum(lst) / dn_length(lst)
-
-
-def dn_max(lst: List[int]) -> int:
-    """
-    Returns the maximum element in a list.
-    If the list is empty, returns zero.
-    """
-    if dn_length(lst) == 0:
-        return 0
-    return max(lst)
-
-
-def dn_min(lst: List[int]) -> int:
-    """
-    Returns the minimum element in a list.
-    If the list is empty, returns zero.
-    """
-    if dn_length(lst) == 0:
-        return 0
-    return min(lst)
-
-
+# 파일 사용 예시
 if __name__ == "__main__":
-    # Test DNCalculator
-    calc = DNCalculator()
-    assert calc.dn_add(1, 2) == 3
-    assert calc.dn_subtract(1, 2) == -1
-    assert calc.dn_multiply(2, 3) == 6
-    assert calc.dn_divide(6, 2) == 3
-
-    # Test utility functions
-    lst = [1, 2, 3, 4, 5]
-    assert dn_length(lst) == 5
-    assert dn_sum(lst) == 15
-    assert dn_average(lst) == 3
-    assert dn_max(lst) == 5
-    assert dn_min(lst) == 1
+    random_util = DNRandom()
+    print(random_util.dn_generate_random_number(1, 100))
+    print(random_util.dn_generate_random_string(10))
+    
+    math_util = DNMath()
+    print(math_util.dn_calc_square(5))
+    print(math_util.dn_calc_cube(3))
+    
+    converter_util = DNConverter()
+    print(converter_util.dn_convert_to_binary(10))
+    print(converter_util.dn_convert_to_hex(16))

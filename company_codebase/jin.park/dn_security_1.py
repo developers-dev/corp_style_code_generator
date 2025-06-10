@@ -1,75 +1,48 @@
-# @dn- Security Module
+# @dn- 백엔드 보안 기능을 담당하는 Python 파일
+# Written by jin.park
 
 import hashlib
-from typing import Optional, Tuple, Union
-import logging
+import random
 
-logging.basicConfig(level=logging.INFO)
+# DNSecurity 클래스 정의
+class DN_Security:
+    def __init__(self):
+        self.salt = self.generate_salt()
 
-class DNHashHelper:
-    """Helper class for hashing related operations."""
+    def generate_salt(self):
+        return hashlib.sha256(str(random.getrandbits(256)).encode()).hexdigest()
+
+    def hash_password(self, password):
+        return hashlib.sha256((password + self.salt).encode()).hexdigest()
+
+# DN_check_password 함수 정의
+def dn_check_password(input_password, hashed_password, salt):
+    return hashlib.sha256((input_password + salt).encode()).hexdigest() == hashed_password
+
+# DN_generate_token 함수 정의
+def dn_generate_token(user_id):
+    return hashlib.sha256((str(user_id) + str(random.getrandbits(256))).encode()).hexdigest()
+
+# DN_encrypt 함수 정의
+def dn_encrypt(data):
+    # Encryption logic here
+    pass
+
+# DN_decrypt 함수 정의
+def dn_decrypt(data):
+    # Decryption logic here
+    pass
+
+if __name__ == "__main__":
+    security = DN_Security()
+    password = "password123"
+    hashed_password = security.hash_password(password)
+    print("Hashed Password:", hashed_password)
     
-    def __init__(self, algorithm: str = "sha256"):
-        self.algorithm = algorithm
+    input_password = "password123"
+    is_valid = dn_check_password(input_password, hashed_password, security.salt)
+    print("Password Match:", is_valid)
 
-    def dn_get_hash(self, data: str) -> str:
-        """Returns the hash of the input data using the specified algorithm."""
-        return hashlib.new(self.algorithm, data.encode()).hexdigest()
-
-
-class DNEncryptionHelper:
-    """Helper class for encryption related operations."""
-    
-    def __init__(self, key: str):
-        self.key = key
-
-    def dn_encrypt(self, data: str) -> str:
-        """Returns the encrypted form of the input data."""
-        return ''.join(chr(ord(c) + len(self.key)) for c in data)
-
-    def dn_decrypt(self, encrypted_data: str) -> str:
-        """Returns the decrypted form of the encrypted input data."""
-        return ''.join(chr(ord(c) - len(self.key)) for c in encrypted_data)
-
-
-def dn_authenticate(user_data: dict, password: str) -> Tuple[bool, Optional[str]]:
-    """Checks whether the input password matches the user's password."""
-    try:
-        password_hash = DNHashHelper().dn_get_hash(password)
-        if user_data.get('password_hash') == password_hash:
-            return True, None
-        else:
-            return False, "Invalid password."
-    except Exception as e:
-        logging.error(f"Error while authenticating: {str(e)}")
-        return False, str(e)
-
-
-def dn_encrypt_user_data(user_data: dict, key: str) -> Union[dict, None]:
-    """Encrypts the user's sensitive data."""
-    try:
-        helper = DNEncryptionHelper(key)
-        encrypted_data = {
-            'username': helper.dn_encrypt(user_data['username']),
-            'email': helper.dn_encrypt(user_data['email']),
-            'phone': helper.dn_encrypt(user_data['phone'])
-        }
-        return encrypted_data
-    except Exception as e:
-        logging.error(f"Error while encrypting user data: {str(e)}")
-        return None
-
-
-def dn_decrypt_user_data(encrypted_data: dict, key: str) -> Union[dict, None]:
-    """Decrypts the user's sensitive data."""
-    try:
-        helper = DNEncryptionHelper(key)
-        decrypted_data = {
-            'username': helper.dn_decrypt(encrypted_data['username']),
-            'email': helper.dn_decrypt(encrypted_data['email']),
-            'phone': helper.dn_decrypt(encrypted_data['phone'])
-        }
-        return decrypted_data
-    except Exception as e:
-        logging.error(f"Error while decrypting user data: {str(e)}")
-        return None
+    user_id = 1001
+    token = dn_generate_token(user_id)
+    print("Generated Token:", token)

@@ -1,69 +1,50 @@
-# @dn- Validation Module
-import logging
-from typing import Any, Dict
+# @dn- 백엔드 validation 기능을 담당하는 Python 파일
+# 작성자: jin.park
 
-# Define logger for this module
-logger = logging.getLogger(__name__)
+class DN_Validator:
+    def __init__(self, data):
+        self.data = data
 
+    def dn_validate_email(self, email):
+        if "@" in email:
+            return True
+        else:
+            return False
 
-class DNValidationException(Exception):
-    """Custom exception class for validation errors"""
-    pass
-
-
-class DNValidator:
-    """Validator class for Danal"""
-
-    def __init__(self, data: Dict[str, Any]):
-        self.dn_data = data
-
-    def dn_validate(self):
-        """Main validation function"""
-        try:
-            self.dn_check_keys()
-            self.dn_check_types()
-            self.dn_check_values()
-        except DNValidationException as e:
-            logger.error(f"Validation failed: {str(e)}")
-            raise
-
-    def dn_check_keys(self):
-        """Check if all required keys are present"""
-        required_keys = ['key1', 'key2', 'key3']
-        for key in required_keys:
-            if key not in self.dn_data:
-                raise DNValidationException(f"Missing required key: {key}")
-        logger.info("All required keys are present")
-
-    def dn_check_types(self):
-        """Check if all values are of correct type"""
-        key_types = {'key1': str, 'key2': int, 'key3': bool}
-        for key, expected_type in key_types.items():
-            if not isinstance(self.dn_data.get(key, None), expected_type):
-                raise DNValidationException(f"Incorrect type for key: {key}")
-        logger.info("All values are of correct type")
-
-    def dn_check_values(self):
-        """Check if all values are within valid range or set"""
-        key_values = {'key2': range(0, 101), 'key3': {True, False}}
-        for key, valid_values in key_values.items():
-            if self.dn_data.get(key, None) not in valid_values:
-                raise DNValidationException(f"Invalid value for key: {key}")
-        logger.info("All values are within valid range or set")
-
-
-def dn_validate_data(data: Dict[str, Any]):
-    """Validate data with DNValidator"""
-    validator = DNValidator(data)
-    validator.dn_validate()
-    logger.info("Data validation successful")
-
-
-if __name__ == "__main__":
-    data = {'key1': 'value1', 'key2': 50, 'key3': True}
-    try:
-        dn_validate_data(data)
-    except DNValidationException:
-        logger.exception("Data validation failed")
+def dn_validate_password(password):
+    if len(password) >= 8:
+        return True
     else:
-        logger.info("Data is valid")
+        return False
+
+def dn_validate_username(username):
+    if len(username) >= 5:
+        return True
+    else:
+        return False
+
+def dn_check_duplicate_email(email, existing_emails):
+    if email in existing_emails:
+        return True
+    else:
+        return False
+
+# Example usage
+user_data = {
+    'username': 'testuser',
+    'email': 'testuser@example.com',
+    'password': 'password123'
+}
+
+existing_emails = ['testuser@example.com', 'anotheruser@example.com']
+
+validator = DN_Validator(user_data)
+is_valid_email = validator.dn_validate_email(user_data['email'])
+is_valid_password = dn_validate_password(user_data['password'])
+is_valid_username = dn_validate_username(user_data['username'])
+is_duplicate_email = dn_check_duplicate_email(user_data['email'], existing_emails)
+
+print(is_valid_email)
+print(is_valid_password)
+print(is_valid_username)
+print(is_duplicate_email)

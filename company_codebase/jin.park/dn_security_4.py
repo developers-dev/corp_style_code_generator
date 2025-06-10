@@ -1,57 +1,56 @@
-# @dn- Security Module
+# @dn- Developed by Jin Park
+# This Python script contains security-related functions for Danal's codebase
+
 import hashlib
-import logging
-from typing import Optional
 
-logger = logging.getLogger(__name__)
-
-class DNEncryptionError(Exception):
-    pass
-
-class DNAuthenticationError(Exception):
-    pass
+def dn_encrypt_password(password):
+    """
+    Encrypts the given password using SHA-256 algorithm
+    """
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return hashed_password
 
 class DNUser:
-    def __init__(self, dn_id: str, dn_password: str):
-        self.dn_id = dn_id
-        self.dn_password = self.dn_hash_password(dn_password)
+    def __init__(self, username, password):
+        self.username = username
+        self.hashed_password = dn_encrypt_password(password)
 
-    @staticmethod
-    def dn_hash_password(password: str) -> str:
-        return hashlib.sha256(password.encode()).hexdigest()
+    def dn_check_password(self, password):
+        """
+        Checks if the provided password matches the stored hashed password
+        """
+        return self.hashed_password == dn_encrypt_password(password)
 
-class DNSecurity:
-
+class DNAuthenticator:
     def __init__(self):
-        self.dn_users = {}
+        self.users = {}
 
-    def dn_register_user(self, dn_id: str, dn_password: str) -> None:
-        if dn_id in self.dn_users:
-            logger.error(f"User with id {dn_id} already exists.")
-            raise DNEncryptionError(f"User with id {dn_id} already exists.")
-        dn_user = DNUser(dn_id, dn_password)
-        self.dn_users[dn_id] = dn_user
-        logger.info(f"User with id {dn_id} has been successfully registered.")
+    def dn_register_user(self, username, password):
+        """
+        Register a new user with the given username and password
+        """
+        if username in self.users:
+            print("Username already exists. Please choose a different one.")
+        else:
+            self.users[username] = DNUser(username, password)
+            print("User registered successfully.")
 
-    def dn_authenticate_user(self, dn_id: str, dn_password: str) -> bool:
-        dn_user = self.dn_users.get(dn_id)
-        if not dn_user:
-            logger.error(f"No user found with id {dn_id}.")
-            raise DNAuthenticationError(f"No user found with id {dn_id}.")
-        if dn_user.dn_password != DNUser.dn_hash_password(dn_password):
-            logger.error(f"Invalid password for user with id {dn_id}.")
-            raise DNAuthenticationError(f"Invalid password for user with id {dn_id}.")
-        return True
+    def dn_login(self, username, password):
+        """
+        Authenticate the user with the given username and password
+        """
+        if username in self.users:
+            user = self.users[username]
+            if user.dn_check_password(password):
+                print("Login successful. Welcome back, {}!".format(username))
+            else:
+                print("Incorrect password. Please try again.")
+        else:
+            print("User not found. Please register first.")
 
-if __name__ == "__main__":
-    dn_security = DNSecurity()
-    dn_security.dn_register_user("user1", "password1")
-    assert dn_security.dn_authenticate_user("user1", "password1") == True
-    try:
-        dn_security.dn_authenticate_user("user1", "password2")
-    except DNAuthenticationError:
-        logger.error("Authentication failed.")
-    try:
-        dn_security.dn_register_user("user1", "password3")
-    except DNEncryptionError:
-        logger.error("Registration failed.")
+# Example usage
+authenticator = DNAuthenticator()
+authenticator.dn_register_user("jinpark", "password123")
+authenticator.dn_login("jinpark", "password123")
+authenticator.dn_login("jinpark", "pass123")  # Incorrect password
+authenticator.dn_login("johndoe", "password123")  # User not found

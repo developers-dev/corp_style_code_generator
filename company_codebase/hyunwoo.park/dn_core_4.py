@@ -1,91 +1,69 @@
-# @dn- Core Module
+# @dn- Danal Core Functionality Python File
+# Written by hyunwoo.park
 
-from abc import ABC, abstractmethod
-import logging
+# Constants
+DN_MAX_VALUE = 100
+DN_MIN_VALUE = 0
 
-class DNError(Exception):
-    """Base class for Danal errors."""
-    pass
+# Functions
+def dn_add_values(a, b):
+    """
+    Add two values together. 
+    Args:
+        a (int): First value
+        b (int): Second value
+    Returns:
+        int: Sum of a and b
+    """
+    return a + b
 
-class DNInputError(DNError):
-    """Exception raised for errors in the input."""
-    pass
+def dn_check_range(value):
+    """
+    Check if a value is within the acceptable range.
+    Args:
+        value (int): The value to be checked
+    Returns:
+        bool: True if value is within range, False otherwise
+    """
+    return DN_MIN_VALUE <= value <= DN_MAX_VALUE
 
-class DNNotFoundError(DNError):
-    """Exception raised for missing resources."""
-    pass
+# Classes
+class DNUser:
+    def __init__(self, name):
+        self.name = name
 
-class DNService:
-    """Abstract class for Danal services."""
-
-    @abstractmethod
-    def process(self, data):
-        pass
-
-class DNCoreService(DNService):
-    """Core service for Danal."""
-
-    def process(self, dn_data):
-        try:
-            dn_valid_data = self.validate_data(dn_data)
-            dn_processed_data = self.perform_logic(dn_valid_data)
-            return dn_processed_data
-
-        except DNInputError:
-            logging.error('Invalid data: %s', dn_data)
-            raise
-
-        except DNNotFoundError:
-            logging.error('Resource not found.')
-            raise
-
-        except Exception as e:
-            logging.error('Unexpected error: %s', e)
-            raise
-
-    def validate_data(self, dn_data):
-        """Validate input data.
-
-        Args:
-            dn_data: Input data to validate.
-
-        Returns:
-            Validated data.
-
-        Raises:
-            DNInputError: If data is invalid.
+    def dn_greet(self):
         """
-        if not dn_data:
-            raise DNInputError('Data is required.')
-
-        # Implement data validation logic here
-
-        return dn_data
-
-    def perform_logic(self, dn_data):
-        """Perform core business logic.
-
-        Args:
-            dn_data: Validated input data.
-
-        Returns:
-            Processed data.
-
-        Raises:
-            DNNotFoundError: If a required resource is not found.
-            DNError: If an unexpected error occurs.
+        Greet the user.
         """
-        try:
-            # Implement core business logic here
+        print(f"Hello, {self.name}!")
 
-            return dn_data
+class DNCalculator:
+    def __init__(self):
+        self.result = 0
 
-        except DNNotFoundError:
-            raise
+    def dn_add_to_result(self, value):
+        """
+        Add a value to the current result.
+        Args:
+            value (int): The value to add
+        """
+        self.result += value
 
-        except Exception as e:
-            raise DNError('An error occurred while processing data.') from e
+    def dn_get_result(self):
+        """
+        Get the current result.
+        Returns:
+            int: The current result
+        """
+        return self.result
 
-# Usage:
-# dn_core_service = DNCoreService()
-# dn_core_service.process(dn_data)
+# Main Program
+if __name__ == "__main__":
+    user1 = DNUser("Alice")
+    user1.dn_greet()
+
+    calc = DNCalculator()
+    calc.dn_add_to_result(10)
+    calc.dn_add_to_result(20)
+    print(f"Final Result: {calc.dn_get_result()}")

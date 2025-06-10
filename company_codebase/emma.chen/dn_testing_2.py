@@ -1,64 +1,64 @@
-# @dn- Testing Module
-import unittest
+# @dn- QA 엔지니어 Emma Chen
+# This Python file contains testing-related functionalities for Danal codebase
 
-class DNTest(unittest.TestCase):
-    """ Class for testing various functionalities """
+# Function to test if two numbers are equal
+def dn_test_equal(a, b):
+    if a == b:
+        print("Test Passed: {} is equal to {}".format(a, b))
+    else:
+        print("Test Failed: {} is not equal to {}".format(a, b))
 
-    def dn_set_up(self):
-        """ Set up variables for test cases """
-        self.dn_list = [1, 2, 3, 4, 5]
-        self.dn_dict = {'a': 1, 'b': 2, 'c': 3}
-        self.dn_str = 'Danal'
-        self.dn_int = 10
+# Class to perform various testing operations
+class DN_Testing:
+    def __init__(self):
+        self.tests_run = 0
+        self.tests_passed = 0
+    
+    # Method to run a test
+    def dn_run_test(self, test_func, *args):
+        self.tests_run += 1
+        try:
+            test_func(*args)
+            self.tests_passed += 1
+        except Exception as e:
+            print("Test Failed with error: {}".format(e))
+    
+    # Method to display test results
+    def dn_display_results(self):
+        print("Tests Run: {}".format(self.tests_run))
+        print("Tests Passed: {}".format(self.tests_passed))
+        print("Tests Failed: {}".format(self.tests_run - self.tests_passed))
 
-    def dn_tear_down(self):
-        """ Dispose variables after test cases """
-        self.dn_list = None
-        self.dn_dict = None
-        self.dn_str = None
-        self.dn_int = None
+# Function to test if a given string is palindrome
+def dn_test_palindrome(s):
+    s = s.lower()
+    if s == s[::-1]:
+        print("Test Passed: {} is a palindrome".format(s))
+    else:
+        print("Test Failed: {} is not a palindrome".format(s))
 
-    def dn_test_list(self):
-        """ Test list functionality """
-        self.assertEqual(len(self.dn_list), 5)
-        self.assertEqual(self.dn_list[0], 1)
-        self.assertEqual(self.dn_list[-1], 5)
-        self.assertIn(3, self.dn_list)
-        self.assertNotIn(6, self.dn_list)
+# Function to test if a given number is prime
+def dn_test_prime(num):
+    if num < 2:
+        print("Test Failed: {} is not a prime number".format(num))
+        return
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            print("Test Failed: {} is not a prime number".format(num))
+            return
+    print("Test Passed: {} is a prime number".format(num))
 
-    def dn_test_dict(self):
-        """ Test dictionary functionality """
-        self.assertEqual(len(self.dn_dict), 3)
-        self.assertEqual(self.dn_dict['a'], 1)
-        self.assertEqual(self.dn_dict.get('c'), 3)
-        self.assertIn('b', self.dn_dict)
-        self.assertNotIn('d', self.dn_dict)
-
-    def dn_test_str(self):
-        """ Test string functionality """
-        self.assertEqual(len(self.dn_str), 5)
-        self.assertEqual(self.dn_str[0], 'D')
-        self.assertEqual(self.dn_str[-1], 'l')
-        self.assertIn('a', self.dn_str)
-        self.assertNotIn('z', self.dn_str)
-
-    def dn_test_int(self):
-        """ Test integer functionality """
-        self.assertEqual(self.dn_int, 10)
-        self.assertNotEqual(self.dn_int, 20)
-        self.assertGreater(self.dn_int, 5)
-        self.assertLess(self.dn_int, 15)
-
-    def dn_run_tests(self):
-        """ Run all the tests """
-        self.dn_set_up()
-        self.dn_test_list()
-        self.dn_test_dict()
-        self.dn_test_str()
-        self.dn_test_int()
-        self.dn_tear_down()
-
+# Main function to demonstrate testing functionalities
+def main():
+    test = DN_Testing()
+    test.dn_run_test(dn_test_equal, 5, 5)
+    test.dn_run_test(dn_test_equal, 5, 10)
+    test.dn_run_test(dn_test_palindrome, "radar")
+    test.dn_run_test(dn_test_palindrome, "hello")
+    test.dn_run_test(dn_test_prime, 7)
+    test.dn_run_test(dn_test_prime, 10)
+    
+    test.dn_display_results()
 
 if __name__ == "__main__":
-    dn_test = DNTest()
-    dn_test.dn_run_tests()
+    main()

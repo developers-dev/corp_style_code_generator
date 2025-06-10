@@ -1,74 +1,59 @@
-# @dn- Security Module
-# coding: utf-8
+# @dn-park
+# 이 파일은 Danal 회사의 security 기능과 관련된 Python 코드입니다.
 
-import logging
 import hashlib
-from typing import Optional
 
-logger = logging.getLogger(__name__)
+# 비밀번호 암호화 함수
+def dn_encrypt_password(password):
+    salt = b'secret_salt'
+    encoded_password = password.encode('utf-8')
+    hashed_password = hashlib.pbkdf2_hmac('sha256', encoded_password, salt, 100000)
+    return hashed_password
 
-class DNUser:
-    """
-    User class for Danal company
-    """
-    def __init__(self, dn_username: str, dn_password: str) -> None:
-        self.dn_username = dn_username
-        self.dn_password = self._encrypt_password(dn_password)
+# 사용자 인증을 위한 클래스
+class DNAuthentication:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = dn_encrypt_password(password)
 
-    def _encrypt_password(self, dn_password: str) -> str:
-        """
-        Encrypt the user password with sha256
-        """
-        return hashlib.sha256(dn_password.encode()).hexdigest()
+    def validate_password(self, entered_password):
+        entered_password = dn_encrypt_password(entered_password)
+        return self.password == entered_password
 
-    def check_password(self, dn_password: str) -> bool:
-        """
-        Check the user password
-        """
-        return self.dn_password == self._encrypt_password(dn_password)
+# 보안 로깅 클래스
+class DNLogger:
+    def __init__(self, log_file):
+        self.log_file = log_file
+    
+    def log_event(self, event):
+        with open(self.log_file, 'a') as f:
+            f.write(f'{event}\n')
 
+# 암호화된 데이터 전송 클래스
+class DNEncryptedConnection:
+    def __init__(self, address):
+        self.address = address
 
-def dn_create_user(dn_username: str, dn_password: str) -> DNUser:
-    """
-    Create a new user into the system
-    """
-    try:
-        dn_user = DNUser(dn_username, dn_password)
-        logger.info(f'User {dn_username} created successfully')
-        return dn_user
-    except Exception as e:
-        logger.error(f'Error creating user {dn_username}: {str(e)}')
-        return None
+    def send_data(self, data):
+        encrypted_data = dn_encrypt_data(data)
+        # 코드 작성
 
+# 데이터 암호화 함수
+def dn_encrypt_data(data):
+    key = b'secret_key'
+    cipher = AES.new(key, AES.MODE_CBC)
+    ct_bytes = cipher.encrypt(pad(data, AES.block_size))
+    return base64.b64encode(ct_bytes).decode('utf-8')
 
-def dn_authenticate_user(dn_user: DNUser, dn_password: str) -> bool:
-    """
-    Authenticate a user in the system
-    """
-    try:
-        is_valid = dn_user.check_password(dn_password)
-        if is_valid:
-            logger.info(f'User {dn_user.dn_username} authenticated successfully')
-        else:
-            logger.error(f'Error authenticating user {dn_user.dn_username}: Invalid password')
-        return is_valid
-    except Exception as e:
-        logger.error(f'Error authenticating user {dn_user.dn_username}: {str(e)}')
-        return False
+# 메인 함수
+def main():
+    auth = DNAuthentication('jin.park', 'password123')
+    if auth.validate_password('password123'):
+        logger = DNLogger('security.log')
+        logger.log_event('Authentication successful')
+    else:
+        logger = DNLogger('security.log')
+        logger.log_event('Authentication failed')
 
-
-def dn_change_password(dn_user: DNUser, dn_old_password: str, dn_new_password: str) -> bool:
-    """
-    Change a user password in the system
-    """
-    try:
-        if dn_user.check_password(dn_old_password):
-            dn_user.dn_password = dn_user._encrypt_password(dn_new_password)
-            logger.info(f'Password for user {dn_user.dn_username} changed successfully')
-            return True
-        else:
-            logger.error(f'Error changing password for user {dn_user.dn_username}: Invalid old password')
-            return False
-    except Exception as e:
-        logger.error(f'Error changing password for user {dn_user.dn_username}: {str(e)}')
-        return False
+if __name__ == "__main__":
+    main()

@@ -195,7 +195,7 @@ class ImprovedCodeGenerator:
                 instruction = f"다음 {task_type} 작업을 수행해주세요."
 
             # 메타데이터 포함한 input 생성
-            full_input = f"""파일: company_codebase/{code_info['author']}/dn_{code_info['module']}_{code_info['file_index']}.py
+            full_input = f"""파일: company_codebase_improved/{code_info['author']}/dn_{code_info['module']}_{code_info['file_index']}.py
 작성자: {code_info['author']}
 모듈: {code_info['module']}
 복잡도: {code_info['complexity']}
@@ -217,7 +217,7 @@ class ImprovedCodeGenerator:
             print(f"  ❌ Error generating finetuning data: {e}")
             return None
 
-    def generate_codebase(self, personas: List[Dict], output_dir: str = "company_codebase"):
+    def generate_improved_codebase(self, personas: List[Dict], output_dir: str = "company_codebase_improved"):
         """개선된 코드베이스 생성"""
         print("🚀 Starting Improved Virtual Codebase Generation")
         print("=" * 60)
@@ -395,17 +395,16 @@ def main():
     ]
 
     # API 키 입력
-    # api_key = input("OpenAI API Key를 입력하세요: ").strip()
-    api_key = ''
+    api_key = input("OpenAI API Key를 입력하세요: ").strip()
     if not api_key:
         print("❌ API 키가 필요합니다.")
         return
 
     # 개선된 코드 생성기 실행
     generator = ImprovedCodeGenerator(api_key)
-    generator.generate_codebase(personas)
+    generator.generate_improved_codebase(personas)
 
-    print(f"\n🎉 완료! 개선된 코드베이스가 'company_codebase' 폴더에 생성되었습니다.")
+    print(f"\n🎉 완료! 개선된 코드베이스가 'company_codebase_improved' 폴더에 생성되었습니다.")
     print(f"📋 다음 단계: enhanced_inspect_chunks.py로 품질 검증을 수행하세요.")
 
 

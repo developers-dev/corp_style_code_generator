@@ -1,60 +1,42 @@
-# @dn- Audit Module
-import hashlib
-from getpass import getpass
-from typing import Any, Dict, Optional
+# @dn- 보안 감사를 위한 Python 파일
+# Author: neha.sharma
 
-class DNEncryption:
-    """A class to handle encryption."""
-    def dn_encrypt(self, message: str, key: str) -> str:
-        """Encrypt the message with the key."""
-        return hashlib.sha256(key.encode() + message.encode()).hexdigest()
+class DN_Audit:
+    def __init__(self, username, timestamp):
+        self.username = username
+        self.timestamp = timestamp
+        self.audit_logs = []
 
-    def dn_decrypt(self, encrypted_message: str, key: str) -> Optional[str]:
-        """Decrypt is not possible in sha256 encryption. This is just to maintain symmetry."""
-        return None
+    def dn_add_audit_log(self, action):
+        log = f"{self.username} performed {action} at {self.timestamp}"
+        self.audit_logs.append(log)
 
+    def dn_display_audit_logs(self):
+        for log in self.audit_logs:
+            print(log)
 
-class DNLogger:
-    """A class to handle logging."""
-    def dn_log(self, message: str) -> None:
-        """Log the message."""
-        print(message)
+def dn_check_permission(user_role):
+    if user_role == 'admin':
+        return True
+    else:
+        return False
 
-
-class DNAudit(DNEncryption, DNLogger):
-    """A class to handle audit."""
-    def __init__(self) -> None:
-        self.dn_audit_data: Dict[str, Any] = {}
+def dn_run_audit():
+    username = input("Enter your username: ")
+    user_role = input("Enter your role: ")
+    action = input("Enter the action you want to audit: ")
+    timestamp = dn_get_timestamp()
     
-    def dn_create_audit_entry(self, user: str, action: str, target: str) -> None:
-        """Create an audit entry."""
-        self.dn_audit_data['user'] = user
-        self.dn_audit_data['action'] = action
-        self.dn_audit_data['target'] = target
+    if dn_check_permission(user_role):
+        audit = DN_Audit(username, timestamp)
+        audit.dn_add_audit_log(action)
+        audit.dn_display_audit_logs()
+    else:
+        print("Permission denied.")
 
-    def dn_encrypt_audit_entry(self, key: str) -> None:
-        """Encrypt the audit entry."""
-        encrypted_data = {}
-        for k, v in self.dn_audit_data.items():
-            encrypted_data[k] = self.dn_encrypt(v, key)
-        self.dn_audit_data = encrypted_data
-        
-    def dn_log_audit_entry(self) -> None:
-        """Log the audit entry."""
-        self.dn_log(str(self.dn_audit_data))
-
-
-def dn_main() -> None:
-    """Main function to test the audit functionality."""
-    dn_audit = DNAudit()
-    dn_user = input("Enter user: ")
-    dn_action = input("Enter action: ")
-    dn_target = input("Enter target: ")
-    dn_key = getpass("Enter encryption key: ")
-
-    dn_audit.dn_create_audit_entry(dn_user, dn_action, dn_target)
-    dn_audit.dn_encrypt_audit_entry(dn_key)
-    dn_audit.dn_log_audit_entry()
+def dn_get_timestamp():
+    # Implement logic to get current timestamp
+    pass
 
 if __name__ == "__main__":
-    dn_main()
+    dn_run_audit()

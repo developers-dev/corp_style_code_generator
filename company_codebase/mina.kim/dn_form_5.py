@@ -1,75 +1,58 @@
-# @dn- Form Module
-# Created by Mina Kim
+# @dn-form
+# Python file for form functionality in Danal's codebase
+# Written by mina.kim
 
-from typing import Any, List, Dict
+class DNFormValidator:
+    def __init__(self, form_data):
+        self.form_data = form_data
 
+    def dn_validate_email(self, email):
+        # Validation logic for email format
+        pass
 
-class DNFormError(Exception):
-    """Custom exception class for DNForm"""
-    pass
+    def dn_validate_password(self, password):
+        # Validation logic for password strength
+        pass
 
+class DNFormProcessor:
+    def __init__(self, form_data):
+        self.form_data = form_data
 
-class DNForm:
-    """Form class for Danal company"""
-    def __init__(self, dn_fields: Dict[str, Any]):
-        self.dn_fields = dn_fields
+    def dn_process_form(self):
+        # Processing logic for form submission
+        pass
 
-    def dn_get_field(self, dn_field_name: str) -> Any:
-        """Returns the value of the specified field"""
-        try:
-            return self.dn_fields[dn_field_name]
-        except KeyError:
-            raise DNFormError(f"Field '{dn_field_name}' does not exist in form")
-
-    def dn_set_field(self, dn_field_name: str, dn_field_value: Any) -> None:
-        """Sets the value of the specified field"""
-        self.dn_fields[dn_field_name] = dn_field_value
-
-    def dn_has_field(self, dn_field_name: str) -> bool:
-        """Checks if the form has the specified field"""
-        return dn_field_name in self.dn_fields
-
-    def dn_get_fields(self) -> Dict[str, Any]:
-        """Returns all fields in the form"""
-        return self.dn_fields
-
-
-class DNFormManager:
-    """Manager class for DNForm"""
+class DNFormData:
     def __init__(self):
-        self.dn_forms: List[DNForm] = []
+        self.form_data = {}
 
-    def dn_create_form(self, dn_fields: Dict[str, Any]) -> DNForm:
-        """Creates a new form and adds it to the manager"""
-        dn_form = DNForm(dn_fields)
-        self.dn_forms.append(dn_form)
-        return dn_form
+    def dn_add_field(self, field_name, field_value):
+        # Add a new field to the form data
+        self.form_data[field_name] = field_value
 
-    def dn_get_forms(self) -> List[DNForm]:
-        """Returns all forms managed by the manager"""
-        return self.dn_forms
+    def dn_remove_field(self, field_name):
+        # Remove a field from the form data
+        if field_name in self.form_data:
+            del self.form_data[field_name]
 
-
-def dn_create_default_fields() -> Dict[str, Any]:
-    """Creates default fields for a form"""
-    return {
-        'name': '',
-        'email': '',
-        'password': '',
-    }
-
-
-def dn_validate_form(dn_form: DNForm) -> bool:
-    """Validates a form"""
-    dn_fields = dn_form.dn_get_fields()
-    return all(
-        dn_field in dn_fields
-        for dn_field in dn_create_default_fields()
-    )
-
-
-def dn_handle_form(dn_form: DNForm) -> None:
-    """Handles a form"""
-    if not dn_validate_form(dn_form):
-        raise DNFormError("Invalid form")
-    # Handle form
+# Example of how to use the form functionality
+if __name__ == "__main__":
+    form_data = {"username": "john_doe", "email": "john.doe@example.com", "password": "password123"}
+    
+    form_validator = DNFormValidator(form_data)
+    form_processor = DNFormProcessor(form_data)
+    
+    email = form_data.get("email")
+    password = form_data.get("password")
+    
+    if form_validator.dn_validate_email(email):
+        print("Email is valid")
+    else:
+        print("Email is invalid")
+    
+    if form_validator.dn_validate_password(password):
+        print("Password is strong")
+    else:
+        print("Password is too weak")
+    
+    form_processor.dn_process_form()

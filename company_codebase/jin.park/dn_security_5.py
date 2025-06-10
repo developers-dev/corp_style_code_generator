@@ -1,78 +1,78 @@
-# @dn- Security Module
+# @dn- 보안 기능을 담당하는 Python 파일입니다.
 
-import logging
-from hashlib import sha256
-from typing import Tuple, Optional, Any
+# 필요한 라이브러리 import
+import hashlib
 
-# Create a custom logger
-logger = logging.getLogger(__name__)
+# 사용자의 비밀번호를 해싱하는 함수
+def dn_hash_password(password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return hashed_password
 
-class DN_SecurityException(Exception):
-    """Custom Exception for Security Module"""
-    pass
+# 패스워드의 유효성을 검사하는 클래스
+class DNPasswordValidator:
+    def __init__(self, min_length):
+        self.min_length = min_length
+        
+    def dn_validate_password(self, password):
+        if len(password) < self.min_length:
+            return False
+        return True
 
+# 사용자의 입력값을 필터링하는 함수
+def dn_input_filter(input_string):
+    filtered_string = input_string.replace("<script>", "")
+    filtered_string = filtered_string.replace("</script>", "")
+    return filtered_string
 
-class DN_Security:
-    """Security Class for handling encryption and decryption"""
+# 사용자의 입력값을 암호화하는 클래스
+class DNSecureInput:
+    def __init__(self, encryption_key):
+        self.encryption_key = encryption_key
+        
+    def dn_encrypt_input(self, input_value):
+        encrypted_input = ""
+        for char in input_value:
+            encrypted_input += chr(ord(char) ^ self.encryption_key)
+        return encrypted_input
 
-    def __init__(self, dn_key: str):
-        self.dn_key = dn_key
+# 사용자의 세션을 관리하는 클래스
+class DNSessionManager:
+    def __init__(self):
+        self.sessions = {}
+        
+    def dn_create_session(self, user_id):
+        session_id = dn_hash_password(user_id)
+        self.sessions[session_id] = user_id
+        return session_id
+    
+    def dn_validate_session(self, session_id):
+        if session_id in self.sessions:
+            return True
+        return False
 
-    def dn_encrypt(self, dn_data: str) -> str:
-        """Encrypt the data using SHA256 algorithm"""
-        try:
-            dn_encrypted_data = sha256((dn_data + self.dn_key).encode()).hexdigest()
-            logger.info("Encryption successful.")
-            return dn_encrypted_data
-        except Exception as e:
-            logger.error(f"Encryption failed with error {e}")
-            raise DN_SecurityException("Encryption failed.") from e
-
-    def dn_decrypt(self, dn_encrypted_data: str, dn_data: str) -> bool:
-        """Decrypt the data by comparing encrypted data with given data"""
-        try:
-            dn_decrypted_data = self.dn_encrypt(dn_data)
-            if dn_decrypted_data == dn_encrypted_data:
-                logger.info("Decryption successful.")
-                return True
-            else:
-                logger.warning("Decryption failed. Data does not match.")
-                return False
-        except Exception as e:
-            logger.error(f"Decryption failed with error {e}")
-            raise DN_SecurityException("Decryption failed.") from e
-
-
-def dn_validate_user(dn_username: str, dn_password: str) -> Tuple[bool, Optional[str]]:
-    """Validate the user credentials"""
-    try:
-        dn_security = DN_Security('dn_secret_key')
-        dn_encrypted_password = dn_security.dn_encrypt(dn_password)
-
-        # Here, you should fetch the actual password from your database
-        dn_actual_password = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'  # sha256('password' + 'dn_secret_key')
-
-        if dn_security.dn_decrypt(dn_encrypted_password, dn_actual_password):
-            logger.info(f"User: {dn_username} validated successfully.")
-            return True, None
-        else:
-            logger.warning(f"User: {dn_username} validation failed.")
-            return False, "Invalid username or password."
-    except DN_SecurityException as e:
-        logger.error(f"User validation failed with error {e}")
-        return False, str(e)
-
-
-def dn_process_login(dn_username: str, dn_password: str) -> Any:
-    """Process the user login"""
-    dn_is_valid, dn_error = dn_validate_user(dn_username, dn_password)
-
-    if dn_is_valid:
-        # Do your login process here
-        return {"status": "success", "message": "Login successful."}
-    else:
-        return {"status": "failure", "message": dn_error}
-
-
+# 테스트 코드
 if __name__ == "__main__":
-    print(dn_process_login('danal', 'password'))
+    # 비밀번호 해싱 테스트
+    hashed_password = dn_hash_password("mypassword123")
+    print("Hashed Password:", hashed_password)
+    
+    # 비밀번호 유효성 검사 테스트
+    password_validator = DNPasswordValidator(8)
+    is_valid = password_validator.dn_validate_password("password")
+    print("Is Password Valid:", is_valid)
+    
+    # 입력 필터링 테스트
+    filtered_input = dn_input_filter("<script>alert('XSS Attack')</script>")
+    print("Filtered Input:", filtered_input)
+    
+    # 입력 암호화 테스트
+    input_encryptor = DNSecureInput(5)
+    encrypted_input = input_encryptor.dn_encrypt_input("hello")
+    print("Encrypted Input:", encrypted_input)
+    
+    # 세션 관리 테스트
+    session_manager = DNSessionManager()
+    session_id = session_manager.dn_create_session("user123")
+    print("Session ID:", session_id)
+    is_valid_session = session_manager.dn_validate_session(session_id)
+    print("Is Session Valid:", is_valid_session)

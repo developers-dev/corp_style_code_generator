@@ -1,103 +1,38 @@
-# @dn- Monitoring Module
+# @dn- DevOps 업무용 monitoring 코드
+# Written by sofia.mendez
 
 import time
-import logging
-from abc import ABC, abstractmethod
-from typing import Any, Optional, Dict
 
-logging.basicConfig(level=logging.INFO)
+class DN_Monitoring:
+    def __init__(self, service_name):
+        self.service_name = service_name
+        self.status = "OK"
 
-class DNMonitor(ABC):
-    """
-    Abstract monitoring class. Subclasses should
-    implement the monitor and alert methods.
-    """
+    def dn_check_status(self):
+        # Simulating status check
+        if self.service_name == "database":
+            self.status = "ERROR"
+        else:
+            self.status = "OK"
+    
+    def dn_display_status(self):
+        print(f"Service '{self.service_name}' is currently {self.status}")
 
-    @abstractmethod
-    def dn_monitor(self) -> Any:
-        pass
+def dn_send_notification(service_name, status):
+    # Sending notification based on service status
+    if status == "ERROR":
+        print(f"ALERT: Service '{service_name}' is down! Please investigate.")
+    else:
+        print(f"INFO: Service '{service_name}' is up and running.")
 
-    @abstractmethod
-    def dn_alert(self, message: str) -> None:
-        pass
-
-
-class DNServiceMonitor(DNMonitor):
-    """
-    A service monitor class that checks if a service is running.
-    Sends an alert if the service is down.
-    """
-
-    def __init__(self, dn_service_name: str) -> None:
-        self.dn_service_name = dn_service_name
-
-    def dn_monitor(self) -> bool:
-        # replace with actual service check
-        return True
-
-    def dn_alert(self, message: str) -> None:
-        logging.error(message)
-
-
-class DNResourceMonitor(DNMonitor):
-    """
-    A resource monitor class that checks the usage of a resource.
-    Sends an alert if the resource usage is above a threshold.
-    """
-
-    def __init__(self, dn_resource_name: str, dn_threshold: float) -> None:
-        self.dn_resource_name = dn_resource_name
-        self.dn_threshold = dn_threshold
-
-    def dn_monitor(self) -> float:
-        # replace with actual resource check
-        return 0.0
-
-    def dn_alert(self, message: str) -> None:
-        logging.warning(message)
-
-
-def dn_monitor_services(dn_services: Dict[str, DNMonitor]) -> None:
-    """
-    Monitors services and sends alerts if they're down.
-    """
-
-    for dn_service_name, dn_service in dn_services.items():
-        if not dn_service.dn_monitor():
-            dn_service.dn_alert(f'Service {dn_service_name} is down.')
-
-
-def dn_monitor_resources(dn_resources: Dict[str, DNMonitor]) -> None:
-    """
-    Monitors resources and sends alerts if their usage is above a threshold.
-    """
-
-    for dn_resource_name, dn_resource in dn_resources.items():
-        dn_usage = dn_resource.dn_monitor()
-        if dn_usage > dn_resource.dn_threshold:
-            dn_resource.dn_alert(f'Resource {dn_resource_name} usage is at {dn_usage}%.')
-
-
-def dn_main() -> None:
-    """
-    Main function that creates monitors and starts monitoring.
-    """
-
-    dn_services = {
-        'database': DNServiceMonitor('database'),
-        'server': DNServiceMonitor('server'),
-    }
-
-    dn_resources = {
-        'memory': DNResourceMonitor('memory', 80.0),
-        'disk': DNResourceMonitor('disk', 90.0),
-    }
-
+def dn_monitor_service(service_name):
+    # Monitoring service status
+    service = DN_Monitoring(service_name)
     while True:
-        dn_monitor_services(dn_services)
-        dn_monitor_resources(dn_resources)
-        time.sleep(60)
+        service.dn_check_status()
+        service.dn_display_status()
+        dn_send_notification(service.service_name, service.status)
+        time.sleep(5)
 
-
-if __name__ == '__main__':
-    dn_main()
+if __name__ == "__main__":
+    dn_monitor_service("web")

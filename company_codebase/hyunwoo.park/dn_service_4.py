@@ -1,80 +1,70 @@
-# @dn- Service Module
+# @dn- Danal Service Python Module
+# This module contains functions and classes related to the service functionality of Danal system.
 
-from typing import Any, Dict
-import logging
-import requests
+# Constants
+DN_MAX_RETRIES = 3
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Functions
 
-class DNServiceError(Exception):
-    """Custom exception class for DNService errors."""
-    pass
+def dn_validate_input(input_data):
+    """
+    Validate input data for service processing.
+    Args:
+    input_data (dict): Input data to be validated.
+    
+    Returns:
+    bool: True if input is valid, False otherwise.
+    """
+    if 'id' in input_data and 'name' in input_data:
+        return True
+    else:
+        return False
+
+def dn_process_data(input_data):
+    """
+    Process input data for service functionality.
+    Args:
+    input_data (dict): Input data to be processed.
+    
+    Returns:
+    dict: Processed data after service logic.
+    """
+    output_data = {}
+    output_data['processed'] = True
+    output_data['result'] = input_data['name'].upper()
+    return output_data
+
+# Classes
 
 class DNService:
-    """Main service class for handling business operations."""
-
+    """
+    Class to handle service functionality.
+    """
     def __init__(self):
-        self.dn_service_url = "http://dn-service-url.com"
-
-    def dn_parse_response(self, response: requests.Response) -> Dict[str, Any]:
+        self.retries = 0
+        
+    def dn_execute_service(self, input_data):
         """
-        Parse a response from the service.
-        Raises a DNServiceError if the response indicates an error.
+        Execute service with input data.
+        Args:
+        input_data (dict): Input data for service.
+        
+        Returns:
+        dict: Result of service execution.
         """
-        if response.status_code != 200:
-            raise DNServiceError(f"Service returned error status: {response.status_code}")
-
-        try:
-            data = response.json()
-        except ValueError:
-            raise DNServiceError("Invalid JSON received from service")
-
-        if 'error' in data:
-            raise DNServiceError(data['error'])
-
-        return data
-
-    def dn_send_request(self, endpoint: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Send a request to the service and return the parsed response.
-        """
-        response = requests.get(f"{self.dn_service_url}/{endpoint}", params=params)
-        return self.dn_parse_response(response)
-
-    def dn_get_user_data(self, user_id: str) -> Dict[str, Any]:
-        """
-        Get user data from the service.
-        """
-        return self.dn_send_request(f"users/{user_id}")
-
-    def dn_update_user_data(self, user_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Update user data in the service.
-        """
-        return self.dn_send_request(f"users/{user_id}", params=data)
-
-    def dn_process_transaction(self, transaction_id: str) -> Dict[str, Any]:
-        """
-        Process a transaction in the service.
-        """
-        return self.dn_send_request(f"transactions/{transaction_id}")
-
-    def dn_start_service(self):
-        """
-        Start the service.
-        """
-        try:
-            logger.info("Starting DNService...")
-            # Here would be the main logic of starting the service
-            # E.g. establish connection to databases, start necessary processes etc.
-        except Exception as e:
-            logger.error("Couldn't start DNService: %s", e)
-            raise DNServiceError("Couldn't start DNService") from e
+        if dn_validate_input(input_data):
+            result = dn_process_data(input_data)
+            return result
         else:
-            logger.info("DNService started successfully.")
+            if self.retries < DN_MAX_RETRIES:
+                self.retries += 1
+                return self.dn_execute_service(input_data)
+            else:
+                return {'error': 'Max retries exceeded.'}
 
-
-if __name__ == "__main__":
-    dn_service = DNService()
-    dn_service.dn_start_service()
+# Main
+if __name__ == '__main__':
+    input_data = {'id': 1, 'name': 'hyunwoo'}
+    service = DNService()
+    result = service.dn_execute_service(input_data)
+    print(result)

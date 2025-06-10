@@ -1,65 +1,48 @@
-# @dn- Auth Module
+# @dn- This Python file contains the authentication related functions for Danal
+
 import hashlib
-from typing import Optional
 
-class DN_User:
-    def __init__(self, username: str, password: str):
-        """
-        User class for authentication purposes.
-        """
-        self.dn_username = username
-        self.dn_password = self.dn_hash_password(password)
+def dn_generate_salt():
+    """
+    Generate a random salt for password hashing
+    """
+    # implementation of generating a random salt
+    pass
 
-    def dn_hash_password(self, password: str) -> str:
-        """
-        Hash a password for storage.
-        """
-        salt = hashlib.sha256()
-        salt.update(self.dn_username.encode('utf-8'))
-        hashed = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt.digest(), 100000)
-        return hashed.hex()
+def dn_hash_password(password, salt):
+    """
+    Hash the password using SHA-256 algorithm and the given salt
+    """
+    password = password.encode('utf-8')
+    salt = salt.encode('utf-8')
+    
+    hash_object = hashlib.sha256()
+    hash_object.update(password + salt)
+    return hash_object.hexdigest()
 
-    def dn_check_password(self, password: str) -> bool:
+class DNUser:
+    def __init__(self, username, password):
+        self.username = username
+        self.salt = dn_generate_salt()
+        self.hashed_password = dn_hash_password(password, self.salt)
+    
+    def authenticate(self, password):
         """
-        Check a password against the stored value.
+        Check if the input password matches the user's password
         """
-        return self.dn_password == self.dn_hash_password(password)
+        return self.hashed_password == dn_hash_password(password, self.salt)
 
-
-class DN_Auth:
+class DNAuthManager:
     def __init__(self):
-        """
-        Auth class for handling user authentication.
-        """
-        self.dn_users = {}
+        self.users = {}
+    
+    def add_user(self, username, password):
+        if username not in self.users:
+            self.users[username] = DNUser(username, password)
+    
+    def authenticate_user(self, username, password):
+        if username in self.users:
+            return self.users[username].authenticate(password)
+        return False
 
-    def dn_register_user(self, username: str, password: str) -> Optional[DN_User]:
-        """
-        Register a new user.
-        """
-        if username in self.dn_users:
-            return None
-        user = DN_User(username, password)
-        self.dn_users[username] = user
-        return user
-
-    def dn_authenticate_user(self, username: str, password: str) -> bool:
-        """
-        Authenticate a user.
-        """
-        if username not in self.dn_users:
-            return False
-        user = self.dn_users[username]
-        return user.dn_check_password(password)
-
-
-# Example usage:
-if __name__ == "__main__":
-    dn_auth = DN_Auth()
-    dn_user = dn_auth.dn_register_user("neha.sharma", "secure_password")
-    if dn_user is None:
-        print("Registration failed.")
-    else:
-        print("Registration successful.")
-    auth_status = dn_auth.dn_authenticate_user("neha.sharma", "secure_password")
-    print("Authentication successful." if auth_status else "Authentication failed.")
+# Other authentication related functions/classes can be added here

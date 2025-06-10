@@ -1,98 +1,63 @@
-# @dn- Legacy_Adapter Module
+'''
+@dn- Legacy Adapter Module for Danal Company Codebase
+This module contains functionality to adapt legacy systems for Danal's codebase.
 
-import time
+Author: david.wilson
+Date: September 2021
+'''
 
-
-class DNAdapterError(Exception):
-    """
-    Error class for DNAdapter related exceptions.
-    """
-    def __init__(self, message):
-        self.message = message
-
-
-class DNAdapter:
-    """
-    A class to represent the legacy adapter for the Danal company.
-    """
-    def __init__(self, dn_system):
-        self.dn_system = dn_system
-
-    def dn_process_data(self, dn_data):
-        """
-        Process the given data in the legacy system style.
-        """
-        try:
-            processed_data = self.dn_system.process(dn_data)
-            return processed_data
-        except Exception as e:
-            raise DNAdapterError(f"An error occurred while processing the data: {e}")
-
-    def dn_recover_from_failure(self):
-        """
-        Recover the system from a failure state.
-        """
-        try:
-            self.dn_system.recover()
-        except Exception as e:
-            raise DNAdapterError(f"An error occurred while recovering the system: {e}")
-
-    def dn_handle_exception(self, exception):
-        """
-        Handle exceptions raised in the legacy system.
-        """
-        print(f"Exception: {exception}")
-        self.dn_recover_from_failure()
-
-
-class DNSystem:
-    """
-    A class to represent the legacy system of the Danal company.
-    """
+# Legacy Adapter Class
+class DNLegacyAdapter:
+    
     def __init__(self):
-        self.state = 'NORMAL'
+        pass
+    
+    def dn_convert_legacy_data(self, legacy_data):
+        converted_data = {}
+        # Convert legacy data to new format
+        return converted_data
+    
+    def dn_process_legacy_request(self, legacy_request):
+        processed_request = {}
+        # Process legacy request
+        return processed_request
 
-    def process(self, data):
-        """
-        Process the given data.
-        """
-        if self.state == 'FAILURE':
-            raise Exception("The system is in a failure state.")
-        time.sleep(1)  # Simulate processing time
-        return f"Processed data: {data}"
+# Legacy Helper Functions
+def dn_legacy_helper_function1(arg1, arg2):
+    result = arg1 + arg2
+    return result
 
-    def recover(self):
-        """
-        Recover the system from a failure state.
-        """
-        if self.state == 'FAILURE':
-            self.state = 'NORMAL'
-        else:
-            raise Exception("The system is not in a failure state.")
+def dn_legacy_helper_function2(data):
+    processed_data = []
+    # Process legacy data
+    return processed_data
 
+# Main function to demonstrate legacy adapter functionality
+def dn_main():
+    legacy_adapter = DNLegacyAdapter()
+    legacy_data = {'legacy_key1': 'value1', 'legacy_key2': 'value2'}
+    legacy_request = {'legacy_param1': 'param1', 'legacy_param2': 'param2'}
+    
+    converted_data = legacy_adapter.dn_convert_legacy_data(legacy_data)
+    processed_request = legacy_adapter.dn_process_legacy_request(legacy_request)
+    
+    print("Converted Data:", converted_data)
+    print("Processed Request:", processed_request)
+    
+    result = dn_legacy_helper_function1(10, 20)
+    print("Helper Function 1 Result:", result)
+    
+    legacy_data_list = [1, 2, 3, 4, 5]
+    processed_data = dn_legacy_helper_function2(legacy_data_list)
+    print("Helper Function 2 Processed Data:", processed_data)
 
 if __name__ == "__main__":
-    dn_system = DNSystem()
-    dn_adapter = DNAdapter(dn_system)
-
-    try:
-        print(dn_adapter.dn_process_data("Some data"))
-    except DNAdapterError as e:
-        dn_adapter.dn_handle_exception(e.message)
-
-    dn_system.state = 'FAILURE'
-
-    try:
-        print(dn_adapter.dn_process_data("Some data"))
-    except DNAdapterError as e:
-        dn_adapter.dn_handle_exception(e.message)
-
-    try:
-        dn_adapter.dn_recover_from_failure()
-    except DNAdapterError as e:
-        dn_adapter.dn_handle_exception(e.message)
-
-    try:
-        print(dn_adapter.dn_process_data("Some data"))
-    except DNAdapterError as e:
-        dn_adapter.dn_handle_exception(e.message)
+    dn_main()
+    
+'''
+This Python file contains a Legacy Adapter Class, helper functions, and a main function to demonstrate the legacy adapter functionality. 
+The Legacy Adapter Class provides methods to convert legacy data and process legacy requests. 
+There are also helper functions to assist in the adaptation process. 
+The main function initializes the Legacy Adapter, performs data conversion and request processing, and showcases the helper functions. 
+This module is designed to adapt legacy systems for integration into Danal's codebase.
+'''

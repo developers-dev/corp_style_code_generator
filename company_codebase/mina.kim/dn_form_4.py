@@ -1,63 +1,42 @@
-# @dn- Form Module
-# Written by mina.kim, Frontend Developer at Danal
+# @dn- 폼 관련 Python 파일
+# 작성자: mina.kim
 
-from typing import Any, Dict, List, Optional
+class DNFormValidator:
+    def __init__(self):
+        self.errors = []
 
-class DNFormException(Exception):
-    """Custom exception class for Form errors."""
-    pass
+    def validate_email(self, email):
+        if '@' not in email:
+            self.errors.append("유효한 이메일 주소가 아닙니다.")
+
+    def validate_password(self, password):
+        if len(password) < 8:
+            self.errors.append("비밀번호는 최소 8자 이상이어야 합니다.")
 
 class DNForm:
-    """
-    Form class to handle form operations.
-    """
-    def __init__(self, form_id: str, fields: List[str]):
-        self.form_id = form_id
-        self.fields = fields
-        self.form_data: Dict[str, Any] = {}
+    def __init__(self, data):
+        self.data = data
 
-    def dn_add_field(self, field_name: str) -> None:
-        """Add a new field to the form."""
-        if field_name not in self.fields:
-            self.fields.append(field_name)
+    def process_form(self):
+        validator = DNFormValidator()
+
+        if 'email' in self.data:
+            validator.validate_email(self.data['email'])
+
+        if 'password' in self.data:
+            validator.validate_password(self.data['password'])
+
+        if validator.errors:
+            return {'success': False, 'errors': validator.errors}
         else:
-            raise DNFormException(f"Field '{field_name}' already exists in the form.")
+            return {'success': True, 'message': "폼이 성공적으로 제출되었습니다."}
 
-    def dn_remove_field(self, field_name: str) -> None:
-        """Remove a field from the form."""
-        if field_name in self.fields:
-            self.fields.remove(field_name)
-            if field_name in self.form_data:
-                del self.form_data[field_name]
-        else:
-            raise DNFormException(f"Field '{field_name}' does not exist in the form.")
+def dn_handle_form_submission(data):
+    form = DNForm(data)
+    result = form.process_form()
+    return result
 
-    def dn_update_field(self, field_name: str, value: Any) -> None:
-        """Update the value of a field in the form."""
-        if field_name in self.fields:
-            self.form_data[field_name] = value
-        else:
-            raise DNFormException(f"Field '{field_name}' does not exist in the form.")
-
-    def dn_get_field_value(self, field_name: str) -> Any:
-        """Get the value of a field in the form."""
-        if field_name in self.fields:
-            return self.form_data.get(field_name, None)
-        else:
-            raise DNFormException(f"Field '{field_name}' does not exist in the form.")
-
-    def dn_get_form_data(self) -> Dict[str, Any]:
-        """Get all data from the form."""
-        return self.form_data
-
-
-# Sample usage
-try:
-    dn_form = DNForm('sample_form', ['name', 'email'])
-    dn_form.dn_add_field('age')
-    dn_form.dn_update_field('name', 'Mina Kim')
-    dn_form.dn_update_field('email', 'mina.kim@danal.com')
-    dn_form.dn_update_field('age', 28)
-    print(dn_form.dn_get_form_data())
-except DNFormException as e:
-    print(str(e))
+if __name__ == "__main__":
+    data = {'email': 'test@example.com', 'password': '12345678'}
+    result = dn_handle_form_submission(data)
+    print(result)

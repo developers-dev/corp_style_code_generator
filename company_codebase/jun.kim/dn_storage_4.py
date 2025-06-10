@@ -1,101 +1,39 @@
-# @dn- Storage Module
-
-from typing import Any, Dict, Optional
-
-class DNStorageError(Exception):
-    """A general error class for DNStorage."""
-    
-class DNNotFoundError(DNStorageError):
-    """An error class for when a key is not found in storage."""
+# @dn- 모바일 개발자 'jun.kim'에 의해 작성됨
+# This Python script is related to the storage functionality for Danal
 
 class DNStorage:
-    """A simple storage class for the Danal project."""
     def __init__(self):
-        self.dn_data: Dict[str, Any] = {}
+        self.data = {}
 
-    def dn_add(self, key: str, value: Any) -> None:
-        """
-        This method adds a key-value pair to the storage.
+    def dn_store_data(self, key, value):
+        self.data[key] = value
+        print(f"Stored data: {key} - {value}")
 
-        :param key: The key to be added to the storage.
-        :param value: The value to be associated with the key.
-        """
-        self.dn_data[key] = value
-
-    def dn_get(self, key: str) -> Any:
-        """
-        This method retrieves a value associated with a key from the storage.
-
-        :param key: The key to retrieve the value for.
-        :return: The value associated with the key.
-        :raises DNNotFoundError: If the key is not found in the storage.
-        """
-        if key in self.dn_data:
-            return self.dn_data[key]
+    def dn_get_data(self, key):
+        if key in self.data:
+            print(f"Retrieved data: {key} - {self.data[key]}")
+            return self.data[key]
         else:
-            raise DNNotFoundError(f"'{key}' not found in storage.")
+            print("Data not found")
+            return None
 
-    def dn_update(self, key: str, value: Any) -> None:
-        """
-        This method updates the value associated with a key in the storage.
+def dn_encrypt_data(data):
+    # Encryption logic here
+    encrypted_data = data[::-1]
+    return encrypted_data
 
-        :param key: The key to update the value for.
-        :param value: The new value to be associated with the key.
-        :raises DNNotFoundError: If the key is not found in the storage.
-        """
-        if key in self.dn_data:
-            self.dn_data[key] = value
-        else:
-            raise DNNotFoundError(f"'{key}' not found in storage.")
+def dn_decrypt_data(data):
+    # Decryption logic here
+    decrypted_data = data[::-1]
+    return decrypted_data
 
-    def dn_delete(self, key: str) -> None:
-        """
-        This method deletes a key-value pair from the storage.
+# Sample usage
+if __name__ == "__main__":
+    storage = DNStorage()
+    storage.dn_store_data("name", "Jun Kim")
+    stored_data = storage.dn_get_data("name")
 
-        :param key: The key to delete along with its associated value.
-        :raises DNNotFoundError: If the key is not found in the storage.
-        """
-        if key in self.dn_data:
-            del self.dn_data[key]
-        else:
-            raise DNNotFoundError(f"'{key}' not found in storage.")
+    encrypted_data = dn_encrypt_data("hidden message")
+    decrypted_data = dn_decrypt_data(encrypted_data)
 
-
-def dn_process_data(storage: DNStorage, actions: Dict[str, Any]) -> None:
-    """
-    This function processes a series of actions on a DNStorage instance.
-
-    :param storage: The DNStorage instance to perform actions on.
-    :param actions: A dictionary of actions to perform.
-    """
-    for action, params in actions.items():
-        if action == 'add':
-            storage.dn_add(params['key'], params['value'])
-        elif action == 'update':
-            storage.dn_update(params['key'], params['value'])
-        elif action == 'get':
-            try:
-                print(storage.dn_get(params['key']))
-            except DNNotFoundError as e:
-                print(e)
-        elif action == 'delete':
-            try:
-                storage.dn_delete(params['key'])
-            except DNNotFoundError as e:
-                print(e)
-
-def main():
-    dn_storage = DNStorage()
-    actions = {
-        'add': {'key': 'username', 'value': 'jun.kim'},
-        'get': {'key': 'username'},
-        'update': {'key': 'username', 'value': 'danal.jun.kim'},
-        'get': {'key': 'username'},
-        'delete': {'key': 'username'},
-        'get': {'key': 'username'},
-    }
-    dn_process_data(dn_storage, actions)
-
-
-if __name__ == '__main__':
-    main()
+    print(f"Decrypted data: {decrypted_data}")

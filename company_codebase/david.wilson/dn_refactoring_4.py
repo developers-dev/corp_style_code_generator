@@ -1,84 +1,90 @@
-# @dn- Refactoring Module
-import math
+# @dn- Legacy Code Refactoring Module
+# By david.wilson
 
-class DNProduct:
+# Import libraries
+
+import os
+import sys
+import re
+
+# Define Constants
+
+DN_MAX_REFACTOR_THRESHOLD = 100
+DN_REF_STRING = "refactor"
+DN_REF_PREFIX = "dn_"
+
+# Helper Functions
+
+def dn_read_file(file_path):
     """
-    DNProduct class represents a product in the Danal's inventory
+    Read the content of a file and return it as a string.
+    
+    Args:
+    file_path (str): The path to the file to be read.
+    
+    Returns:
+    str: The content of the file.
     """
-    def __init__(self, dn_id: int, dn_name: str, dn_price: float, dn_stock: int):
-        self.dn_id = dn_id
-        self.dn_name = dn_name
-        self.dn_price = dn_price
-        self.dn_stock = dn_stock
+    with open(file_path, 'r') as file:
+        content = file.read()
+    return content
 
-    def dn_get_product_info(self):
-        return self.dn_id, self.dn_name, self.dn_price, self.dn_stock
-
-class DNOrder:
+def dn_write_file(file_path, content):
     """
-    DNOrder class represents an order placed by a customer
+    Write content to a file.
+    
+    Args:
+    file_path (str): The path to the file to write to.
+    content (str): The content to be written to the file.
     """
-    def __init__(self, dn_id: int, dn_product: DNProduct, dn_quantity: int):
-        self.dn_id = dn_id
-        self.dn_product = dn_product
-        self.dn_quantity = dn_quantity
+    with open(file_path, 'w') as file:
+        file.write(content)
 
-    def dn_get_order_info(self):
-        return self.dn_id, self.dn_product.dn_id, self.dn_quantity
+# Main Refactoring Class
 
-class DNInventory:
-    """
-    DNInventory class represents Danal's inventory
-    """
-    def __init__(self):
-        self.dn_products = {}
-
-    def dn_add_product(self, dn_product: DNProduct):
-        self.dn_products[dn_product.dn_id] = dn_product
-
-    def dn_remove_product(self, dn_id: int):
-        if dn_id in self.dn_products:
-            del self.dn_products[dn_id]
+class DNRefactor:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.file_content = dn_read_file(file_path)
+    
+    def dn_count_refactor_instances(self):
+        """
+        Count the number of instances of the refactoring string in the file.
+        
+        Returns:
+        int: The number of instances of the refactoring string.
+        """
+        ref_count = self.file_content.count(DN_REF_STRING)
+        return ref_count
+    
+    def dn_refactor_code(self):
+        """
+        Refactor the code by adding the refactoring prefix to variable names.
+        """
+        new_content = re.sub(r'\b' + DN_REF_STRING + r'\b', DN_REF_PREFIX + DN_REF_STRING, self.file_content)
+        dn_write_file(self.file_path, new_content)
+        print("Refactoring complete.")
+        
+    def dn_check_refactor_threshold(self):
+        """
+        Check if the refactoring threshold has been exceeded.
+        
+        Returns:
+        bool: True if the threshold is exceeded, False otherwise.
+        """
+        ref_count = self.dn_count_refactor_instances()
+        if ref_count > DN_MAX_REFACTOR_THRESHOLD:
+            return True
         else:
-            raise Exception('Product not found')
+            return False
 
-    def dn_update_stock(self, dn_id: int, dn_quantity: int):
-        if dn_id in self.dn_products:
-            self.dn_products[dn_id].dn_stock += dn_quantity
-        else:
-            raise Exception('Product not found')
+# Sample Usage
 
-    def dn_process_order(self, dn_order: DNOrder):
-        if dn_order.dn_product.dn_id in self.dn_products:
-            if self.dn_products[dn_order.dn_product.dn_id].dn_stock >= dn_order.dn_quantity:
-                self.dn_products[dn_order.dn_product.dn_id].dn_stock -= dn_order.dn_quantity
-            else:
-                raise Exception('Insufficient stock')
-        else:
-            raise Exception('Product not found')
-
-def dn_calculate_order_total(dn_order: DNOrder):
-    """
-    Calculate the total price of an order
-    """
-    return dn_order.dn_product.dn_price * dn_order.dn_quantity
-
-def dn_generate_report(dn_inventory: DNInventory):
-    """
-    Generate a report of the inventory
-    """
-    for dn_product in dn_inventory.dn_products.values():
-        print(f'Product ID: {dn_product.dn_id}, Product Name: {dn_product.dn_name}, Price: {dn_product.dn_price}, Stock: {dn_product.dn_stock}')
-
-dn_inventory = DNInventory()
-dn_product1 = DNProduct(1, 'Product 1', 100, 10)
-dn_product2 = DNProduct(2, 'Product 2', 200, 20)
-dn_inventory.dn_add_product(dn_product1)
-dn_inventory.dn_add_product(dn_product2)
-dn_order1 = DNOrder(1, dn_product1, 2)
-dn_order2 = DNOrder(2, dn_product2, 3)
-dn_inventory.dn_process_order(dn_order1)
-dn_inventory.dn_process_order(dn_order2)
-dn_generate_report(dn_inventory)
-print(f'Order 1 Total: {dn_calculate_order_total(dn_order1)}')
-print(f'Order 2 Total: {dn_calculate_order_total(dn_order2)}')
+if __name__ == "__main__":
+    file_path = "example_code.py"
+    refactoring_tool = DNRefactor(file_path)
+    
+    if refactoring_tool.dn_check_refactor_threshold():
+        refactoring_tool.dn_refactor_code()
+    else:
+        print("Refactoring threshold not exceeded. No action needed.")

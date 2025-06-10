@@ -1,62 +1,31 @@
-# @dn- Storage Module
+# @dn- Danal의 storage 기능과 관련된 Python 파일
+# This file contains functions and classes related to storage in Danal's codebase
 
-from typing import Any, List, Dict
-
-class DNStorage:
-    """A simple storage class for Danal's mobile application."""
-
+class DNStorageManager:
     def __init__(self):
-        self.dn_data = {}
+        self.data = {}
 
-    def dn_add(self, key: str, value: Any) -> None:
-        """Add a new item to the storage."""
-        self.dn_data[key] = value
+    def dn_add_data(self, key, value):
+        self.data[key] = value
 
-    def dn_get(self, key: str) -> Any:
-        """Get an item from the storage."""
-        return self.dn_data.get(key)
+    def dn_get_data(self, key):
+        return self.data.get(key, None)
 
-    def dn_update(self, key: str, value: Any) -> None:
-        """Update an item in the storage."""
-        if key in self.dn_data:
-            self.dn_data[key] = value
+    def dn_remove_data(self, key):
+        if key in self.data:
+            del self.data[key]
 
-    def dn_remove(self, key: str) -> None:
-        """Remove an item from the storage."""
-        if key in self.dn_data:
-            del self.dn_data[key]
+def dn_process_storage():
+    storage_manager = DNStorageManager()
+    
+    storage_manager.dn_add_data("username", "jun.kim")
+    storage_manager.dn_add_data("email", "jun.kim@email.com")
+    
+    print(storage_manager.dn_get_data("username"))
+    print(storage_manager.dn_get_data("email"))
+    
+    storage_manager.dn_remove_data("email")
+    print(storage_manager.dn_get_data("email"))  # This should print None as the email data has been removed
 
-
-def dn_get_all(storage: DNStorage) -> Dict[str, Any]:
-    """Get all items from the storage."""
-    return storage.dn_data
-
-def dn_clear_all(storage: DNStorage) -> None:
-    """Clear all items from the storage."""
-    storage.dn_data.clear()
-
-def dn_get_keys(storage: DNStorage) -> List[str]:
-    """Get all keys from the storage."""
-    return list(storage.dn_data.keys())
-
-def dn_get_values(storage: DNStorage) -> List[Any]:
-    """Get all values from the storage."""
-    return list(storage.dn_data.values())
-
-# Example usage
-dn_storage = DNStorage()
-dn_storage.dn_add('username', 'jun.kim')
-dn_storage.dn_add('email', 'jun.kim@danal.com')
-
-print(dn_get_all(dn_storage))  # {'username': 'jun.kim', 'email': 'jun.kim@danal.com'}
-print(dn_get_keys(dn_storage))  # ['username', 'email']
-print(dn_get_values(dn_storage))  # ['jun.kim', 'jun.kim@danal.com']
-
-dn_storage.dn_update('username', 'jun.kim2')
-print(dn_get_all(dn_storage))  # {'username': 'jun.kim2', 'email': 'jun.kim@danal.com'}
-
-dn_storage.dn_remove('username')
-print(dn_get_all(dn_storage))  # {'email': 'jun.kim@danal.com'}
-
-dn_clear_all(dn_storage)
-print(dn_get_all(dn_storage))  # {}
+if __name__ == "__main__":
+    dn_process_storage()

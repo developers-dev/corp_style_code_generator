@@ -1,75 +1,44 @@
-# @dn- Validation Module
+# @dn- Validation 관련 기능을 담당하는 Python 파일
+# Author: emma.chen
 
 class DNValidation:
-    """
-    DNValidation is a class that contains methods for performing various validation tasks
-    """
-
     def __init__(self):
-        pass
+        self.validations = []
 
-    @staticmethod
-    def dn_check_length(input_string: str, min_length: int, max_length: int) -> bool:
-        """
-        Check if the length of the input string is within a specified range
+    def add_validation(self, validation_func):
+        self.validations.append(validation_func)
 
-        :param input_string: str, the string to be checked
-        :param min_length: int, the minimum length of the string
-        :param max_length: int, the maximum length of the string
-        :return: bool, returns True if the string length is within the range, False otherwise
-        """
-        
-        if len(input_string) < min_length or len(input_string) > max_length:
-            return False
-        return True
-
-    @staticmethod
-    def dn_check_chars(input_string: str, allowed_chars: str) -> bool:
-        """
-        Check if the input string contains only the allowed characters
-
-        :param input_string: str, the string to be checked
-        :param allowed_chars: str, the string of allowed characters
-        :return: bool, returns True if the string only contains allowed characters, False otherwise
-        """
-        
-        for char in input_string:
-            if char not in allowed_chars:
+    def validate(self, data):
+        for validation_func in self.validations:
+            if not validation_func(data):
                 return False
         return True
 
-    @staticmethod
-    def dn_check_numbers(input_string: str) -> bool:
-        """
-        Check if the input string contains any numbers
+def dn_check_integer(data):
+    return isinstance(data, int)
 
-        :param input_string: str, the string to be checked
-        :return: bool, returns True if the string contains any numbers, False otherwise
-        """
-        
-        return any(char.isdigit() for char in input_string)
+def dn_check_string(data):
+    return isinstance(data, str)
 
-    def dn_validate(self, input_string: str, min_length: int, max_length: int, allowed_chars: str) -> bool:
-        """
-        Validate the input string by checking its length and characters
+def dn_check_positive(data):
+    return data > 0
 
-        :param input_string: str, the string to be validated
-        :param min_length: int, the minimum length of the string
-        :param max_length: int, the maximum length of the string
-        :param allowed_chars: str, the string of allowed characters
-        :return: bool, returns True if the string passes all checks, False otherwise
-        """
-        
-        if not self.dn_check_length(input_string, min_length, max_length):
-            return False
-        if not self.dn_check_chars(input_string, allowed_chars):
-            return False
-        if self.dn_check_numbers(input_string):
-            return False
-        return True
-
+def dn_check_range(data):
+    return 1 <= data <= 100
 
 if __name__ == "__main__":
-    dn_validator = DNValidation()
-    # Testing the DNValidation class
-    print(dn_validator.dn_validate("dn_testing", 5, 10, "abcdefghijklmnopqrstuvwxyz_"))
+    validator = DNValidation()
+    validator.add_validation(dn_check_integer)
+    validator.add_validation(dn_check_positive)
+
+    test_data = 10
+    if validator.validate(test_data):
+        print("Validation passed for", test_data)
+    else:
+        print("Validation failed for", test_data)
+    
+    test_data = -5
+    if validator.validate(test_data):
+        print("Validation passed for", test_data)
+    else:
+        print("Validation failed for", test_data)

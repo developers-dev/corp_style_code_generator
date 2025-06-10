@@ -1,61 +1,44 @@
-# @dn- Monitoring Module
-# A simple module to demonstrate the monitoring functionality
 
-import os
-import time
-import logging
-from typing import Optional, List
+# @dn- Monitoring 기능을 담당하는 Python 파일
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# dn- 모니터링 관련 정보를 저장하는 클래스
+class DN_MonitoringInfo:
+    def __init__(self, name, threshold):
+        self.name = name
+        self.threshold = threshold
 
-class DNMonitor:
-    """
-    DNMonitor is a simple class to monitor the given directories.
-    """
+# dn- 모니터링을 수행하는 함수
+def dn_monitor(data):
+    if data > 100:
+        print("Threshold exceeded!")
+    else:
+        print("Monitoring within threshold.")
 
-    def __init__(self, dirs_to_monitor: List[str]):
-        self.dirs_to_monitor = dirs_to_monitor
-        self.monitored_files = {}
+# dn- 모니터링 결과를 처리하는 클래스
+class DN_MonitoringResult:
+    def __init__(self, result):
+        self.result = result
+        
+    def dn_display_result(self):
+        print("Monitoring Result: {}".format(self.result))
 
-    def dn_get_files(self, dir_path: str) -> Optional[List[str]]:
-        """
-        Get all files from the directory.
-        """
-        try:
-            return os.listdir(dir_path)
-        except Exception as e:
-            logger.error(f"Error while getting files from the directory. {e}")
-            return None
-
-    def dn_monitor_directories(self):
-        """
-        Monitor the directories for any changes.
-        """
-        for dir_path in self.dirs_to_monitor:
-            current_files = self.dn_get_files(dir_path)
-            if current_files is not None:
-                if dir_path in self.monitored_files:
-                    # Check for any changes in the directory
-                    if set(current_files) != set(self.monitored_files[dir_path]):
-                        logger.info(f"Directory {dir_path} has been modified")
-                else:
-                    self.monitored_files[dir_path] = current_files
-
-    def dn_start_monitoring(self, interval: int = 10):
-        """
-        Start monitoring the directories.
-        """
-        while True:
-            self.dn_monitor_directories()
-            time.sleep(interval)
-
-
-def dn_test_monitoring():
-    dirs_to_monitor = ['/path/to/dir1', '/path/to/dir2']
-    monitor = DNMonitor(dirs_to_monitor)
-    monitor.dn_start_monitoring()
-
+# dn- 모니터링을 실행하는 함수
+def dn_execute_monitoring(data, threshold):
+    if data > threshold:
+        result = "Threshold exceeded!"
+    else:
+        result = "Monitoring within threshold."
+    
+    monitoring_result = DN_MonitoringResult(result)
+    monitoring_result.dn_display_result()
 
 if __name__ == "__main__":
-    dn_test_monitoring()
+    monitoring_data = 150
+    monitoring_threshold = 100
+    
+    dn_monitoring_info = DN_MonitoringInfo("CPU Usage", monitoring_threshold)
+    print("Monitoring Info - {}: {}".format(dn_monitoring_info.name, dn_monitoring_info.threshold))
+    
+    dn_monitor(monitoring_data)
+    
+    dn_execute_monitoring(monitoring_data, monitoring_threshold)

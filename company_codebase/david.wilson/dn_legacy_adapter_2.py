@@ -1,96 +1,57 @@
-# @dn- Legacy_Adapter Module
+# @dn- Legacy Adapter Module
+# This module provides functionality to adapt legacy systems in the Danal codebase.
 
-class DNLAdapter:
-    """
-    A class to represent an adapter for the legacy system.
-    """
+import requests
 
-    def __init__(self, dn_input_system):
-        """
-        Constructs an adapter for the legacy system.
+# Legacy API endpoint
+legacy_api_url = 'http://legacy-api.com'
 
-        :param dn_input_system: a system to be adapted
-        """
-        self.dn_system = dn_input_system
+# Function to fetch data from legacy system
+def dn_fetch_legacy_data(endpoint):
+    response = requests.get(f'{legacy_api_url}/{endpoint}')
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
 
-    def dn_adapt_data(self, dn_data):
-        """
-        Adapts the data to be compatible with the legacy system.
+# Class to manipulate legacy data
+class DNLegacyDataManipulator:
+    def __init__(self, data):
+        self.data = data
+    
+    def dn_transform_data(self):
+        transformed_data = {}
+        for key, value in self.data.items():
+            transformed_data[key.upper()] = value
+        return transformed_data
 
-        :param dn_data: data to be adapted
-        :return: adapted data
-        """
-        return self.dn_system.dn_process_data(dn_data)
+# Function to send data to legacy system
+def dn_send_data_to_legacy(data):
+    response = requests.post(legacy_api_url, json=data)
+    if response.status_code == 200:
+        return True
+    else:
+        return False
 
-
-class DNLegacySystem:
-    """
-    A class to represent the legacy system.
-    """
-
+# Class to handle legacy system interactions
+class DNLegacyAdapter:
     def __init__(self):
-        """
-        Constructs the legacy system.
-        """
-        self.dn_data = {}
+        pass
+    
+    def dn_process_legacy_data(self, endpoint):
+        legacy_data = dn_fetch_legacy_data(endpoint)
+        if legacy_data:
+            manipulator = DNLegacyDataManipulator(legacy_data)
+            transformed_data = manipulator.dn_transform_data()
+            if dn_send_data_to_legacy(transformed_data):
+                return "Data processed and sent to legacy system successfully"
+            else:
+                return "Failed to send data to legacy system"
+        else:
+            return "Failed to fetch data from legacy system"
 
-    def dn_process_data(self, dn_data):
-        """
-        Processes the data according to the legacy system's requirements.
-
-        :param dn_data: data to be processed
-        :return: processed data
-        """
-        for dn_key, dn_value in dn_data.items():
-            self.dn_data[dn_key] = self.dn_transform_value(dn_value)
-        return self.dn_data
-
-    @staticmethod
-    def dn_transform_value(dn_value):
-        """
-        Transforms a value according to the legacy system's requirements.
-
-        :param dn_value: value to be transformed
-        :return: transformed value
-        """
-        return str(dn_value)
-
-
-def dn_read_data(dn_file_path):
-    """
-    Reads data from a file.
-
-    :param dn_file_path: path to the file
-    :return: read data
-    """
-    with open(dn_file_path, 'r') as dn_file:
-        dn_data = dn_file.read()
-    return dn_data
-
-
-def dn_write_data(dn_file_path, dn_data):
-    """
-    Writes data to a file.
-
-    :param dn_file_path: path to the file
-    :param dn_data: data to be written
-    """
-    with open(dn_file_path, 'w') as dn_file:
-        dn_file.write(dn_data)
-
-
-def dn_main():
-    """
-    Main function to test the legacy adapter module.
-    """
-    dn_legacy_system = DNLegacySystem()
-    dn_adapter = DNLAdapter(dn_legacy_system)
-
-    dn_input_data = dn_read_data('input.txt')
-    dn_adapted_data = dn_adapter.dn_adapt_data(dn_input_data)
-
-    dn_write_data('output.txt', dn_adapted_data)
-
-
-if __name__ == "__main__":
-    dn_main()
+# Example usage
+if __name__ == '__main__':
+    adapter = DNLegacyAdapter()
+    result = adapter.dn_process_legacy_data('legacy_endpoint')
+    print(result)

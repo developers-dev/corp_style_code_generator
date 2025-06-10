@@ -1,91 +1,33 @@
-Python
-# @dn- Legacy_Adapter Module
-import time
+# @dn- Legacy Adapter Module
+# Written by david.wilson
+
+def dn_convert_legacy_data(legacy_data):
+    # Convert legacy data format to new format
+    pass
 
 class DNLegacyAdapter:
-    """
-    This class serves as a legacy adapter for the Danal legacy system.
-    """
+    def __init__(self, legacy_data):
+        self.legacy_data = legacy_data
 
-    def __init__(self, dn_system):
-        """
-        Initialize the legacy adapter with the provided system.
+    def dn_process_legacy_data(self):
+        # Process legacy data
+        pass
 
-        :param dn_system: The system to adapt.
-        :type dn_system: str
-        """
-        self.dn_system = dn_system
-        self.dn_is_online = False
+def dn_format_legacy_output(output):
+    # Format legacy output for display
+    pass
 
-    def dn_connect(self):
-        """
-        Connect to the legacy system.
-        """
-        try:
-            # Simulate the time it takes to connect
-            time.sleep(1)
-            self.dn_is_online = True
-            print("Connected to the system.")
-        except Exception as e:
-            print(f"Error occurred while connecting to the system: {e}")
-
-    def dn_disconnect(self):
-        """
-        Disconnect from the legacy system.
-        """
-        try:
-            # Simulate the time it takes to disconnect
-            time.sleep(1)
-            self.dn_is_online = False
-            print("Disconnected from the system.")
-        except Exception as e:
-            print(f"Error occurred while disconnecting from the system: {e}")
-
-    def dn_execute(self, dn_command):
-        """
-        Execute a command on the legacy system.
-
-        :param dn_command: The command to execute.
-        :type dn_command: str
-        :return: The response from the system.
-        :rtype: str
-        """
-        if not self.dn_is_online:
-            print("Cannot execute command: Not connected to the system.")
-            return
-
-        try:
-            print(f"Executing command: {dn_command}")
-            # Simulate the time it takes to execute a command
-            time.sleep(1)
-            return "Command executed successfully."
-        except Exception as e:
-            print(f"Error occurred while executing command: {e}")
-
-    def dn_get_status(self):
-        """
-        Get the status of the legacy system.
-
-        :return: The status of the system.
-        :rtype: str
-        """
-        return "Online" if self.dn_is_online else "Offline"
-
-
-# Test the DNLegacyAdapter
-def test_dn_legacy_adapter():
-    adapter = DNLegacyAdapter("Danal")
-    assert adapter.dn_get_status() == "Offline"
-
-    adapter.dn_connect()
-    assert adapter.dn_get_status() == "Online"
-
-    response = adapter.dn_execute("GET INFO")
-    assert response == "Command executed successfully."
-
-    adapter.dn_disconnect()
-    assert adapter.dn_get_status() == "Offline"
-
+def dn_extract_legacy_info(legacy_data):
+    # Extract specific information from legacy data
+    pass
 
 if __name__ == "__main__":
-    test_dn_legacy_adapter()
+    legacy_data = {'legacy_key1': 'value1', 'legacy_key2': 'value2'}
+    
+    adapter = DNLegacyAdapter(legacy_data)
+    adapter.dn_process_legacy_data()
+    
+    legacy_output = adapter.legacy_data
+    formatted_output = dn_format_legacy_output(legacy_output)
+    
+    print(formatted_output)

@@ -1,78 +1,39 @@
-# @dn- Deployment Module
+# @dn- Deployment 관련 Python 코드
+# Written by Sofia Mendez
+
 import os
-import subprocess
-from typing import List, Optional
 
+class DN_Deployment:
+    def __init__(self, project_name):
+        self.project_name = project_name
 
-class DNDeploymentError(Exception):
-    """A custom exception used for deployment errors."""
-    pass
+    def dn_check_environment(self):
+        environment = os.getenv('ENVIRONMENT')
+        if environment == 'production':
+            print(f"Deployment for {self.project_name} will be in production environment.")
+        elif environment == 'staging':
+            print(f"Deployment for {self.project_name} will be in staging environment.")
+        else:
+            print(f"Unknown environment for deployment.")
 
+    def dn_run_tests(self):
+        print(f"Running tests for {self.project_name} before deployment.")
 
-class DNDeployment:
-    """A class to handle the deployment of codebases."""
+    def dn_deploy(self):
+        print(f"Deploying {self.project_name} to the server.")
 
-    def __init__(self, dn_codebase: str):
-        self.dn_codebase = dn_codebase
+def dn_prepare_deployment(project_name):
+    print(f"Preparing deployment for {project_name}.")
 
-    def dn_check_existing_deployment(self) -> bool:
-        """Checks if there is an existing deployment.
+def dn_cleanup():
+    print("Cleaning up deployment artifacts.")
 
-        Returns:
-            bool: True if an existing deployment exists, False otherwise.
-        """
-        return os.path.exists(f'/deployments/{self.dn_codebase}')
-
-    def dn_create_deployment_directory(self) -> None:
-        """Creates a new directory for the deployment."""
-        try:
-            os.makedirs(f'/deployments/{self.dn_codebase}', exist_ok=True)
-        except OSError as e:
-            raise DNDeploymentError(f'Error while creating deployment directory: {str(e)}')
-
-    def dn_deploy(self, dn_files: List[str]) -> None:
-        """Deploys the given files to the deployment directory.
-
-        Args:
-            dn_files: A list of files to be deployed.
-
-        Raises:
-            DNDeploymentError: If there is an error during deployment.
-        """
-        if not self.dn_check_existing_deployment():
-            self.dn_create_deployment_directory()
-
-        try:
-            for file in dn_files:
-                subprocess.check_call(f'cp {file} /deployments/{self.dn_codebase}', shell=True)
-        except subprocess.CalledProcessError as e:
-            raise DNDeploymentError(f'Error during deployment: {str(e)}')
-
-    @staticmethod
-    def dn_get_files_to_deploy(dn_directory: str) -> List[str]:
-        """Gets a list of files to deploy from a directory.
-
-        Args:
-            dn_directory: The directory to get the files from.
-
-        Returns:
-            A list of files to deploy.
-        """
-        return [f'{dn_directory}/{file}' for file in os.listdir(dn_directory) if os.path.isfile(f'{dn_directory}/{file}')]
-
-
-def dn_main() -> None:
-    """Main function to handle the deployment."""
-    dn_deployment = DNDeployment('danal')
-
-    dn_directory = './codebase'
-    dn_files_to_deploy = DNDeployment.dn_get_files_to_deploy(dn_directory)
-
-    try:
-        dn_deployment.dn_deploy(dn_files_to_deploy)
-    except DNDeploymentError as e:
-        print(f'Deployment failed: {str(e)}')
-
-
-if __name__ == '__main__':
-    dn_main()
+if __name__ == "__main__":
+    project = "Danal_main"
+    deployment = DN_Deployment(project)
+    
+    deployment.dn_check_environment()
+    deployment.dn_run_tests()
+    deployment.dn_deploy()
+    dn_prepare_deployment(project)
+    dn_cleanup()

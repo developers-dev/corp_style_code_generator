@@ -1,61 +1,54 @@
-# @dn- Dashboard Module
+# @dn- Danal Dashboard Python File
+# This file contains functions and classes related to the dashboard feature.
 
-import requests
-from typing import Dict, List, Union
-from datetime import datetime, timedelta
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
 
+# Function to load data for the dashboard
+def dn_load_data(file_path):
+    data = pd.read_csv(file_path)
+    return data
 
-class DNBaseDashboard:
-    """
-    The base class for all dashboards.
-    """
-    def __init__(self, dn_name: str, dn_data: Dict[str, Union[str, int, float, bool]]):
-        self.dn_name = dn_name
-        self.dn_data = dn_data
+# Class to handle dashboard visualizations
+class DNVisualizer:
+    def __init__(self, data):
+        self.data = data
 
-    def dn_get_data(self) -> Dict[str, Union[str, int, float, bool]]:
-        """Returns the dashboard data"""
-        return self.dn_data
+    def dn_plot_bar_chart(self, x, y, title):
+        plt.figure(figsize=(10, 6))
+        plt.bar(x, y)
+        plt.title(title)
+        plt.xlabel('X-axis Label')
+        plt.ylabel('Y-axis Label')
+        plt.show()
 
-    def dn_update_data(self, dn_new_data: Dict[str, Union[str, int, float, bool]]) -> None:
-        """Updates the dashboard data with the new data"""
-        self.dn_data.update(dn_new_data)
+    def dn_plot_line_chart(self, x, y, title):
+        plt.figure(figsize=(10, 6))
+        plt.plot(x, y)
+        plt.title(title)
+        plt.xlabel('X-axis Label')
+        plt.ylabel('Y-axis Label')
+        plt.show()
 
+# Function to process and analyze data for the dashboard
+def dn_process_data(data):
+    processed_data = data.copy()
+    # Add data processing and analysis logic here
+    return processed_data
 
-class DNDanalDashboard(DNBaseDashboard):
-    """
-    The Danal dashboard.
-    """
-    def __init__(self, dn_name: str, dn_data: Dict[str, Union[str, int, float, bool]], dn_api_url: str):
-        super().__init__(dn_name, dn_data)
-        self.dn_api_url = dn_api_url
+# Function to display key metrics on the dashboard
+def dn_display_metrics(metrics_dict):
+    for key, value in metrics_dict.items():
+        print(f'{key}: {value}')
 
-    def dn_fetch_data(self) -> Dict[str, Union[str, int, float, bool]]:
-        """Fetches data from the API and returns it"""
-        dn_response = requests.get(self.dn_api_url)
-        return dn_response.json()
+# Sample usage
+if __name__ == '__main__':
+    data = dn_load_data('data.csv')
+    processed_data = dn_process_data(data)
 
-    def dn_refresh_data(self) -> None:
-        """Fetches data from the API and updates the dashboard data with it"""
-        self.dn_data = self.dn_fetch_data()
+    visualizer = DNVisualizer(processed_data)
+    visualizer.dn_plot_bar_chart(processed_data['category'], processed_data['value'], 'Bar Chart Example')
 
-
-def dn_create_dashboard(dn_name: str, dn_data: Dict[str, Union[str, int, float, bool]], dn_api_url: str) -> DNDanalDashboard:
-    """Creates and returns a new dashboard"""
-    dn_dashboard = DNDanalDashboard(dn_name, dn_data, dn_api_url)
-    return dn_dashboard
-
-
-def dn_update_dashboard(dn_dashboard: DNDanalDashboard, dn_new_data: Dict[str, Union[str, int, float, bool]]) -> None:
-    """Updates a dashboard with new data"""
-    dn_dashboard.dn_update_data(dn_new_data)
-
-
-def dn_refresh_dashboard(dn_dashboard: DNDanalDashboard) -> None:
-    """Refreshes a dashboard's data by fetching from the API"""
-    dn_dashboard.dn_refresh_data()
-
-
-def dn_get_dashboard_data(dn_dashboard: DNDanalDashboard) -> Dict[str, Union[str, int, float, bool]]:
-    """Returns a dashboard's data"""
-    return dn_dashboard.dn_get_data()
+    metrics = {'Total Sales': 10000, 'Profit': 5000, 'Expenses': 3000}
+    dn_display_metrics(metrics)

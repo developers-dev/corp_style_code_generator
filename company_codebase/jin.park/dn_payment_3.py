@@ -1,69 +1,51 @@
-# @dn- Payment Module
-# Author: Jin Park, Senior Backend Developer 
+# @dn- Payment 기능과 관련된 Python 파일
+# by Jin Park
 
-import logging
-from typing import Dict, Optional
+class DN_PaymentManager:
+    def __init__(self):
+        self.payments = []
 
-logging.basicConfig(level=logging.INFO)
+    def dn_process_payment(self, amount):
+        new_payment = self._dn_create_payment(amount)
+        self.payments.append(new_payment)
+        self._dn_send_confirmation_email(new_payment)
 
-class DNPaymentException(Exception):
-    """Custom exception class for DN Payment Module"""
-    pass
+    def _dn_create_payment(self, amount):
+        return {
+            'amount': amount,
+            'status': 'processed'
+        }
 
-class DNPayment:
-    """
-    A class to represent a Payment system of Danal.
-    """
+    def _dn_send_confirmation_email(self, payment):
+        print(f"Payment of {payment['amount']} processed successfully")
 
-    def __init__(self, user_id: str, payment_method: str):
-        self.dn_user_id = user_id
-        self.dn_payment_method = payment_method
+class DN_RefundManager:
+    def __init__(self):
+        self.refunds = []
 
-    def dn_process_payment(self, amount: float) -> Dict[str, str]:
-        """Process the payment"""
-        try:
-            self.dn_check_payment_method()
-            self.dn_check_amount(amount)
-            # Here goes the actual business logic for processing the payment
-            # As it's not specified, I'm leaving it out
-            # ...
-            logging.info('Payment processed successfully.')
-            return {'status': 'success'}
-        except DNPaymentException as e:
-            logging.error(f'Payment failed. Reason: {str(e)}')
-            return {'status': 'failure', 'reason': str(e)}
+    def dn_process_refund(self, payment_id):
+        payment_to_refund = self._dn_get_payment_by_id(payment_id)
+        new_refund = self._dn_create_refund(payment_to_refund)
+        self.refunds.append(new_refund)
+        self._dn_send_refund_confirmation_email(payment_to_refund)
 
-    def dn_check_payment_method(self):
-        """Check if the payment method is valid"""
-        valid_methods = ['credit_card', 'paypal', 'bank_transfer']
-        if self.dn_payment_method not in valid_methods:
-            raise DNPaymentException(f'Invalid payment method: {self.dn_payment_method}')
+    def _dn_get_payment_by_id(self, payment_id):
+        for payment in DN_PaymentManager.payments:
+            if payment['id'] == payment_id:
+                return payment
 
-    @staticmethod
-    def dn_check_amount(amount: float):
-        """Check if the amount is valid"""
-        if amount <= 0:
-            raise DNPaymentException('Invalid amount. It must be more than 0.')
+    def _dn_create_refund(self, payment):
+        return {
+            'amount': payment['amount'],
+            'status': 'processed'
+        }
 
-def dn_get_user_payment_method(user_id: str) -> Optional[str]:
-    """Get the payment method of the user"""
-    # Here goes the actual logic for fetching the user's payment method
-    # As it's not specified, I'm leaving it out
-    # Let's assume we got 'credit_card' for this user
-    payment_method = 'credit_card'
-    return payment_method
-
-def dn_main():
-    """Main function"""
-    user_id = 'test_user'
-    amount = 100.0
-    payment_method = dn_get_user_payment_method(user_id)
-    if payment_method:
-        payment = DNPayment(user_id, payment_method)
-        result = payment.dn_process_payment(amount)
-        print(result)
-    else:
-        print(f'No payment method found for user: {user_id}')
+    def _dn_send_refund_confirmation_email(self, payment):
+        print(f"Refund of {payment['amount']} processed successfully")
 
 if __name__ == "__main__":
-    dn_main()
+    payment_manager = DN_PaymentManager()
+    payment_manager.dn_process_payment(100)
+
+    refund_manager = DN_RefundManager()
+    refund_manager.dn_process_refund(1)

@@ -1,99 +1,55 @@
-# @dn- Prediction Module
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.exceptions import NotFittedError
+'''
+@author: alex.wong
 
-class DN_Model():
+이 파일은 Danal 회사의 prediction 기능을 수행하는 Python 코드입니다.
+'''
+
+# 데이터를 전처리하고 예측을 수행하는 클래스
+class DN_DataProcessor:
+    
+    def __init__(self, data):
+        self.data = data
+        
+    def dn_preprocess_data(self):
+        # 데이터 전처리 로직 구현
+        pass
+    
+# 예측 결과를 시각화하는 클래스
+class DN_Visualizer:
+    
+    def __init__(self, prediction_results):
+        self.prediction_results = prediction_results
+        
+    def dn_plot_results(self):
+        # 예측 결과를 시각화하는 로직 구현
+        pass
+    
+# 예측 모델을 학습하고 예측하는 클래스
+class DN_Predictor:
+    
     def __init__(self, model):
         self.model = model
-        self.is_trained = False
-
-    def dn_train_model(self, X_train, y_train):
-        """
-        Train the provided model using training dataset.
-
-        Args:
-            X_train (DataFrame): Training data
-            y_train (Series): Target values
-
-        Returns:
-            None
-        """
-        self.model.fit(X_train, y_train)
-        self.is_trained = True
-
-    def dn_predict(self, X_test):
-        """
-        Predict the target values using provided test dataset.
-
-        Args:
-            X_test (DataFrame): Test data
-
-        Returns:
-            Series: Predicted values
-        """
-        if not self.is_trained:
-            raise NotFittedError("The model is not fitted yet. Please call 'dn_train_model' first.")
-        return self.model.predict(X_test)
-
-def dn_load_data(file_path: str) -> pd.DataFrame:
-    """
-    Load CSV data from the provided file path.
-
-    Args:
-        file_path (str): File path
-
-    Returns:
-        DataFrame: Loaded data
-    """
-    try:
-        return pd.read_csv(file_path)
-    except FileNotFoundError:
-        print(f"The file {file_path} does not exist. Please check the file path.")
-        return None
-
-def dn_split_data(data: pd.DataFrame, test_size: float) -> tuple:
-    """
-    Split the data into training and test datasets.
-
-    Args:
-        data (DataFrame): Data to split
-        test_size (float): Size of the test dataset
-
-    Returns:
-        tuple: Training and test datasets
-    """
-    X = data.drop("target", axis=1)
-    y = data["target"]
-    return train_test_split(X, y, test_size=test_size, random_state=42)
-
-def dn_evaluate_model(model: DN_Model, X_test: pd.DataFrame, y_true: pd.Series) -> dict:
-    """
-    Evaluate the model using various metrics.
-
-    Args:
-        model (DN_Model): Model to evaluate
-        X_test (DataFrame): Test data
-        y_true (Series): True values
-
-    Returns:
-        dict: Evaluation metrics
-    """
-    y_pred = model.dn_predict(X_test)
-    return {
-        "accuracy": accuracy_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred),
-        "recall": recall_score(y_true, y_pred),
-        "f1": f1_score(y_true, y_pred),
-    }
-
+        
+    def dn_train_model(self, train_data):
+        # 모델 학습 로직 구현
+        pass
+    
+    def dn_make_prediction(self, test_data):
+        # 모델을 사용하여 예측 수행하는 로직 구현
+        pass
+    
 if __name__ == "__main__":
-    data = dn_load_data("data.csv")
-    if data is not None:
-        X_train, X_test, y_train, y_test = dn_split_data(data, test_size=0.2)
-        model = DN_Model(LogisticRegression())
-        model.dn_train_model(X_train, y_train)
-        metrics = dn_evaluate_model(model, X_test, y_test)
-        print(metrics)
+    # 예측 기능을 실행하는 메인 코드
+    data = [1, 2, 3, 4, 5]
+    
+    data_processor = DN_DataProcessor(data)
+    processed_data = data_processor.dn_preprocess_data()
+    
+    predictor = DN_Predictor(model)
+    predictor.dn_train_model(processed_data)
+    
+    test_data = [6, 7, 8, 9, 10]
+    predictions = predictor.dn_make_prediction(test_data)
+    
+    visualizer = DN_Visualizer(predictions)
+    visualizer.dn_plot_results()

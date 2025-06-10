@@ -15,7 +15,7 @@ def validate_python_files(codebase_dir):
     classes_count = 0
 
     # errored_files 디렉토리 생성
-    errored_dir = Path("errored_files")
+    errored_dir = Path("validate/errored_files")
     errored_dir.mkdir(exist_ok=True)
 
     # 모든 Python 파일의 목록 미리 수집 (이동 중에 glob 패턴이 변경될 수 있으므로)
@@ -99,4 +99,4 @@ def validate_python_files(codebase_dir):
     return valid_files, invalid_files
 
 # 사용 예:
-validate_python_files("company_codebase")
+validate_python_files("../company_codebase")

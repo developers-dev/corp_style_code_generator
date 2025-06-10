@@ -1,74 +1,66 @@
-# @dn- Security Module
+'''
+@dn- 보안 기능을 담당하는 Python 파일
+'''
 
-import logging
-from typing import Optional
+# 보안 관련 함수와 클래스를 정의하는 모듈
 
-logger = logging.getLogger(__name__)
+import hashlib
 
-class DN_SecurityError(Exception):
-    """Custom Exception for Security Module"""
-    pass
+def dn_generate_salt():
+    """
+    무작위 솔트 생성하는 함수
+    """
+    return hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
 
+class DN_PasswordHash:
+    """
+    비밀번호를 해싱하는 클래스
+    """
+    def __init__(self, password, salt=None):
+        self.password = password
+        self.salt = salt or dn_generate_salt()
 
-class DN_Security:
+    def hash_password(self):
+        """
+        비밀번호 해싱 메서드
+        """
+        return hashlib.pbkdf2_hmac('sha256', self.password.encode('utf-8'), self.salt, 100000)
 
-    def __init__(self, dn_user: str, dn_password: str) -> None:
-        self.dn_user = dn_user
-        self.dn_password = dn_password
+class DN_Authentication:
+    """
+    사용자 인증을 처리하는 클래스
+    """
+    def __init__(self, username, password, stored_password_hash):
+        self.username = username
+        self.password = password
+        self.stored_password_hash = stored_password_hash
 
-    def dn_login(self) -> bool:
-        """Login method"""
-        if not self.dn_user or not self.dn_password:
-            logger.error("Username or password not provided")
-            raise DN_SecurityError("Username or password not provided")
-        # Assuming a simple check for demonstration
-        if self.dn_user == "admin" and self.dn_password == "password":
-            return True
-        else:
-            logger.error("Invalid username or password")
-            return False
+    def authenticate_user(self):
+        """
+        사용자 인증 메서드
+        """
+        new_password_hash = DN_PasswordHash(self.password, self.stored_password_hash).hash_password()
+        return new_password_hash == self.stored_password_hash
 
-    def dn_logout(self) -> bool:
-        """Logout method"""
-        # Assuming a simple check for demonstration
-        if self.dn_user == "admin":
-            return True
-        else:
-            logger.error("Logout failed")
-            return False
+class DN_TokenGenerator:
+    """
+    인증 토큰을 생성하는 클래스
+    """
+    def generate_token(self, user_id):
+        """
+        사용자 아이디를 받아 토큰을 생성하는 메서드
+        """
+        token = hashlib.sha256(str(user_id).encode('utf-8')).hexdigest()
+        return token
 
-
-def dn_encrypt_data(data: str, key: Optional[str] = "default") -> str:
-    """Function to encrypt data"""
-    if not data:
-        logger.error("Data not provided for encryption")
-        raise DN_SecurityError("Data not provided for encryption")
-    # Placeholder for actual encryption logic
-    return data[::-1]
-
-
-def dn_decrypt_data(data: str, key: Optional[str] = "default") -> str:
-    """Function to decrypt data"""
-    if not data:
-        logger.error("Data not provided for decryption")
-        raise DN_SecurityError("Data not provided for decryption")
-    # Placeholder for actual decryption logic
-    return data[::-1]
-
-
-def dn_verify_data(data: str, checksum: str) -> bool:
-    """Function to verify data"""
-    if not data or not checksum:
-        logger.error("Data or checksum not provided for verification")
-        raise DN_SecurityError("Data or checksum not provided for verification")
-    # Placeholder for actual verification logic
-    return True
-
-
-def dn_hash_data(data: str) -> str:
-    """Function to hash data"""
-    if not data:
-        logger.error("Data not provided for hashing")
-        raise DN_SecurityError("Data not provided for hashing")
-    # Placeholder for actual hash logic
-    return data[::-1]
+if __name__ == '__main__':
+    # 예시 코드
+    password = "MySecretPassword123"
+    stored_password_hash = DN_PasswordHash(password).hash_password()
+    auth = DN_Authentication("user123", password, stored_password_hash)
+    if auth.authenticate_user():
+        token_gen = DN_TokenGenerator()
+        token = token_gen.generate_token("user123")
+        print("Authentication successful. Token:", token)
+    else:
+        print("Authentication failed")
