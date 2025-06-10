@@ -1,0 +1,272 @@
+[
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_device_3.py\n작성자: jun.kim\n모듈: device\n복잡도: 0.187\n\n# 코드 시작점:\n    def add_device(self, dn_device_id: str, dn_device: DNDevice) -> None:\n        \"\"\"\n        Add a new device to the system.\n        \"\"\"\n        if dn_device_id in self.dn_devices:\n            raise ValueError(f'Device with ID: {dn_device_id} already exists')\n        self.dn_devices[dn_device_id] = dn_device",
+    "output": "이 함수는 add_device로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.187,
+    "author": "jun.kim",
+    "module": "device"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_utility_2.py\n작성자: jaewon.lee\n모듈: utility\n복잡도: 0.106\n\n# 코드 시작점:\n    def dn_sort_list(cls, lst: List[Any], reverse: bool = False) -> List[Any]:\n        Sort a list in ascending or descending order\n        return sorted(lst, reverse=reverse)",
+    "output": "    def dn_sort_list(cls, lst: List[Any], reverse: bool = False) -> List[Any]:\n        \"\"\"Sort a list in ascending or descending order\"\"\"\n        return sorted(lst, reverse=reverse)",
+    "task_type": "code_refactoring",
+    "complexity": 0.106,
+    "author": "jaewon.lee",
+    "module": "utility"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_encryption_4.py\n작성자: neha.sharma\n모듈: encryption\n복잡도: 0.125\n\n# 코드 시작점:\n    def dn_exchange_key(self) -> str:\n        \n        Exchanges the Fernet key securely using RSA.\n        \n        private_key = rsa.generate_private_key(\n            public_exponent=65537,\n            key_size=2048,\n        )\n        public_key = private_key.public_key().public_bytes(\n            encoding=serialization.Encoding.PEM,\n            format=serialization.PublicFormat.SubjectPublicKeyInfo\n        )\n        # Here, we would send the public_key to the other party and they would use it to encrypt the Fernet key.\n        # Then we would use our private_key to decrypt it.\n        # For simplicity, we are just returning the public key.\n        return public_key.decode()",
+    "output": "    def dn_exchange_key(self) -> str:\n        \"\"\"\n        Exchanges the Fernet key securely using RSA.\n        \"\"\"\n        private_key = rsa.generate_private_key(\n            public_exponent=65537,\n            key_size=2048,\n        )\n        public_key = private_key.public_key().public_bytes(\n            encoding=serialization.Encoding.PEM,\n            format=serialization.PublicFormat.SubjectPublicKeyInfo\n        )\n        # Here, we would send the public_key to the other party and they would use it to encrypt the Fernet key.\n        # Then we would use our private_key to decrypt it.\n        # For simplicity, we are just returning the public key.\n        return public_key.decode()",
+    "task_type": "code_refactoring",
+    "complexity": 0.125,
+    "author": "neha.sharma",
+    "module": "encryption"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_encryption_1.py\n작성자: neha.sharma\n모듈: encryption\n복잡도: 0.087\n\n# 코드 시작점:\n    def _dn_pad(self, message: str) -> bytes:\n        \n        Pad the message to be a multiple of AES.block_size.\n\n        :param message: The message to pad.\n        :return: The padded message.\n        \n        return message + (AES.block_size - len(message) % AES.block_size) * chr(AES.block_size - len(message) % AES.block_size)",
+    "output": "    def _dn_pad(self, message: str) -> bytes:\n        \"\"\"\n        Pad the message to be a multiple of AES.block_size.\n\n        :param message: The message to pad.\n        :return: The padded message.\n        \"\"\"\n        return message + (AES.block_size - len(message) % AES.block_size) * chr(AES.block_size - len(message) % AES.block_size)",
+    "task_type": "code_refactoring",
+    "complexity": 0.087,
+    "author": "neha.sharma",
+    "module": "encryption"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_testing_1.py\n작성자: emma.chen\n모듈: testing\n복잡도: 0.188\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_divide(num1: int, num2: int) -> float:\n    ...",
+    "output": "def dn_divide(num1: int, num2: int) -> float:\n    \"\"\"\n    The function receives two integers and returns their division.\n    \"\"\"\n    if num2 == 0:\n        raise ValueError(\"Cannot divide by zero!\")\n    return num1 / num2",
+    "task_type": "test_generation",
+    "complexity": 0.188,
+    "author": "emma.chen",
+    "module": "testing"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_form_5.py\n작성자: mina.kim\n모듈: form\n복잡도: 0.205\n\n# 코드 시작점:\n# documentation 작업\n    def __init__(self, dn_fields: Dict[str, Any]):...",
+    "output": "    def __init__(self, dn_fields: Dict[str, Any]):\n        self.dn_fields = dn_fields",
+    "task_type": "documentation",
+    "complexity": 0.205,
+    "author": "mina.kim",
+    "module": "form"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_compatibility_5.py\n작성자: david.wilson\n모듈: compatibility\n복잡도: 0.263\n\n# 코드 시작점:\n# documentation 작업\n    def dn_check_system(self):\n        \"\"\"Check if...",
+    "output": "    def dn_check_system(self):\n        \"\"\"Check if Python version is compatible\"\"\"\n        return self.dn_system.dn_python_version >= self.dn_python_version",
+    "task_type": "documentation",
+    "complexity": 0.263,
+    "author": "david.wilson",
+    "module": "compatibility"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_storage_4.py\n작성자: jun.kim\n모듈: storage\n복잡도: 0.223\n\n# 코드 시작점:\n    def dn_delete(self, key: str) -> None:\n        \"\"\"\n        This method deletes a key-value pair from the storage.\n\n        :param key: The key to delete along with its associated value.\n        :raises DNNotFoundError: If the key is not found in the storage.\n        \"\"\"\n        if key in self.dn_data:\n            del self.dn_data[key]\n        else:\n            raise DNNotFoundError(f\"'{key}' not found in storage.\")",
+    "output": "이 함수는 dn_delete로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.223,
+    "author": "jun.kim",
+    "module": "storage"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_config_3.py\n작성자: sofia.mendez\n모듈: config\n복잡도: 0.288\n\n# 코드 시작점:\n    def dn_save_config(self) -> None:\n        \"\"\"Saves the current configuration data to the config file\"\"\"\n        try:\n            with open(self.dn_config_file, 'w') as file:\n                json.dump(self.dn_config_data, file)\n        except Exception as err:\n            raise DNConfigError(f\"Error saving config file: {err}\")",
+    "output": "이 함수는 dn_save_config로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.288,
+    "author": "sofia.mendez",
+    "module": "config"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_core_4.py\n작성자: hyunwoo.park\n모듈: core\n복잡도: 0.167\n\n# 코드 시작점:\n    def perform_logic(self, dn_data):\n        \"\"\"Perform core business logic.\n    # TODO: 구현 완료",
+    "output": "    def perform_logic(self, dn_data):\n        \"\"\"Perform core business logic.\n\n        Args:\n            dn_data: Validated input data.\n\n        Returns:\n            Processed data.\n\n        Raises:\n            DNNotFoundError: If a required resource is not found.\n            DNError: If an unexpected error occurs.\n        \"\"\"\n        try:\n            # Implement core business logic here\n\n            return dn_data\n\n        except DNNotFoundError:\n            raise\n\n        except Exception as e:\n            raise DNError('An error occurred while processing data.') from e",
+    "task_type": "code_completion",
+    "complexity": 0.167,
+    "author": "hyunwoo.park",
+    "module": "core"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_core_1.py\n작성자: hyunwoo.park\n모듈: core\n복잡도: 0.098\n\n# 코드 시작점:\n# documentation 작업\ndef dn_function_2(dn_input: str) -> str:\n    \"\"\"\n ...",
+    "output": "def dn_function_2(dn_input: str) -> str:\n    \"\"\"\n    This is the second function in the Danal system.\n    It takes a string as input and returns a string.\n    \"\"\"\n    dn_output = dn_input + \" processed by function 2\"\n    return dn_output",
+    "task_type": "documentation",
+    "complexity": 0.098,
+    "author": "hyunwoo.park",
+    "module": "core"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_validation_1.py\n작성자: emma.chen\n모듈: validation\n복잡도: 0.164\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_test_is_in_range():\n    validator = DN_Vali...",
+    "output": "def dn_test_is_in_range():\n    validator = DN_Validator(100)\n    assert validator.dn_is_in_range(0, 200), \"Failed on range check\"",
+    "task_type": "test_generation",
+    "complexity": 0.164,
+    "author": "emma.chen",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_validation_2.py\n작성자: emma.chen\n모듈: validation\n복잡도: 0.18\n\n# 코드 시작점:\n    def dn_validate_string(self, input_string: str) -> bool:\n        \n        Validate if the input is a string.\n        \n        return isinstance(input_string, str)",
+    "output": "    def dn_validate_string(self, input_string: str) -> bool:\n        \"\"\"\n        Validate if the input is a string.\n        \"\"\"\n        return isinstance(input_string, str)",
+    "task_type": "code_refactoring",
+    "complexity": 0.18,
+    "author": "emma.chen",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_user_1.py\n작성자: jaewon.lee\n모듈: user\n복잡도: 0.114\n\n# 코드 시작점:\n    def dn_set_password(self, password: str):\n        \n        사용자 비밀번호를 변경합니다.\n        \n        self.dn_password = password",
+    "output": "    def dn_set_password(self, password: str):\n        \"\"\"\n        사용자 비밀번호를 변경합니다.\n        \"\"\"\n        self.dn_password = password",
+    "task_type": "code_refactoring",
+    "complexity": 0.114,
+    "author": "jaewon.lee",
+    "module": "user"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_prediction_3.py\n작성자: alex.wong\n모듈: prediction\n복잡도: 0.11\n\n# 코드 시작점:\ndef dn_load_data(file_path: str) -> pd.DataFrame:\n    \"\"\"\n    Load CSV data from the provided file path.\n\n    Args:\n        file_path (str): File path\n\n    Returns:\n        DataFrame: Loaded data\n    \"\"\"\n    try:\n        return pd.read_csv(file_path)\n    except FileNotFoundError:\n        print(f\"The file {file_path} does not exist. Please check the file path.\")\n        return None",
+    "output": "이 함수는 dn_load_data로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.11,
+    "author": "alex.wong",
+    "module": "prediction"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_device_5.py\n작성자: jun.kim\n모듈: device\n복잡도: 0.225\n\n# 코드 시작점:\n    def dn_disconnect_device(self, device_id: str) -> None:\n        Disconnect a device\n        if device_id not in self.dn_connected_devices:\n            logging.info(f\"Device {device_id} is not connected.\")\n            return\n\n        # Disconnect the device\n        self.dn_connected_devices.remove(device_id)\n        logging.info(f\"Device {device_id} disconnected.\")",
+    "output": "    def dn_disconnect_device(self, device_id: str) -> None:\n        \"\"\"Disconnect a device\"\"\"\n        if device_id not in self.dn_connected_devices:\n            logging.info(f\"Device {device_id} is not connected.\")\n            return\n\n        # Disconnect the device\n        self.dn_connected_devices.remove(device_id)\n        logging.info(f\"Device {device_id} disconnected.\")",
+    "task_type": "code_refactoring",
+    "complexity": 0.225,
+    "author": "jun.kim",
+    "module": "device"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_compatibility_3.py\n작성자: david.wilson\n모듈: compatibility\n복잡도: 0.151\n\n# 코드 시작점:\n    def dn_handle_file(self):\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_handle_file(self):\n        \"\"\"\n        The function to handle a file, checking if it exists and is readable.\n\n        Returns:\n            str: The return message.\n        \"\"\"\n        if not self.dn_check_file_exists():\n            return \"File does not exist.\"\n        elif not self.dn_check_file_readability():\n            return \"File is not readable.\"\n        else:\n            return \"File exists and is readable.\"",
+    "task_type": "code_completion",
+    "complexity": 0.151,
+    "author": "david.wilson",
+    "module": "compatibility"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_form_3.py\n작성자: mina.kim\n모듈: form\n복잡도: 0.213\n\n# 코드 시작점:\ndef dn_create_form(form_data: Dict[str, Any]) -> DNForm::\n    # TODO: 구현",
+    "output": "def dn_create_form(form_data: Dict[str, Any]) -> DNForm:\n    \"\"\"Create a new form with given data\"\"\"\n    return DNForm(form_data)",
+    "task_type": "code_completion",
+    "complexity": 0.213,
+    "author": "mina.kim",
+    "module": "form"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_mobile_ui_5.py\n작성자: jun.kim\n모듈: mobile_ui\n복잡도: 0.338\n\n# 코드 시작점:\n    def render(self) -> None:\n        print(f\"Rendered a label with text '{self.dn_text}'\")",
+    "output": "이 함수는 render로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.338,
+    "author": "jun.kim",
+    "module": "mobile_ui"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_testing_3.py\n작성자: emma.chen\n모듈: testing\n복잡도: 0.294\n\n# 코드 시작점:\n# test_generation 작업\n    def __init__(self):\n        self.dn_data = []...",
+    "output": "    def __init__(self):\n        self.dn_data = []",
+    "task_type": "test_generation",
+    "complexity": 0.294,
+    "author": "emma.chen",
+    "module": "testing"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_security_1.py\n작성자: jin.park\n모듈: security\n복잡도: 0.186\n\n# 코드 시작점:\ndef dn_decrypt_user_data(encrypted_data: dict, key: str) -> Union[dict, None]:\n    Decrypts the user's sensitive data.\n    try:\n        helper = DNEncryptionHelper(key)\n        decrypted_data = {\n            'username': helper.dn_decrypt(encrypted_data['username']),\n            'email': helper.dn_decrypt(encrypted_data['email']),\n            'phone': helper.dn_decrypt(encrypted_data['phone'])\n        }\n        return decrypted_data\n    except Exception as e:\n        logging.error(f\"Error while decrypting user data: {str(e)}\")\n        return None",
+    "output": "def dn_decrypt_user_data(encrypted_data: dict, key: str) -> Union[dict, None]:\n    \"\"\"Decrypts the user's sensitive data.\"\"\"\n    try:\n        helper = DNEncryptionHelper(key)\n        decrypted_data = {\n            'username': helper.dn_decrypt(encrypted_data['username']),\n            'email': helper.dn_decrypt(encrypted_data['email']),\n            'phone': helper.dn_decrypt(encrypted_data['phone'])\n        }\n        return decrypted_data\n    except Exception as e:\n        logging.error(f\"Error while decrypting user data: {str(e)}\")\n        return None",
+    "task_type": "code_refactoring",
+    "complexity": 0.186,
+    "author": "jin.park",
+    "module": "security"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_validation_2.py\n작성자: jin.park\n모듈: validation\n복잡도: 0.122\n\n# 코드 시작점:\n    def dn_validate_email(dn_email: str) -> Union[str, DN_ValidationException]:\n        \"\"\"\n        Validate if the given string is a valid email.\n\n        Args:\n            dn_email (str): The email string to be validated.\n\n        Returns:\n            Union[str, DN_ValidationException]: The given email if it is valid, else raises DN_ValidationException.\n        \"\"\"\n        email_regex = r'\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b'\n        if re.match(email_regex, dn_email):\n            return dn_email\n        else:\n            logger.error(f'Invalid email: {dn_email}')\n            raise DN_ValidationException(f'Invalid email: {dn_email}')",
+    "output": "이 함수는 dn_validate_email로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.122,
+    "author": "jin.park",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_storage_5.py\n작성자: jun.kim\n모듈: storage\n복잡도: 0.225\n\n# 코드 시작점:\n# test_generation 작업\n    def __init__(self, storage_path: str):\n       ...",
+    "output": "    def __init__(self, storage_path: str):\n        self.dn_storage_path = storage_path\n        self.dn_storage_data = self.dn_load()",
+    "task_type": "test_generation",
+    "complexity": 0.225,
+    "author": "jun.kim",
+    "module": "storage"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_deployment_5.py\n작성자: sofia.mendez\n모듈: deployment\n복잡도: 0.211\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_deploy(self, dn_files: List[str]) -> No...",
+    "output": "    def dn_deploy(self, dn_files: List[str]) -> None:\n        \"\"\"Deploys the given files to the deployment directory.\n\n        Args:\n            dn_files: A list of files to be deployed.\n\n        Raises:\n            DNDeploymentError: If there is an error during deployment.\n        \"\"\"\n        if not self.dn_check_existing_deployment():\n            self.dn_create_deployment_directory()\n\n        try:\n            for file in dn_files:\n                subprocess.check_call(f'cp {file} /deployments/{self.dn_codebase}', shell=True)\n        except subprocess.CalledProcessError as e:\n            raise DNDeploymentError(f'Error during deployment: {str(e)}')",
+    "task_type": "test_generation",
+    "complexity": 0.211,
+    "author": "sofia.mendez",
+    "module": "deployment"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_payment_4.py\n작성자: jin.park\n모듈: payment\n복잡도: 0.113\n\n# 코드 시작점:\n    def dn_process_payment(self, amount: float) -> Dict[str, str]:\n        \"\"\"\n        The function to process payment\n\n        Parameters:\n            amount (float): The payment amount\n\n        Returns:\n            dict: a dictionary with payment status\n        \"\"\"\n\n        payment_status = {}\n        if self.dn_verify_payment_info():\n            # Assuming some external payment gateway is used here\n            # So, the actual implementation will be based on the external payment gateway's API\n            payment_status['status'] = 'Success'\n            payment_status['amount'] = amount\n            logger.info(f\"Payment processed successfully for user_id: {self.user_id}\")\n        else:\n            payment_status['status'] = 'Failed'\n            logger.error(f\"Payment failed for user_id: {self.user_id}\")\n\n        return payment_status",
+    "output": "이 함수는 dn_process_payment로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.113,
+    "author": "jin.park",
+    "module": "payment"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_reporting_1.py\n작성자: alex.wong\n모듈: reporting\n복잡도: 0.129\n\n# 코드 시작점:\n    def dn_remove_column(self, column_name: str):\n        \n        Remove a column from the report data.\n\n        :param column_name: name of the column to be removed\n        :type column_name: str\n        \n        self.data.drop([column_name], axis=1, inplace=True)",
+    "output": "    def dn_remove_column(self, column_name: str):\n        \"\"\"\n        Remove a column from the report data.\n\n        :param column_name: name of the column to be removed\n        :type column_name: str\n        \"\"\"\n        self.data.drop([column_name], axis=1, inplace=True)",
+    "task_type": "code_refactoring",
+    "complexity": 0.129,
+    "author": "alex.wong",
+    "module": "reporting"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_mocking_5.py\n작성자: emma.chen\n모듈: mocking\n복잡도: 0.232\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_process_data(self, url: str) -> dict:\n ...",
+    "output": "    def dn_process_data(self, url: str) -> dict:\n        \"\"\"Fetches data from a given URL and processes it\"\"\"\n        data = self.api.dn_get_data(url)\n        return self.dn_transform_data(data)",
+    "task_type": "test_generation",
+    "complexity": 0.232,
+    "author": "emma.chen",
+    "module": "mocking"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_mobile_ui_1.py\n작성자: jun.kim\n모듈: mobile_ui\n복잡도: 0.156\n\n# 코드 시작점:\n# documentation 작업\n    def dn_get_state(self, key: str) -> Any:\n     ...",
+    "output": "    def dn_get_state(self, key: str) -> Any:\n        \"\"\"\n        Get a state variable.\n        \"\"\"\n        return self.dn_state.get(key, None)",
+    "task_type": "documentation",
+    "complexity": 0.156,
+    "author": "jun.kim",
+    "module": "mobile_ui"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_service_3.py\n작성자: hyunwoo.park\n모듈: service\n복잡도: 0.158\n\n# 코드 시작점:\n# documentation 작업\n    def dn_initialize(self) -> None:\n        \"\"\"In...",
+    "output": "    def dn_initialize(self) -> None:\n        \"\"\"Initializes the service.\"\"\"\n        logger.info(\"Initializing service...\")\n\n        # Here, we might connect to databases, initialize resources, etc.\n        # This is just a placeholder.\n        pass",
+    "task_type": "documentation",
+    "complexity": 0.158,
+    "author": "hyunwoo.park",
+    "module": "service"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_analytics_2.py\n작성자: alex.wong\n모듈: analytics\n복잡도: 0.11\n\n# 코드 시작점:\ndef dn_load_model(file_path: str) -> LinearRegression:\n    \"\"\"\n    Load a trained model from a file.\n    :param file_path: The path to the file to load the model from.\n    :return: The loaded model.\n    \"\"\"\n    with open(file_path, 'rb') as file:\n        return pickle.load(file)",
+    "output": "이 함수는 dn_load_model로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.11,
+    "author": "alex.wong",
+    "module": "analytics"
+  }
+]
