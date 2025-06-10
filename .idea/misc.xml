@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="uv (corp_style_code_generator)" />
   </component>
-  <component name="KubernetesApiPersistence">{}</component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="uv (corp_style_code_generator)" project-jdk-type="Python SDK" />
 </project>
