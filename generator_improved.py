@@ -292,10 +292,10 @@ class ImprovedCodeGenerator:
         finetuning_dir = f"{output_dir}/finetuning_data"
         os.makedirs(finetuning_dir, exist_ok=True)
 
-        with open(f"{finetuning_dir}/improved_train_dataset.json", "w", encoding="utf-8") as f:
+        with open(f"./{finetuning_dir}/improved_train_dataset_improved.json", "w", encoding="utf-8") as f:
             json.dump(train_data, f, ensure_ascii=False, indent=2)
 
-        with open(f"{finetuning_dir}/improved_val_dataset.json", "w", encoding="utf-8") as f:
+        with open(f"./{finetuning_dir}/val_dataset_improved.json", "w", encoding="utf-8") as f:
             json.dump(val_data, f, ensure_ascii=False, indent=2)
 
         # 통계 출력

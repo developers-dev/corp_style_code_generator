@@ -1,0 +1,1082 @@
+[
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_reporting_2.py\n작성자: alex.wong\n모듈: reporting\n복잡도: 0.116\n\n# 코드 시작점:\n# bug_fix 작업\n    def __init__(self, data: pd.DataFrame) -> None...",
+    "output": "    def __init__(self, data: pd.DataFrame) -> None:\n        \"\"\"\n        Initialize the DNReporting class.\n\n        Parameters:\n        data (pd.DataFrame): The dataframe to generate reports from.\n        \"\"\"\n        self.dn_data = data",
+    "task_type": "bug_fix",
+    "complexity": 0.116,
+    "author": "alex.wong",
+    "module": "reporting"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_utility_1.py\n작성자: jaewon.lee\n모듈: utility\n복잡도: 0.149\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_divide(self, a: int, b: int) -> float:\n...",
+    "output": "    def dn_divide(self, a: int, b: int) -> float:\n        \"\"\"\n        Returns the division of two numbers.\n        If the denominator is zero, returns zero.\n        \"\"\"\n        if b == 0:\n            return 0\n        return a / b",
+    "task_type": "test_generation",
+    "complexity": 0.149,
+    "author": "jaewon.lee",
+    "module": "utility"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_refactoring_2.py\n작성자: david.wilson\n모듈: refactoring\n복잡도: 0.111\n\n# 코드 시작점:\n    def dn_get_function_count(self) -> int:\n        \"\"\"\n        Returns the function count in the code base.\n        \n        :return: The number of functions in the code base.\n        \"\"\"\n        return self.dn_code_base.count('def ')",
+    "output": "이 함수는 dn_get_function_count로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.111,
+    "author": "david.wilson",
+    "module": "refactoring"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_validation_5.py\n작성자: jin.park\n모듈: validation\n복잡도: 0.245\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_test_validators():\n    \"\"\"Test validators.\"...",
+    "output": "def dn_test_validators():\n    \"\"\"Test validators.\"\"\"\n    string_data = \"Danal\"\n    integer_data = 2020\n\n    dn_string_validator = DNStringValidator()\n    assert dn_string_validator.validate(string_data), \"String validation failed.\"\n\n    dn_integer_validator = DNIntegerValidator()\n    assert dn_integer_validator.validate(integer_data), \"Integer validation failed.\"\n\n    dn_composite_validator = DNCompositeValidator()\n    dn_composite_validator.add_validator(dn_string_validator)\n    dn_composite_validator.add_validator(dn_integer_validator)\n\n    assert dn_composite_validator.validate(string_data), \"Composite validation failed.\"\n    assert not dn_composite_validator.validate(integer_data), \"Composite validation should fail.\"",
+    "task_type": "test_generation",
+    "complexity": 0.245,
+    "author": "jin.park",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_prediction_5.py\n작성자: alex.wong\n모듈: prediction\n복잡도: 0.136\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_fit(self, X, y):\n        \"\"\"\n        Fi...",
+    "output": "    def dn_fit(self, X, y):\n        \"\"\"\n        Fit the model using GridSearch.\n        \"\"\"\n        self.dn_gs.fit(X, y)",
+    "task_type": "bug_fix",
+    "complexity": 0.136,
+    "author": "alex.wong",
+    "module": "prediction"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_user_3.py\n작성자: jaewon.lee\n모듈: user\n복잡도: 0.188\n\n# 코드 시작점:\n    def dn_change_password(self, dn_new_password: str):\n        \n        Change the user password.\n        \n        self.dn_password = dn_new_password",
+    "output": "    def dn_change_password(self, dn_new_password: str):\n        \"\"\"\n        Change the user password.\n        \"\"\"\n        self.dn_password = dn_new_password",
+    "task_type": "code_refactoring",
+    "complexity": 0.188,
+    "author": "jaewon.lee",
+    "module": "user"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_mobile_ui_2.py\n작성자: jun.kim\n모듈: mobile_ui\n복잡도: 0.101\n\n# 코드 시작점:\ndef dn_switch_device(mobile_ui: DNMobileUI, device: str) -> None:\n    \n    Function to switch device.\n    \n    mobile_ui.dn_optimize_for_device(device)\n    mobile_ui.dn_render_ui()",
+    "output": "def dn_switch_device(mobile_ui: DNMobileUI, device: str) -> None:\n    \"\"\"\n    Function to switch device.\n    \"\"\"\n    mobile_ui.dn_optimize_for_device(device)\n    mobile_ui.dn_render_ui()",
+    "task_type": "code_refactoring",
+    "complexity": 0.101,
+    "author": "jun.kim",
+    "module": "mobile_ui"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_security_3.py\n작성자: jin.park\n모듈: security\n복잡도: 0.159\n\n# 코드 시작점:\n    def __init__(self, dn_username: str, dn_password: str) -> None:\n        self.dn_username = dn_username\n        self.dn_password = self._encrypt_password(dn_password)",
+    "output": "    def __init__(self, dn_username: str, dn_password: str) -> None:\n        self.dn_username = dn_username\n        self.dn_password = self._encrypt_password(dn_password)",
+    "task_type": "code_refactoring",
+    "complexity": 0.159,
+    "author": "jin.park",
+    "module": "security"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_utility_4.py\n작성자: jaewon.lee\n모듈: utility\n복잡도: 0.24\n\n# 코드 시작점:\n# bug_fix 작업\ndef dn_save_data(file_path: str, data: Dict[str, A...",
+    "output": "def dn_save_data(file_path: str, data: Dict[str, Any]):\n    \"\"\"Save data to a file\"\"\"\n    # logic to save data to a file\n    with open(file_path, 'w') as file:\n        file.write(data)",
+    "task_type": "bug_fix",
+    "complexity": 0.24,
+    "author": "jaewon.lee",
+    "module": "utility"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_testing_2.py\n작성자: emma.chen\n모듈: testing\n복잡도: 0.12\n\n# 코드 시작점:\n    def dn_set_up(self):\n        \"\"\" Set up variables for test cases \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_set_up(self):\n        \"\"\" Set up variables for test cases \"\"\"\n        self.dn_list = [1, 2, 3, 4, 5]\n        self.dn_dict = {'a': 1, 'b': 2, 'c': 3}\n        self.dn_str = 'Danal'\n        self.dn_int = 10",
+    "task_type": "code_completion",
+    "complexity": 0.12,
+    "author": "emma.chen",
+    "module": "testing"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_device_1.py\n작성자: jun.kim\n모듈: device\n복잡도: 0.135\n\n# 코드 시작점:\n# bug_fix 작업\ndef dn_set_device_os(device: DNDevice, os: str) ->...",
+    "output": "def dn_set_device_os(device: DNDevice, os: str) -> None:\n    \"\"\"\n    This function sets the operating system for the device.\n    \"\"\"\n    device.dn_os = os",
+    "task_type": "bug_fix",
+    "complexity": 0.135,
+    "author": "jun.kim",
+    "module": "device"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_compatibility_1.py\n작성자: david.wilson\n모듈: compatibility\n복잡도: 0.14\n\n# 코드 시작점:\n# documentation 작업\n    def dn_set_version(self, version: str):\n      ...",
+    "output": "    def dn_set_version(self, version: str):\n        \"\"\"\n        Set the system version.\n\n        :param version: The version to set.\n        \"\"\"\n        self.dn_version = version",
+    "task_type": "documentation",
+    "complexity": 0.14,
+    "author": "david.wilson",
+    "module": "compatibility"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_validation_4.py\n작성자: jin.park\n모듈: validation\n복잡도: 0.169\n\n# 코드 시작점:\ndef dn_validate_input(dn_input: Any, dn_validator: DNValidator, dn_validation_method: str) -> Union[bool, str]:\n    \"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_validate_input(dn_input: Any, dn_validator: DNValidator, dn_validation_method: str) -> Union[bool, str]:\n    \"\"\"\n    Validates the input data using the given validation method of DNValidator\n    :param dn_input: Input data to validate\n    :param dn_validator: DNValidator instance\n    :param dn_validation_method: Validation method of DNValidator\n    :return: True if the input data is valid, error message otherwise\n    \"\"\"\n    try:\n        is_valid = getattr(dn_validator, dn_validation_method)(dn_input)\n        if not is_valid:\n            raise DNValidationError(f\"Input '{dn_input}' is not valid.\")\n        return True\n    except DNValidationError as e:\n        logger.error(e)\n        return str(e)\n    except Exception as e:\n        logger.error(e)\n        return \"Unknown error occurred.\"",
+    "task_type": "code_completion",
+    "complexity": 0.169,
+    "author": "jin.park",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_validation_1.py\n작성자: jin.park\n모듈: validation\n복잡도: 0.273\n\n# 코드 시작점:\n    def dn_check_types(self):\n        \"\"\"Check if all values are of correct type\"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_check_types(self):\n        \"\"\"Check if all values are of correct type\"\"\"\n        key_types = {'key1': str, 'key2': int, 'key3': bool}\n        for key, expected_type in key_types.items():\n            if not isinstance(self.dn_data.get(key, None), expected_type):\n                raise DNValidationException(f\"Incorrect type for key: {key}\")\n        logger.info(\"All values are of correct type\")",
+    "task_type": "code_completion",
+    "complexity": 0.273,
+    "author": "jin.park",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_dashboard_5.py\n작성자: mina.kim\n모듈: dashboard\n복잡도: 0.182\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_refresh_data(self) -> None:\n        \"\"\"...",
+    "output": "    def dn_refresh_data(self) -> None:\n        \"\"\"Fetches data from the API and updates the dashboard data with it\"\"\"\n        self.dn_data = self.dn_fetch_data()",
+    "task_type": "bug_fix",
+    "complexity": 0.182,
+    "author": "mina.kim",
+    "module": "dashboard"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_service_2.py\n작성자: hyunwoo.park\n모듈: service\n복잡도: 0.148\n\n# 코드 시작점:\n# documentation 작업\ndef dn_create_service(dn_data: Dict) -> DNService:...",
+    "output": "def dn_create_service(dn_data: Dict) -> DNService:\n    \"\"\"\n    Factory function to create a new service.\n    \n    :param dn_data: The data to be processed by the service.\n    :return: A new instance of a service.\n    \"\"\"\n    return DNExampleService(dn_data)",
+    "task_type": "documentation",
+    "complexity": 0.148,
+    "author": "hyunwoo.park",
+    "module": "service"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_encryption_5.py\n작성자: neha.sharma\n모듈: encryption\n복잡도: 0.159\n\n# 코드 시작점:\ndef main():\n    dn_password = \"password\"\n    # TODO: 구현 완료",
+    "output": "def main():\n    dn_password = \"password\"\n    dn_salt = \"salt\"\n    dn_key = dn_generate_key(dn_password, dn_salt)\n\n    dn_encryptor = DNFernetEncryptor(dn_key)\n\n    dn_data = \"Hello, World!\"\n    dn_validate_input(dn_data)\n\n    dn_encrypted_data = dn_encryptor.dn_encrypt(dn_data)\n    print(f\"Encrypted data: {dn_encrypted_data}\")\n\n    dn_decrypted_data = dn_encryptor.dn_decrypt(dn_encrypted_data)\n    print(f\"Decrypted data: {dn_decrypted_data}\")\n\n    dn_hashed_string = dn_hash_string(dn_data)\n    print(f\"Hashed string: {dn_hashed_string}\")",
+    "task_type": "code_completion",
+    "complexity": 0.159,
+    "author": "neha.sharma",
+    "module": "encryption"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_ui_component_2.py\n작성자: mina.kim\n모듈: ui_component\n복잡도: 0.095\n\n# 코드 시작점:\n# documentation 작업\ndef dn_render_component(dn_component: DN_UiCompone...",
+    "output": "def dn_render_component(dn_component: DN_UiComponent):\n    \"\"\"\n    Render a UI component.\n\n    :param dn_component: An instance of DN_UiComponent to render.\n    :return: None.\n    \"\"\"\n    dn_component.dn_render()",
+    "task_type": "documentation",
+    "complexity": 0.095,
+    "author": "mina.kim",
+    "module": "ui_component"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_dashboard_1.py\n작성자: mina.kim\n모듈: dashboard\n복잡도: 0.167\n\n# 코드 시작점:\ndef dn_create_dashboard(dn_id: int, dn_name: str) -> DN_Dashboard:\n    Create a new dashboard\n    return DN_Dashboard(dn_id, dn_name)",
+    "output": "def dn_create_dashboard(dn_id: int, dn_name: str) -> DN_Dashboard:\n    \"\"\"Create a new dashboard\"\"\"\n    return DN_Dashboard(dn_id, dn_name)",
+    "task_type": "code_refactoring",
+    "complexity": 0.167,
+    "author": "mina.kim",
+    "module": "dashboard"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_legacy_adapter_4.py\n작성자: david.wilson\n모듈: legacy_adapter\n복잡도: 0.135\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_get_status(self):\n        \"\"\"\n        G...",
+    "output": "    def dn_get_status(self):\n        \"\"\"\n        Get the status of the legacy system.\n\n        :return: The status of the system.\n        :rtype: str\n        \"\"\"\n        return \"Online\" if self.dn_is_online else \"Offline\"",
+    "task_type": "test_generation",
+    "complexity": 0.135,
+    "author": "david.wilson",
+    "module": "legacy_adapter"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_storage_3.py\n작성자: jun.kim\n모듈: storage\n복잡도: 0.136\n\n# 코드 시작점:\n# documentation 작업\n    def dn_clear(self) -> None:\n        \"\"\"\n      ...",
+    "output": "    def dn_clear(self) -> None:\n        \"\"\"\n        Clear the storage.\n        \"\"\"\n        self.dn_storage.clear()",
+    "task_type": "documentation",
+    "complexity": 0.136,
+    "author": "jun.kim",
+    "module": "storage"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_config_5.py\n작성자: sofia.mendez\n모듈: config\n복잡도: 0.242\n\n# 코드 시작점:\n    def dn_set_config(self, key: str, value: Any) -> None:\n        pass",
+    "output": "이 함수는 dn_set_config로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.242,
+    "author": "sofia.mendez",
+    "module": "config"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_testing_5.py\n작성자: emma.chen\n모듈: testing\n복잡도: 0.235\n\n# 코드 시작점:\n# documentation 작업\n    def dn_run_tests(self):\n        for dn_test_ca...",
+    "output": "    def dn_run_tests(self):\n        for dn_test_case in self.dn_test_cases:\n            dn_test_case.run()",
+    "task_type": "documentation",
+    "complexity": 0.235,
+    "author": "emma.chen",
+    "module": "testing"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_security_2.py\n작성자: jin.park\n모듈: security\n복잡도: 0.233\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_logout(self) -> bool:\n        \"\"\"Logout...",
+    "output": "    def dn_logout(self) -> bool:\n        \"\"\"Logout method\"\"\"\n        # Assuming a simple check for demonstration\n        if self.dn_user == \"admin\":\n            return True\n        else:\n            logger.error(\"Logout failed\")\n            return False",
+    "task_type": "bug_fix",
+    "complexity": 0.233,
+    "author": "jin.park",
+    "module": "security"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_deployment_3.py\n작성자: sofia.mendez\n모듈: deployment\n복잡도: 0.199\n\n# 코드 시작점:\n# documentation 작업\n    def __init__(self, dn_env: str):\n        self....",
+    "output": "    def __init__(self, dn_env: str):\n        self.dn_env = dn_env",
+    "task_type": "documentation",
+    "complexity": 0.199,
+    "author": "sofia.mendez",
+    "module": "deployment"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_analytics_4.py\n작성자: alex.wong\n모듈: analytics\n복잡도: 0.101\n\n# 코드 시작점:\n    def dn_optimize_parameters(self, param_grid):\n        \n        Optimize model parameters using GridSearchCV\n\n        :param param_grid: Dictionary with parameters names as keys and lists of parameter settings to try as values\n        :return: Best parameters\n        \n        dn_grid_search = GridSearchCV(estimator=self.dn_model, param_grid=param_grid, cv=3)\n        dn_X_train, _, dn_y_train, _ = self.dn_train_test_split()\n        dn_grid_search.fit(dn_X_train, dn_y_train)\n        return dn_grid_search.best_params_",
+    "output": "    def dn_optimize_parameters(self, param_grid):\n        \"\"\"\n        Optimize model parameters using GridSearchCV\n\n        :param param_grid: Dictionary with parameters names as keys and lists of parameter settings to try as values\n        :return: Best parameters\n        \"\"\"\n        dn_grid_search = GridSearchCV(estimator=self.dn_model, param_grid=param_grid, cv=3)\n        dn_X_train, _, dn_y_train, _ = self.dn_train_test_split()\n        dn_grid_search.fit(dn_X_train, dn_y_train)\n        return dn_grid_search.best_params_",
+    "task_type": "code_refactoring",
+    "complexity": 0.101,
+    "author": "alex.wong",
+    "module": "analytics"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_utility_3.py\n작성자: jaewon.lee\n모듈: utility\n복잡도: 0.187\n\n# 코드 시작점:\n# bug_fix 작업\n    def __str__(self):\n        return self.message...",
+    "output": "    def __str__(self):\n        return self.message",
+    "task_type": "bug_fix",
+    "complexity": 0.187,
+    "author": "jaewon.lee",
+    "module": "utility"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_integration_1.py\n작성자: hyunwoo.park\n모듈: integration\n복잡도: 0.134\n\n# 코드 시작점:\n    def dn_get_data(self):\n        \n        This function gets the data from the specified URL.\n        :return: Response data\n        \n        response = requests.get(self.dn_url, headers=self.dn_headers)\n        return response.json()",
+    "output": "    def dn_get_data(self):\n        \"\"\"\n        This function gets the data from the specified URL.\n        :return: Response data\n        \"\"\"\n        response = requests.get(self.dn_url, headers=self.dn_headers)\n        return response.json()",
+    "task_type": "code_refactoring",
+    "complexity": 0.134,
+    "author": "hyunwoo.park",
+    "module": "integration"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_payment_1.py\n작성자: jin.park\n모듈: payment\n복잡도: 0.112\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_complete_payment(self, dn_payment_id: s...",
+    "output": "    def dn_complete_payment(self, dn_payment_id: str) -> bool:\n        \"\"\"\n        Complete a payment\n        :param dn_payment_id: id of the payment\n        :return: True if the payment is completed successfully, False otherwise\n        \"\"\"\n        # Here, we should connect to the payment service and complete the payment.\n        # For simplicity, let's assume that the payment is always successful.\n        logger.info(f\"Completing payment {dn_payment_id}\")\n        return True",
+    "task_type": "test_generation",
+    "complexity": 0.112,
+    "author": "jin.park",
+    "module": "payment"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_refactoring_1.py\n작성자: david.wilson\n모듈: refactoring\n복잡도: 0.145\n\n# 코드 시작점:\n# bug_fix 작업\n    def __init__(self, dn_id: int, dn_name: str, d...",
+    "output": "    def __init__(self, dn_id: int, dn_name: str, dn_price: float, dn_stock: int):\n        self.dn_id = dn_id\n        self.dn_name = dn_name\n        self.dn_price = dn_price\n        self.dn_stock = dn_stock",
+    "task_type": "bug_fix",
+    "complexity": 0.145,
+    "author": "david.wilson",
+    "module": "refactoring"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_ui_component_5.py\n작성자: mina.kim\n모듈: ui_component\n복잡도: 0.225\n\n# 코드 시작점:\n    def __init__(self, dn_id: str, dn_props: Dict[str, Any] = None)::\n    # TODO: 구현",
+    "output": "    def __init__(self, dn_id: str, dn_props: Dict[str, Any] = None):\n        self.dn_id = dn_id\n        self.dn_props = dn_props if dn_props is not None else {}",
+    "task_type": "code_completion",
+    "complexity": 0.225,
+    "author": "mina.kim",
+    "module": "ui_component"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_auth_5.py\n작성자: neha.sharma\n모듈: auth\n복잡도: 0.142\n\n# 코드 시작점:\n# documentation 작업\n    def hash_password(self, password: str, salt: s...",
+    "output": "    def hash_password(self, password: str, salt: str) -> str:\n        \"\"\"\n        Method to hash a password for storing in the database\n        \"\"\"\n        pass",
+    "task_type": "documentation",
+    "complexity": 0.142,
+    "author": "neha.sharma",
+    "module": "auth"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_testing_4.py\n작성자: emma.chen\n모듈: testing\n복잡도: 0.241\n\n# 코드 시작점:\n# test_generation 작업\n    def test_dn_get_data(self):\n        self.dn_bu...",
+    "output": "    def test_dn_get_data(self):\n        self.dn_business_logic.dn_add_data('Test')\n        self.assertEqual(self.dn_business_logic.dn_get_data(0), 'Test')\n        with self.assertRaises(IndexError):\n            self.dn_business_logic.dn_get_data(1)",
+    "task_type": "test_generation",
+    "complexity": 0.241,
+    "author": "emma.chen",
+    "module": "testing"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_audit_3.py\n작성자: neha.sharma\n모듈: audit\n복잡도: 0.158\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_generate_signature(self, dn_data: Dict[...",
+    "output": "    def dn_generate_signature(self, dn_data: Dict[str, Any]) -> str:\n        \"\"\"\n        Generate a signature for the given data\n        using the secret key\n        \"\"\"\n        dn_msg = \"\".join([str(v) for v in dn_data.values()])\n        dn_signature = base64.b64encode(\n            hmac.new(\n                self.dn_secret.encode(),\n                dn_msg.encode(),\n                hashlib.sha256\n            ).digest()\n        ).decode()\n        return dn_signature",
+    "task_type": "bug_fix",
+    "complexity": 0.158,
+    "author": "neha.sharma",
+    "module": "audit"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_ui_component_3.py\n작성자: mina.kim\n모듈: ui_component\n복잡도: 0.176\n\n# 코드 시작점:\ndef dn_remove_prop(component: DN_UIComponent, prop_name: str) -> None:\n    \"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_remove_prop(component: DN_UIComponent, prop_name: str) -> None:\n    \"\"\"\n    Remove a property from a ui component.\n    \"\"\"\n    if prop_name not in component.dn_props:\n        raise ValueError(f\"Property '{prop_name}' does not exist in component '{component.dn_id}'\")\n    del component.dn_props[prop_name]",
+    "task_type": "code_completion",
+    "complexity": 0.176,
+    "author": "mina.kim",
+    "module": "ui_component"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_notification_2.py\n작성자: jaewon.lee\n모듈: notification\n복잡도: 0.065\n\n# 코드 시작점:\n# documentation 작업\ndef dn_send_bulk_notifications(dn_notifications: L...",
+    "output": "def dn_send_bulk_notifications(dn_notifications: List[DNNotification]) -> None:\n    \"\"\"\n    Sends bulk notifications\n\n    Parameters\n    ----------\n    dn_notifications : list\n        The list of notification objects to be sent\n\n    Returns\n    -------\n    None\n    \"\"\"\n    for notification in dn_notifications:\n        notification.send_notification()",
+    "task_type": "documentation",
+    "complexity": 0.065,
+    "author": "jaewon.lee",
+    "module": "notification"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_mocking_3.py\n작성자: emma.chen\n모듈: mocking\n복잡도: 0.205\n\n# 코드 시작점:\n# bug_fix 작업\n    def verify_age(self) -> bool:\n        \"\"\" Veri...",
+    "output": "    def verify_age(self) -> bool:\n        \"\"\" Verify if the user is 18 or older \"\"\"\n        if self.dn_user.dn_age < 18:\n            raise ValueError(\"User is not old enough\")\n        return True",
+    "task_type": "bug_fix",
+    "complexity": 0.205,
+    "author": "emma.chen",
+    "module": "mocking"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_analytics_1.py\n작성자: alex.wong\n모듈: analytics\n복잡도: 0.064\n\n# 코드 시작점:\n# documentation 작업\n    def dn_optimize_parameters(model, param_grid: ...",
+    "output": "    def dn_optimize_parameters(model, param_grid: dict) -> GridSearchCV:\n        \"\"\"optimizes parameters for a given machine learning model using GridSearchCV\n\n        Parameters:\n        model (scikit-learn estimator): the machine learning model for which to optimize parameters\n        param_grid (dict): dictionary with parameters names (str) as keys and lists of parameter settings to try as values\n\n        Returns:\n        GridSearchCV: fitted GridSearchCV object\n        \"\"\"\n        grid_search = GridSearchCV(model, param_grid, cv=5)\n        grid_search.fit(self.data)\n        return grid_search",
+    "task_type": "documentation",
+    "complexity": 0.064,
+    "author": "alex.wong",
+    "module": "analytics"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_storage_2.py\n작성자: jun.kim\n모듈: storage\n복잡도: 0.229\n\n# 코드 시작점:\n    def dn_store_file(self, file_name: str, file_content: str):\n        \"\"\"Stores the file with the given content in the storage path.\"\"\"\n        with open(os.path.join(self.dn_storage_path, file_name), 'w') as file:\n            file.write(file_content)",
+    "output": "이 함수는 dn_store_file로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.229,
+    "author": "jun.kim",
+    "module": "storage"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_notification_5.py\n작성자: jaewon.lee\n모듈: notification\n복잡도: 0.182\n\n# 코드 시작점:\n    def dn_set_sender(self, sender: DNSender):\n        \n        Set the notification sender.\n        \n        self.dn_sender = sender",
+    "output": "    def dn_set_sender(self, sender: DNSender):\n        \"\"\"\n        Set the notification sender.\n        \"\"\"\n        self.dn_sender = sender",
+    "task_type": "code_refactoring",
+    "complexity": 0.182,
+    "author": "jaewon.lee",
+    "module": "notification"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_service_5.py\n작성자: hyunwoo.park\n모듈: service\n복잡도: 0.134\n\n# 코드 시작점:\n# documentation 작업\n    def dn_execute(self, dn_data: List) -> Optiona...",
+    "output": "    def dn_execute(self, dn_data: List) -> Optional[List]:\n        \"\"\"\n        Executes the service.\n        Args:\n            dn_data: The data to be processed.\n\n        Returns:\n            Processed data if successful, None otherwise.\n        \"\"\"\n        try:\n            # Here goes the business logic\n            print(\"Service B executed with data: \", dn_data)\n            return dn_data\n        except Exception as e:\n            raise DNServiceError from e",
+    "task_type": "documentation",
+    "complexity": 0.134,
+    "author": "hyunwoo.park",
+    "module": "service"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_notification_3.py\n작성자: jaewon.lee\n모듈: notification\n복잡도: 0.127\n\n# 코드 시작점:\n    def __init__(self, email_host: str, email_port: int, email_user: str, email_password: str, sms_key: str):\n        self.dn_email_host = email_host\n        self.dn_email_port = email_port\n        self.dn_email_user = email_user\n        self.dn_email_password = email_password\n        self.dn_sms_key = sms_key  # This is an API key for the SMS service",
+    "output": "이 함수는 __init__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.127,
+    "author": "jaewon.lee",
+    "module": "notification"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_form_4.py\n작성자: mina.kim\n모듈: form\n복잡도: 0.226\n\n# 코드 시작점:\n    def dn_remove_field(self, field_name: str) -> None:\n        Remove a field from the form.\n        if field_name in self.fields:\n            self.fields.remove(field_name)\n            if field_name in self.form_data:\n                del self.form_data[field_name]\n        else:\n            raise DNFormException(f\"Field '{field_name}' does not exist in the form.\")",
+    "output": "    def dn_remove_field(self, field_name: str) -> None:\n        \"\"\"Remove a field from the form.\"\"\"\n        if field_name in self.fields:\n            self.fields.remove(field_name)\n            if field_name in self.form_data:\n                del self.form_data[field_name]\n        else:\n            raise DNFormException(f\"Field '{field_name}' does not exist in the form.\")",
+    "task_type": "code_refactoring",
+    "complexity": 0.226,
+    "author": "mina.kim",
+    "module": "form"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_monitoring_1.py\n작성자: sofia.mendez\n모듈: monitoring\n복잡도: 0.23\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_monitor_directories(self):\n        \"\"\"\n...",
+    "output": "    def dn_monitor_directories(self):\n        \"\"\"\n        Monitor the directories for any changes.\n        \"\"\"\n        for dir_path in self.dirs_to_monitor:\n            current_files = self.dn_get_files(dir_path)\n            if current_files is not None:\n                if dir_path in self.monitored_files:\n                    # Check for any changes in the directory\n                    if set(current_files) != set(self.monitored_files[dir_path]):\n                        logger.info(f\"Directory {dir_path} has been modified\")\n                else:\n                    self.monitored_files[dir_path] = current_files",
+    "task_type": "test_generation",
+    "complexity": 0.23,
+    "author": "sofia.mendez",
+    "module": "monitoring"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_auth_2.py\n작성자: neha.sharma\n모듈: auth\n복잡도: 0.179\n\n# 코드 시작점:\n# documentation 작업\n    def dn_authenticate_user(self, username: str, ...",
+    "output": "    def dn_authenticate_user(self, username: str, password: str) -> bool:\n        \"\"\"\n        Authenticate a user.\n        \"\"\"\n        if username not in self.dn_users:\n            return False\n        user = self.dn_users[username]\n        return user.dn_check_password(password)",
+    "task_type": "documentation",
+    "complexity": 0.179,
+    "author": "neha.sharma",
+    "module": "auth"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_audit_2.py\n작성자: neha.sharma\n모듈: audit\n복잡도: 0.171\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_encrypt_password(dn_password: str) -> s...",
+    "output": "    def dn_encrypt_password(dn_password: str) -> str:\n        \"\"\"Encrypt the password using SHA256.\"\"\"\n        return hashlib.sha256(dn_password.encode()).hexdigest()",
+    "task_type": "test_generation",
+    "complexity": 0.171,
+    "author": "neha.sharma",
+    "module": "audit"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_validation_3.py\n작성자: emma.chen\n모듈: validation\n복잡도: 0.172\n\n# 코드 시작점:\n    def __init__(self, data: Dict[str, Any]) -> None:\n        Initialize DNValidator with data to be validated.\n        self.data = data",
+    "output": "    def __init__(self, data: Dict[str, Any]) -> None:\n        \"\"\"Initialize DNValidator with data to be validated.\"\"\"\n        self.data = data",
+    "task_type": "code_refactoring",
+    "complexity": 0.172,
+    "author": "emma.chen",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_prediction_1.py\n작성자: alex.wong\n모듈: prediction\n복잡도: 0.11\n\n# 코드 시작점:\n    def dn_train_model(self) -> None:\n        \"\"\"\n        This function trains the model using Linear Regression.\n        \"\"\"\n        self.model = LinearRegression()\n        self.model.fit(self.X_train, self.y_train)",
+    "output": "이 함수는 dn_train_model로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.11,
+    "author": "alex.wong",
+    "module": "prediction"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_mocking_4.py\n작성자: emma.chen\n모듈: mocking\n복잡도: 0.138\n\n# 코드 시작점:\n# test_generation 작업\n    def test_dn_process_data_error(self, mock_dn_c...",
+    "output": "    def test_dn_process_data_error(self, mock_dn_complex_logic):\n        \"\"\"\n        Tests the dn_process_data method with an error.\n        \"\"\"\n        # Arrange\n        test_data = {'key': 'value'}\n        mock_dn_complex_logic.side_effect = Exception('Test exception')\n\n        # Act & Assert\n        with self.assertRaises(DNBusinessLogicError):\n            self.dn_business_logic.dn_process_data(test_data)\n        mock_dn_complex_logic.assert_called_once_with(test_data)",
+    "task_type": "test_generation",
+    "complexity": 0.138,
+    "author": "emma.chen",
+    "module": "mocking"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_user_2.py\n작성자: jaewon.lee\n모듈: user\n복잡도: 0.091\n\n# 코드 시작점:\ndef dn_delete_user(dn_id: int) -> bool:\n    \"\"\"\n    Delete a user from the database.\n    If the deletion was successful, return True.\n    If the user does not exist, return False.\n    \"\"\"\n    # Fetch user from database\n    user = dn_get_user(dn_id)\n    \n    if not user:\n        return False\n    \n    # Delete user\n    # This is a mocked function, replace it with real database operation\n    return True",
+    "output": "이 함수는 dn_delete_user로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.091,
+    "author": "jaewon.lee",
+    "module": "user"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_analytics_3.py\n작성자: alex.wong\n모듈: analytics\n복잡도: 0.132\n\n# 코드 시작점:\n# documentation 작업\n    def dn_predict(self, X: pd.DataFrame) -> pd.Se...",
+    "output": "    def dn_predict(self, X: pd.DataFrame) -> pd.Series:\n        \"\"\"\n        Predict the target values for the given features data.\n        Args:\n            X (pd.DataFrame): The features data.\n        Returns:\n            pd.Series: The predicted target values.\n        \"\"\"\n        if self.model is None:\n            raise ValueError(\"You must train the model before you can make predictions!\")\n        return self.model.predict(X)",
+    "task_type": "documentation",
+    "complexity": 0.132,
+    "author": "alex.wong",
+    "module": "analytics"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_auth_3.py\n작성자: neha.sharma\n모듈: auth\n복잡도: 0.209\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_register(self, username: str, password:...",
+    "output": "    def dn_register(self, username: str, password: str) -> DNUser:\n        \"\"\"Registers a new user\"\"\"\n        if username in self.dn_users:\n            raise DNAuthError(f\"User {username} already exists\")\n        user = DNUser(username, password)\n        self.dn_users[username] = user\n        return user",
+    "task_type": "test_generation",
+    "complexity": 0.209,
+    "author": "neha.sharma",
+    "module": "auth"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_security_5.py\n작성자: jin.park\n모듈: security\n복잡도: 0.205\n\n# 코드 시작점:\ndef dn_process_login(dn_username: str, dn_password: str) -> Any:\n    \"\"\"Process the user login\"\"\"\n    dn_is_valid, dn_error = dn_validate_user(dn_username, dn_password)\n\n    if dn_is_valid:\n        # Do your login process here\n        return {\"status\": \"success\", \"message\": \"Login successful.\"}\n    else:\n        return {\"status\": \"failure\", \"message\": dn_error}",
+    "output": "이 함수는 dn_process_login로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.205,
+    "author": "jin.park",
+    "module": "security"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_reporting_4.py\n작성자: alex.wong\n모듈: reporting\n복잡도: 0.1\n\n# 코드 시작점:\n# test_generation 작업\n    def __init__(self, data: pd.DataFrame):\n      ...",
+    "output": "    def __init__(self, data: pd.DataFrame):\n        self.data = data",
+    "task_type": "test_generation",
+    "complexity": 0.1,
+    "author": "alex.wong",
+    "module": "reporting"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_audit_4.py\n작성자: neha.sharma\n모듈: audit\n복잡도: 0.19\n\n# 코드 시작점:\n# documentation 작업\ndef dn_validate_audit(dn_user: str, dn_data: Any) ...",
+    "output": "def dn_validate_audit(dn_user: str, dn_data: Any) -> bool:\n    \"\"\"Validates an existing audit.\"\"\"\n    # Load the audit from a file\n    with open(f\"{dn_user}_audit.txt\", \"r\") as file:\n        hash = file.read()\n    \n    # Create a new audit object\n    audit = DN_Audit(dn_user, dn_data)\n    audit.dn_hash = hash\n    \n    # Validate the data\n    return audit.dn_validate_data(dn_data)",
+    "task_type": "documentation",
+    "complexity": 0.19,
+    "author": "neha.sharma",
+    "module": "audit"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_auth_4.py\n작성자: neha.sharma\n모듈: auth\n복잡도: 0.275\n\n# 코드 시작점:\n    def register(self, dn_username: str, dn_password: str) -> bool:\n        \"\"\"Register a new user\"\"\"\n        if dn_username in self.dn_users:\n            print(\"Error: User already exists\")\n            return False\n\n        self.dn_users[dn_username] = DNUser(dn_username, dn_password)\n        return True",
+    "output": "이 함수는 register로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.275,
+    "author": "neha.sharma",
+    "module": "auth"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_monitoring_5.py\n작성자: sofia.mendez\n모듈: monitoring\n복잡도: 0.207\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_monitor_resources(dn_resources: Dict[str, D...",
+    "output": "def dn_monitor_resources(dn_resources: Dict[str, DNMonitor]) -> None:\n    \"\"\"\n    Monitors resources and sends alerts if their usage is above a threshold.\n    \"\"\"\n\n    for dn_resource_name, dn_resource in dn_resources.items():\n        dn_usage = dn_resource.dn_monitor()\n        if dn_usage > dn_resource.dn_threshold:\n            dn_resource.dn_alert(f'Resource {dn_resource_name} usage is at {dn_usage}%.')",
+    "task_type": "test_generation",
+    "complexity": 0.207,
+    "author": "sofia.mendez",
+    "module": "monitoring"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_config_1.py\n작성자: sofia.mendez\n모듈: config\n복잡도: 0.179\n\n# 코드 시작점:\n    def __init__(self, message: str):\n        self.message = message\n        super().__init__(self.message)",
+    "output": "이 함수는 __init__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.179,
+    "author": "sofia.mendez",
+    "module": "config"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_legacy_adapter_5.py\n작성자: david.wilson\n모듈: legacy_adapter\n복잡도: 0.161\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_connect(self):\n        raise NotImpleme...",
+    "output": "    def dn_connect(self):\n        raise NotImplementedError()",
+    "task_type": "bug_fix",
+    "complexity": 0.161,
+    "author": "david.wilson",
+    "module": "legacy_adapter"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_refactoring_5.py\n작성자: david.wilson\n모듈: refactoring\n복잡도: 0.163\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_wrapper(*dn_args, **dn_kwargs):\n       ...",
+    "output": "    def dn_wrapper(*dn_args, **dn_kwargs):\n        print(f\"Running {dn_func.__name__}\")\n        return dn_func(*dn_args, **dn_kwargs)",
+    "task_type": "test_generation",
+    "complexity": 0.163,
+    "author": "david.wilson",
+    "module": "refactoring"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_user_5.py\n작성자: jaewon.lee\n모듈: user\n복잡도: 0.087\n\n# 코드 시작점:\ndef dn_get_user_data(dn_user: DNUser, key: str) -> Optional[str]:\n    \"\"\"\n    Get the additional data for the DNUser\n    \n    :param dn_user: the DNUser to get the data\n    :param key: the key of the data\n    :return: the value of the data\n    \"\"\"\n    return dn_user.dn_get_data(key)",
+    "output": "이 함수는 dn_get_user_data로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.087,
+    "author": "jaewon.lee",
+    "module": "user"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_service_4.py\n작성자: hyunwoo.park\n모듈: service\n복잡도: 0.18\n\n# 코드 시작점:\n# documentation 작업\n    def dn_parse_response(self, response: requests...",
+    "output": "    def dn_parse_response(self, response: requests.Response) -> Dict[str, Any]:\n        \"\"\"\n        Parse a response from the service.\n        Raises a DNServiceError if the response indicates an error.\n        \"\"\"\n        if response.status_code != 200:\n            raise DNServiceError(f\"Service returned error status: {response.status_code}\")\n\n        try:\n            data = response.json()\n        except ValueError:\n            raise DNServiceError(\"Invalid JSON received from service\")\n\n        if 'error' in data:\n            raise DNServiceError(data['error'])\n\n        return data",
+    "task_type": "documentation",
+    "complexity": 0.18,
+    "author": "hyunwoo.park",
+    "module": "service"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_dashboard_2.py\n작성자: mina.kim\n모듈: dashboard\n복잡도: 0.217\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_display_user_info(self) -> None:\n      ...",
+    "output": "    def dn_display_user_info(self) -> None:\n        \"\"\"Display the user's info.\"\"\"\n        print(self.user)",
+    "task_type": "bug_fix",
+    "complexity": 0.217,
+    "author": "mina.kim",
+    "module": "dashboard"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_utility_5.py\n작성자: jaewon.lee\n모듈: utility\n복잡도: 0.167\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_sum(self, numbers: List[float]) -> floa...",
+    "output": "    def dn_sum(self, numbers: List[float]) -> float:\n        \"\"\"Returns the sum of the numbers in the list.\"\"\"\n        return sum(numbers)",
+    "task_type": "bug_fix",
+    "complexity": 0.167,
+    "author": "jaewon.lee",
+    "module": "utility"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_monitoring_2.py\n작성자: sofia.mendez\n모듈: monitoring\n복잡도: 0.136\n\n# 코드 시작점:\n# bug_fix 작업\ndef dn_monitor_resources(dn_resources: list[str]) ...",
+    "output": "def dn_monitor_resources(dn_resources: list[str]) -> None:\n    \"\"\"\n    Monitor a list of resources.\n    Args:\n        dn_resources (list[str]): The list of resources to monitor.\n    \"\"\"\n    for dn_resource in dn_resources:\n        dn_monitor = DNMonitor(dn_resource)\n        dn_monitor.dn_log_resource_info()",
+    "task_type": "bug_fix",
+    "complexity": 0.136,
+    "author": "sofia.mendez",
+    "module": "monitoring"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_notification_4.py\n작성자: jaewon.lee\n모듈: notification\n복잡도: 0.146\n\n# 코드 시작점:\n    def __init__(self, user_id: str, notification_type: str):\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def __init__(self, user_id: str, notification_type: str):\n        \"\"\"\n        Initializes DNNotification with user_id and notification_type.\n        \"\"\"\n        self.dn_user_id = user_id\n        self.dn_notification_type = notification_type",
+    "task_type": "code_completion",
+    "complexity": 0.146,
+    "author": "jaewon.lee",
+    "module": "notification"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_monitoring_4.py\n작성자: sofia.mendez\n모듈: monitoring\n복잡도: 0.143\n\n# 코드 시작점:\n# documentation 작업\n    def dn_end(self, status: str) -> None:\n       ...",
+    "output": "    def dn_end(self, status: str) -> None:\n        \"\"\"End the monitoring of a process.\"\"\"\n        self.dn_end_time = time.time()\n        self.dn_duration = self.dn_end_time - self.dn_start_time\n        self.dn_status = status\n        self.dn_log.info(f\"DN Monitoring for {self.dn_name} ended. Status: {self.dn_status}. Duration: {self.dn_duration} seconds.\")",
+    "task_type": "documentation",
+    "complexity": 0.143,
+    "author": "sofia.mendez",
+    "module": "monitoring"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_dashboard_4.py\n작성자: mina.kim\n모듈: dashboard\n복잡도: 0.172\n\n# 코드 시작점:\n    def dn_add_user(self, user: DN_User) -> None:\n        \"\"\"\n        Add user to the user list\n        \"\"\"\n        self.dn_user_list.append(user)",
+    "output": "이 함수는 dn_add_user로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.172,
+    "author": "mina.kim",
+    "module": "dashboard"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_deployment_1.py\n작성자: sofia.mendez\n모듈: deployment\n복잡도: 0.227\n\n# 코드 시작점:\n# documentation 작업\n    def dn_run_command(self, command: List[str]) -...",
+    "output": "    def dn_run_command(self, command: List[str]) -> None:\n        \"\"\"Executes provided command\"\"\"\n        try:\n            subprocess.run(command, check=True)\n        except subprocess.CalledProcessError as e:\n            raise DNDeploymentError(f\"Error running command: {e}\")",
+    "task_type": "documentation",
+    "complexity": 0.227,
+    "author": "sofia.mendez",
+    "module": "deployment"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_core_3.py\n작성자: hyunwoo.park\n모듈: core\n복잡도: 0.198\n\n# 코드 시작점:\n    def dn_authenticate(self, username: str, password: str) -> None:\n        \"\"\"Authenticate a user in the system.\"\"\"\n        try:\n            # This is a placeholder for actual authentication logic.\n            self.dn_auth_token = 'Authenticated'\n        except Exception as error:\n            logger.error(f'Authentication error: {error}')\n            raise DNAuthenticationError('Failed to authenticate.')",
+    "output": "이 함수는 dn_authenticate로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.198,
+    "author": "hyunwoo.park",
+    "module": "core"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_config_4.py\n작성자: sofia.mendez\n모듈: config\n복잡도: 0.208\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_load_config(self) -> Dict[str, Any]:\n  ...",
+    "output": "    def dn_load_config(self) -> Dict[str, Any]:\n        \"\"\"\n        Load the configuration data from the config file.\n\n        :return: A dictionary with the configuration data.\n        \"\"\"\n        try:\n            with open(self.dn_config_file, 'r') as file:\n                return json.load(file)\n        except FileNotFoundError as error:\n            raise DNConfigError(f\"Configuration file not found: {self.dn_config_file}\") from error\n        except json.JSONDecodeError as error:\n            raise DNConfigError(f\"Error parsing the configuration file: {self.dn_config_file}\") from error",
+    "task_type": "test_generation",
+    "complexity": 0.208,
+    "author": "sofia.mendez",
+    "module": "config"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_form_2.py\n작성자: mina.kim\n모듈: form\n복잡도: 0.19\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_validate_form(form: DNForm) -> bool:\n    \"\"...",
+    "output": "def dn_validate_form(form: DNForm) -> bool:\n    \"\"\"\n    Validate form fields\n    \"\"\"\n    for field, value in form.dn_get_fields().items():\n        if not dn_validate_field(field, value):\n            return False\n    return True",
+    "task_type": "test_generation",
+    "complexity": 0.19,
+    "author": "mina.kim",
+    "module": "form"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_ui_component_4.py\n작성자: mina.kim\n모듈: ui_component\n복잡도: 0.246\n\n# 코드 시작점:\n    def dn_render(self):\n        print(f'Rendering text box with id: {self.dn_id} and placeholder: {self.dn_placeholder}')",
+    "output": "이 함수는 dn_render로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.246,
+    "author": "mina.kim",
+    "module": "ui_component"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_encryption_3.py\n작성자: neha.sharma\n모듈: encryption\n복잡도: 0.14\n\n# 코드 시작점:\n# documentation 작업\n    def dn_hash(self, dn_message: bytes) -> Tuple[...",
+    "output": "    def dn_hash(self, dn_message: bytes) -> Tuple[bytes, bytes]:\n        \"\"\"\n        Hashes a message and returns the hash and the salt.\n        :param dn_message: The message to be hashed\n        :return: Hashed message and salt\n        \"\"\"\n        dn_salt = os.urandom(16)\n        dn_kdf = PBKDF2HMAC(\n            algorithm=hashes.SHA256(),\n            length=32,\n            salt=dn_salt,\n            iterations=100000,\n            backend=default_backend()\n        )\n        dn_hashed = dn_kdf.derive(dn_message)\n        return dn_hashed, dn_salt",
+    "task_type": "documentation",
+    "complexity": 0.14,
+    "author": "neha.sharma",
+    "module": "encryption"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_validation_3.py\n작성자: jin.park\n모듈: validation\n복잡도: 0.217\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_validate(self) -> Dict[str, Any]:\n     ...",
+    "output": "    def dn_validate(self) -> Dict[str, Any]:\n        \"\"\"Main validation method\"\"\"\n        try:\n            self.dn_check_required_fields()\n            self.dn_check_email_format()\n            self.dn_check_phone_format()\n        except DNValidationError as e:\n            logger.error(f\"Validation error: {str(e)}\")\n            return {\"status\": \"error\", \"message\": str(e)}\n        else:\n            return {\"status\": \"success\", \"data\": self.data}",
+    "task_type": "test_generation",
+    "complexity": 0.217,
+    "author": "jin.park",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_mocking_2.py\n작성자: emma.chen\n모듈: mocking\n복잡도: 0.094\n\n# 코드 시작점:\n# documentation 작업\n    def dn_get_request(url: str) -> dict:\n        ...",
+    "output": "    def dn_get_request(url: str) -> dict:\n        \"\"\"\n        Function to make GET request\n\n        Args:\n            url (str): Url to make GET request\n\n        Returns:\n            dict: Response of GET request\n        \"\"\"\n        response = requests.get(url)\n        return response.json()",
+    "task_type": "documentation",
+    "complexity": 0.094,
+    "author": "emma.chen",
+    "module": "mocking"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_notification_1.py\n작성자: jaewon.lee\n모듈: notification\n복잡도: 0.082\n\n# 코드 시작점:\n# test_generation 작업\n    def dn_delete_notification(self, notification_...",
+    "output": "    def dn_delete_notification(self, notification_id: int) -> Dict[str, str]:\n        \"\"\"\n        Delete a notification.\n\n        Args:\n            notification_id: The ID of the notification to be deleted.\n\n        Returns:\n            A dictionary containing the response from the API.\n        \"\"\"\n        headers = {'Authorization': f'Bearer {self.api_key}'}\n        response = requests.delete(f'{DN_API_URL}{notification_id}', headers=headers)\n        return response.json()",
+    "task_type": "test_generation",
+    "complexity": 0.082,
+    "author": "jaewon.lee",
+    "module": "notification"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_deployment_2.py\n작성자: sofia.mendez\n모듈: deployment\n복잡도: 0.2\n\n# 코드 시작점:\n    def dn_run_command(self, dn_command: str, dn_env: Optional[dict] = None) -> str:\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_run_command(self, dn_command: str, dn_env: Optional[dict] = None) -> str:\n        \"\"\"\n        Run a shell command with optional environment variables.\n        \"\"\"\n        if dn_env is None:\n            dn_env = os.environ.copy()\n\n        process = subprocess.Popen(dn_command, shell=True, env=dn_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n        stdout, stderr = process.communicate()\n\n        if process.returncode != 0:\n            raise DNDeploymentError(stderr.decode())\n\n        return stdout.decode()",
+    "task_type": "code_completion",
+    "complexity": 0.2,
+    "author": "sofia.mendez",
+    "module": "deployment"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_audit_5.py\n작성자: neha.sharma\n모듈: audit\n복잡도: 0.213\n\n# 코드 시작점:\n    def __init__(self) -> None:\n        self.dn_audit_data: Dict[str, Any] = {}",
+    "output": "    def __init__(self) -> None:\n        self.dn_audit_data: Dict[str, Any] = {}",
+    "task_type": "code_refactoring",
+    "complexity": 0.213,
+    "author": "neha.sharma",
+    "module": "audit"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_storage_1.py\n작성자: jun.kim\n모듈: storage\n복잡도: 0.189\n\n# 코드 시작점:\n    def __init__(self):\n        self.dn_data = {}",
+    "output": "    def __init__(self):\n        self.dn_data = {}",
+    "task_type": "code_refactoring",
+    "complexity": 0.189,
+    "author": "jun.kim",
+    "module": "storage"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_reporting_3.py\n작성자: alex.wong\n모듈: reporting\n복잡도: 0.112\n\n# 코드 시작점:\n    def dn_generate_report(self, columns: Optional[List[str]] = None) -> None:\n        \"\"\"Generate the report.\n\n        Args:\n            columns (Optional[List[str]]): The columns to be included in the report. If None, all columns will be included.\n        \"\"\"\n        if columns is None:\n            columns = self.data.columns\n\n        self.report = self.data[columns]",
+    "output": "이 함수는 dn_generate_report로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.112,
+    "author": "alex.wong",
+    "module": "reporting"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_validation_5.py\n작성자: emma.chen\n모듈: validation\n복잡도: 0.298\n\n# 코드 시작점:\n# documentation 작업\n    def __init__(self, pattern):\n        self.dn_p...",
+    "output": "    def __init__(self, pattern):\n        self.dn_pattern = pattern",
+    "task_type": "documentation",
+    "complexity": 0.298,
+    "author": "emma.chen",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_mobile_ui_4.py\n작성자: jun.kim\n모듈: mobile_ui\n복잡도: 0.185\n\n# 코드 시작점:\n    def __init__(self):\n        self.dn_state = {}\n        self.dn_prev_state = {}",
+    "output": "    def __init__(self):\n        self.dn_state = {}\n        self.dn_prev_state = {}",
+    "task_type": "code_refactoring",
+    "complexity": 0.185,
+    "author": "jun.kim",
+    "module": "mobile_ui"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_security_4.py\n작성자: jin.park\n모듈: security\n복잡도: 0.287\n\n# 코드 시작점:\n# test_generation 작업\n    def __init__(self, dn_id: str, dn_password: st...",
+    "output": "    def __init__(self, dn_id: str, dn_password: str):\n        self.dn_id = dn_id\n        self.dn_password = self.dn_hash_password(dn_password)",
+    "task_type": "test_generation",
+    "complexity": 0.287,
+    "author": "jin.park",
+    "module": "security"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_deployment_4.py\n작성자: sofia.mendez\n모듈: deployment\n복잡도: 0.221\n\n# 코드 시작점:\n    def dn_fetch_code(self) -> None:\n        \"\"\"Fetch the latest code from the repository\"\"\"\n        try:\n            subprocess.run(['git', 'clone', f'https://github.com/Danal/{self.dn_application_name}.git',\n                            f'/opt/{self.dn_application_name}'],\n                           check=True)\n        except subprocess.CalledProcessError as e:\n            raise DNDeploymentError('Failed to fetch code') from e",
+    "output": "이 함수는 dn_fetch_code로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.221,
+    "author": "sofia.mendez",
+    "module": "deployment"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_payment_2.py\n작성자: jin.park\n모듈: payment\n복잡도: 0.198\n\n# 코드 시작점:\n    def dn_initialize_payment(self, dn_user_id: str, dn_amount: float) -> Dict[str, Union[str, float]]:\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_initialize_payment(self, dn_user_id: str, dn_amount: float) -> Dict[str, Union[str, float]]:\n        \"\"\"\n        Initializes a payment process for a user\n        \"\"\"\n        try:\n            dn_payment_data = {\n                'user_id': dn_user_id,\n                'amount': dn_amount,\n                'status': 'initialized'\n            }\n            return dn_payment_data\n        except Exception as e:\n            logger.exception(f'Error initializing payment for user {dn_user_id}: {str(e)}')\n            raise DNPaymentException(str(e))",
+    "task_type": "code_completion",
+    "complexity": 0.198,
+    "author": "jin.park",
+    "module": "payment"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_integration_3.py\n작성자: hyunwoo.park\n모듈: integration\n복잡도: 0.238\n\n# 코드 시작점:\n    def dn_process(self) -> None:\n        Process data through the integration\n        pass",
+    "output": "    def dn_process(self) -> None:\n        \"\"\"Process data through the integration\"\"\"\n        pass",
+    "task_type": "code_refactoring",
+    "complexity": 0.238,
+    "author": "hyunwoo.park",
+    "module": "integration"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_payment_3.py\n작성자: jin.park\n모듈: payment\n복잡도: 0.19\n\n# 코드 시작점:\ndef dn_main():\n    \"\"\"Main function\"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_main():\n    \"\"\"Main function\"\"\"\n    user_id = 'test_user'\n    amount = 100.0\n    payment_method = dn_get_user_payment_method(user_id)\n    if payment_method:\n        payment = DNPayment(user_id, payment_method)\n        result = payment.dn_process_payment(amount)\n        print(result)\n    else:\n        print(f'No payment method found for user: {user_id}')",
+    "task_type": "code_completion",
+    "complexity": 0.19,
+    "author": "jin.park",
+    "module": "payment"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_auth_1.py\n작성자: neha.sharma\n모듈: auth\n복잡도: 0.196\n\n# 코드 시작점:\n    def __init__(self) -> None::\n    # TODO: 구현",
+    "output": "    def __init__(self) -> None:\n        self.dn_users = {}",
+    "task_type": "code_completion",
+    "complexity": 0.196,
+    "author": "neha.sharma",
+    "module": "auth"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_validation_4.py\n작성자: emma.chen\n모듈: validation\n복잡도: 0.195\n\n# 코드 시작점:\n    def dn_check_length(input_string: str, min_length: int, max_length: int) -> bool:\n        \n        Check if the length of the input string is within a specified range\n\n        :param input_string: str, the string to be checked\n        :param min_length: int, the minimum length of the string\n        :param max_length: int, the maximum length of the string\n        :return: bool, returns True if the string length is within the range, False otherwise\n        \n        \n        if len(input_string) < min_length or len(input_string) > max_length:\n            return False\n        return True",
+    "output": "    def dn_check_length(input_string: str, min_length: int, max_length: int) -> bool:\n        \"\"\"\n        Check if the length of the input string is within a specified range\n\n        :param input_string: str, the string to be checked\n        :param min_length: int, the minimum length of the string\n        :param max_length: int, the maximum length of the string\n        :return: bool, returns True if the string length is within the range, False otherwise\n        \"\"\"\n        \n        if len(input_string) < min_length or len(input_string) > max_length:\n            return False\n        return True",
+    "task_type": "code_refactoring",
+    "complexity": 0.195,
+    "author": "emma.chen",
+    "module": "validation"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_integration_5.py\n작성자: hyunwoo.park\n모듈: integration\n복잡도: 0.254\n\n# 코드 시작점:\n# test_generation 작업\n    def connect(self) -> None:\n        print(f\"Con...",
+    "output": "    def connect(self) -> None:\n        print(f\"Connected to Integration Two with config {self.dn_config}\")",
+    "task_type": "test_generation",
+    "complexity": 0.254,
+    "author": "hyunwoo.park",
+    "module": "integration"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jaewon.lee/dn_user_4.py\n작성자: jaewon.lee\n모듈: user\n복잡도: 0.181\n\n# 코드 시작점:\n    def __str__(self):\n        return f'User(id={self.dn_id}, name={self.dn_name}, email={self.dn_email}, created_at={self.dn_created_at})'",
+    "output": "이 함수는 __str__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.181,
+    "author": "jaewon.lee",
+    "module": "user"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_encryption_2.py\n작성자: neha.sharma\n모듈: encryption\n복잡도: 0.069\n\n# 코드 시작점:\n# documentation 작업\n    def dn_generate_key(self) -> bytes:\n        \"\"...",
+    "output": "    def dn_generate_key(self) -> bytes:\n        \"\"\"\n        Generate a cryptographically strong random key\n        :return: a byte string representing the encryption key\n        \"\"\"\n        key = Fernet.generate_key()\n        return key",
+    "task_type": "documentation",
+    "complexity": 0.069,
+    "author": "neha.sharma",
+    "module": "encryption"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_core_2.py\n작성자: hyunwoo.park\n모듈: core\n복잡도: 0.176\n\n# 코드 시작점:\n# bug_fix 작업\n    def run(self):\n        \"\"\"Reads the file and l...",
+    "output": "    def run(self):\n        \"\"\"Reads the file and logs its content.\n\n        Returns:\n            str: The content of the file.\n        \"\"\"\n        with open(self._file_path, 'r') as file:\n            content = file.read()\n            DNLogger(\"DNFileHandler\").log(f\"File content: {content}\")\n            return content",
+    "task_type": "bug_fix",
+    "complexity": 0.176,
+    "author": "hyunwoo.park",
+    "module": "core"
+  },
+  {
+    "instruction": "다음 test_generation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_compatibility_2.py\n작성자: david.wilson\n모듈: compatibility\n복잡도: 0.138\n\n# 코드 시작점:\n# test_generation 작업\ndef dn_test_integer_data() -> None:\n    \"\"\"\n    Te...",
+    "output": "def dn_test_integer_data() -> None:\n    \"\"\"\n    Test function for integer data.\n    \"\"\"\n    dn_data = 10\n    assert dn_data == 10",
+    "task_type": "test_generation",
+    "complexity": 0.138,
+    "author": "david.wilson",
+    "module": "compatibility"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_mobile_ui_3.py\n작성자: jun.kim\n모듈: mobile_ui\n복잡도: 0.143\n\n# 코드 시작점:\n    def dn_change_resolution(self, resolution: str) -> None:\n        \n        Change the resolution of the mobile user interface.\n        \n        if resolution in [\"HD\", \"FHD\", \"QHD\", \"UHD\"]:\n            self.dn_device_optimization[\"resolution\"] = resolution\n        else:\n            raise ValueError(\"Invalid resolution. Only 'HD', 'FHD', 'QHD', or 'UHD' are allowed.\")",
+    "output": "    def dn_change_resolution(self, resolution: str) -> None:\n        \"\"\"\n        Change the resolution of the mobile user interface.\n        \"\"\"\n        if resolution in [\"HD\", \"FHD\", \"QHD\", \"UHD\"]:\n            self.dn_device_optimization[\"resolution\"] = resolution\n        else:\n            raise ValueError(\"Invalid resolution. Only 'HD', 'FHD', 'QHD', or 'UHD' are allowed.\")",
+    "task_type": "code_refactoring",
+    "complexity": 0.143,
+    "author": "jun.kim",
+    "module": "mobile_ui"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_device_2.py\n작성자: jun.kim\n모듈: device\n복잡도: 0.116\n\n# 코드 시작점:\n    def dn_get_driver_info(self) -> Dict[str, str]:\n        \"\"\"\n        Get driver information.\n        \"\"\"\n        return {'name': self.dn_name, 'version': self.dn_version}",
+    "output": "이 함수는 dn_get_driver_info로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.116,
+    "author": "jun.kim",
+    "module": "device"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_monitoring_3.py\n작성자: sofia.mendez\n모듈: monitoring\n복잡도: 0.224\n\n# 코드 시작점:\n# documentation 작업\n    def dn_add_metric(self, dn_metric: DNMetric):\n...",
+    "output": "    def dn_add_metric(self, dn_metric: DNMetric):\n        \"\"\"Add a new metric to the monitoring system\"\"\"\n        self.dn_metrics.append(dn_metric)",
+    "task_type": "documentation",
+    "complexity": 0.224,
+    "author": "sofia.mendez",
+    "module": "monitoring"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jun.kim/dn_device_4.py\n작성자: jun.kim\n모듈: device\n복잡도: 0.167\n\n# 코드 시작점:\n    def __init__(self, dn_device_id: str, dn_device_type: str, dn_device_status: DNDeviceStatus):\n        self.dn_device_id = dn_device_id\n        self.dn_device_type = dn_device_type\n        self.dn_device_status = dn_device_status",
+    "output": "이 함수는 __init__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.167,
+    "author": "jun.kim",
+    "module": "device"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_prediction_2.py\n작성자: alex.wong\n모듈: prediction\n복잡도: 0.095\n\n# 코드 시작점:\n    def dn_split_data(self, test_size: float=0.2):\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_split_data(self, test_size: float=0.2):\n        \"\"\"\n        Split the dataset into training and testing data.\n\n        Parameters:\n        test_size (float): The proportion of the dataset to include in the test split.\n\n        Returns:\n        tuple: training and testing data and targets.\n        \"\"\"\n        X = self.data.drop([self.target], axis=1)\n        y = self.data[self.target]\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)\n        return X_train, X_test, y_train, y_test",
+    "task_type": "code_completion",
+    "complexity": 0.095,
+    "author": "alex.wong",
+    "module": "prediction"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_compatibility_4.py\n작성자: david.wilson\n모듈: compatibility\n복잡도: 0.19\n\n# 코드 시작점:\ndef dn_main() -> None:\n    \n    This is the main function that initializes the DNCompatibility object and checks the system compatibility.\n    \n    try:\n        dn_system_version = dn_get_system_version()\n        dn_required_version = dn_get_required_version()\n        dn_compatibility = DNCompatibility(dn_system_version, dn_required_version)\n        dn_compatibility.dn_check_compatibility()\n        print(\"System is compatible\")\n    except SystemError as e:\n        print(e)",
+    "output": "def dn_main() -> None:\n    \"\"\"\n    This is the main function that initializes the DNCompatibility object and checks the system compatibility.\n    \"\"\"\n    try:\n        dn_system_version = dn_get_system_version()\n        dn_required_version = dn_get_required_version()\n        dn_compatibility = DNCompatibility(dn_system_version, dn_required_version)\n        dn_compatibility.dn_check_compatibility()\n        print(\"System is compatible\")\n    except SystemError as e:\n        print(e)",
+    "task_type": "code_refactoring",
+    "complexity": 0.19,
+    "author": "david.wilson",
+    "module": "compatibility"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_refactoring_4.py\n작성자: david.wilson\n모듈: refactoring\n복잡도: 0.201\n\n# 코드 시작점:\n# bug_fix 작업\n    def dn_update_stock(self, dn_id: int, dn_quant...",
+    "output": "    def dn_update_stock(self, dn_id: int, dn_quantity: int):\n        if dn_id in self.dn_products:\n            self.dn_products[dn_id].dn_stock += dn_quantity\n        else:\n            raise Exception('Product not found')",
+    "task_type": "bug_fix",
+    "complexity": 0.201,
+    "author": "david.wilson",
+    "module": "refactoring"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_refactoring_3.py\n작성자: david.wilson\n모듈: refactoring\n복잡도: 0.181\n\n# 코드 시작점:\ndef dn_main():\n    \"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_main():\n    \"\"\"\n    Main function to run the refactoring process.\n    \"\"\"\n    dn_data = {'name': 'Danal', 'location': 'Seoul', 'sector': 'Technology'}\n    dn_refactored_data = dn_process_data(dn_data)\n    print(f\"Refactored data: {dn_refactored_data}\")",
+    "task_type": "code_completion",
+    "complexity": 0.181,
+    "author": "david.wilson",
+    "module": "refactoring"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_integration_4.py\n작성자: hyunwoo.park\n모듈: integration\n복잡도: 0.194\n\n# 코드 시작점:\n    def __init__(self):\n        self.dn_data: Dict[str, Any] = {}",
+    "output": "이 함수는 __init__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.194,
+    "author": "hyunwoo.park",
+    "module": "integration"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_legacy_adapter_3.py\n작성자: david.wilson\n모듈: legacy_adapter\n복잡도: 0.215\n\n# 코드 시작점:\n    def dn_process_data(self, dn_data):\n        \n        Process the given data in the legacy system style.\n        \n        try:\n            processed_data = self.dn_system.process(dn_data)\n            return processed_data\n        except Exception as e:\n            raise DNAdapterError(f\"An error occurred while processing the data: {e}\")",
+    "output": "    def dn_process_data(self, dn_data):\n        \"\"\"\n        Process the given data in the legacy system style.\n        \"\"\"\n        try:\n            processed_data = self.dn_system.process(dn_data)\n            return processed_data\n        except Exception as e:\n            raise DNAdapterError(f\"An error occurred while processing the data: {e}\")",
+    "task_type": "code_refactoring",
+    "complexity": 0.215,
+    "author": "david.wilson",
+    "module": "legacy_adapter"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_reporting_5.py\n작성자: alex.wong\n모듈: reporting\n복잡도: 0.151\n\n# 코드 시작점:\n    def __init__(self, dn_data: Union[List[Dict[str, Union[str, int, float]]], pd.DataFrame])::\n    # TODO: 구현",
+    "output": "    def __init__(self, dn_data: Union[List[Dict[str, Union[str, int, float]]], pd.DataFrame]):\n        super().__init__(dn_data)",
+    "task_type": "code_completion",
+    "complexity": 0.151,
+    "author": "alex.wong",
+    "module": "reporting"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_legacy_adapter_1.py\n작성자: david.wilson\n모듈: legacy_adapter\n복잡도: 0.113\n\n# 코드 시작점:\n    def dn_process(self, dn_data):\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_process(self, dn_data):\n        \"\"\"\n        Process data.\n        :param dn_data: The data to process.\n        :return: The processed data.\n        \"\"\"\n        # This is a stub. In real code, implement the processing logic.\n        return dn_data",
+    "task_type": "code_completion",
+    "complexity": 0.113,
+    "author": "david.wilson",
+    "module": "legacy_adapter"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_core_5.py\n작성자: hyunwoo.park\n모듈: core\n복잡도: 0.138\n\n# 코드 시작점:\n    def dn_process_data(self) -> pd.DataFrame:\n        \n        Processes the data according to Danal's business logic.\n        \n        processed_data = super().dn_process_data()\n        processed_data = self.dn_enhance_data(processed_data)\n        \n        return processed_data",
+    "output": "    def dn_process_data(self) -> pd.DataFrame:\n        \"\"\"\n        Processes the data according to Danal's business logic.\n        \"\"\"\n        processed_data = super().dn_process_data()\n        processed_data = self.dn_enhance_data(processed_data)\n        \n        return processed_data",
+    "task_type": "code_refactoring",
+    "complexity": 0.138,
+    "author": "hyunwoo.park",
+    "module": "core"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_dashboard_3.py\n작성자: mina.kim\n모듈: dashboard\n복잡도: 0.263\n\n# 코드 시작점:\n    def dn_add_widget(self, widget: Dict[str, Any]) -> None:\n        if not isinstance(widget, dict):\n            raise DNDataError(\"Invalid widget data.\")\n        self.widgets.append(widget)",
+    "output": "이 함수는 dn_add_widget로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.263,
+    "author": "mina.kim",
+    "module": "dashboard"
+  },
+  {
+    "instruction": "다음 documentation 작업을 수행해주세요.",
+    "input": "파일: company_codebase/emma.chen/dn_mocking_1.py\n작성자: emma.chen\n모듈: mocking\n복잡도: 0.141\n\n# 코드 시작점:\n# documentation 작업\n    def dn_add(self, a: int, b: int) -> int:\n     ...",
+    "output": "    def dn_add(self, a: int, b: int) -> int:\n        \"\"\"\n        Returns the sum of two numbers.\n        \"\"\"\n        return a + b",
+    "task_type": "documentation",
+    "complexity": 0.141,
+    "author": "emma.chen",
+    "module": "mocking"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_form_1.py\n작성자: mina.kim\n모듈: form\n복잡도: 0.125\n\n# 코드 시작점:\ndef dn_create_form(form_id: str, fields: dict = None) -> DNForm:\n    \"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_create_form(form_id: str, fields: dict = None) -> DNForm:\n    \"\"\"\n    Create a new form\n    :param form_id: The id of the form\n    :param fields: The fields of the form in a dictionary format\n    :return: returns a new form object\n    \"\"\"\n    if fields is None:\n        fields = {}\n    return DNForm(form_id, fields)",
+    "task_type": "code_completion",
+    "complexity": 0.125,
+    "author": "mina.kim",
+    "module": "form"
+  },
+  {
+    "instruction": "다음 bug_fix 작업을 수행해주세요.",
+    "input": "파일: company_codebase/david.wilson/dn_legacy_adapter_2.py\n작성자: david.wilson\n모듈: legacy_adapter\n복잡도: 0.153\n\n# 코드 시작점:\n# bug_fix 작업\ndef dn_main():\n    \"\"\"\n    Main function to test t...",
+    "output": "def dn_main():\n    \"\"\"\n    Main function to test the legacy adapter module.\n    \"\"\"\n    dn_legacy_system = DNLegacySystem()\n    dn_adapter = DNLAdapter(dn_legacy_system)\n\n    dn_input_data = dn_read_data('input.txt')\n    dn_adapted_data = dn_adapter.dn_adapt_data(dn_input_data)\n\n    dn_write_data('output.txt', dn_adapted_data)",
+    "task_type": "bug_fix",
+    "complexity": 0.153,
+    "author": "david.wilson",
+    "module": "legacy_adapter"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/sofia.mendez/dn_config_2.py\n작성자: sofia.mendez\n모듈: config\n복잡도: 0.169\n\n# 코드 시작점:\ndef dn_print_config(config: DNConfig) -> None:\n    \"\"\"\n    # TODO: 구현 완료",
+    "output": "def dn_print_config(config: DNConfig) -> None:\n    \"\"\"\n    Print the current configuration\n\n    :param config: a DNConfig instance\n    \"\"\"\n    for key, value in config.config.items():\n        print(f\"{key}: {value}\")",
+    "task_type": "code_completion",
+    "complexity": 0.169,
+    "author": "sofia.mendez",
+    "module": "config"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_prediction_4.py\n작성자: alex.wong\n모듈: prediction\n복잡도: 0.13\n\n# 코드 시작점:\n    def dn_get_feature_importance(self) -> Dict[str, float]:\n        \"\"\"\n        Get the feature importance from the trained RandomForest model.\n        \"\"\"\n        if self.dn_clf is None:\n            raise Exception(\"Model not trained yet. Please run dn_fit first.\")\n        \n        return {name: score for name, score in zip(self.dn_X.columns, self.dn_clf.best_estimator_.feature_importances_)}",
+    "output": "이 함수는 dn_get_feature_importance로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.13,
+    "author": "alex.wong",
+    "module": "prediction"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/jin.park/dn_payment_5.py\n작성자: jin.park\n모듈: payment\n복잡도: 0.214\n\n# 코드 시작점:\n    def dn_process_payment(self) -> Dict[str, Any]:\n        payment_status = self.dn_make_payment()\n        return {'status': payment_status, 'amount': self.dn_amount}",
+    "output": "이 함수는 dn_process_payment로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.214,
+    "author": "jin.park",
+    "module": "payment"
+  },
+  {
+    "instruction": "다음 함수를 완성해주세요.",
+    "input": "파일: company_codebase/alex.wong/dn_analytics_5.py\n작성자: alex.wong\n모듈: analytics\n복잡도: 0.088\n\n# 코드 시작점:\n    def dn_fit(self, X, y):\n        \"\"\"\n    # TODO: 구현 완료",
+    "output": "    def dn_fit(self, X, y):\n        \"\"\"\n        Fit the model using X as training data and y as target values\n\n        Args:\n            X (array-like): Training data.\n            y (array-like): Target values.\n\n        Returns:\n            self: returns an instance of itself.\n        \"\"\"\n        self.clf = RandomForestClassifier(**self.params)\n        self.clf.fit(X, y)\n        return self",
+    "task_type": "code_completion",
+    "complexity": 0.088,
+    "author": "alex.wong",
+    "module": "analytics"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/neha.sharma/dn_audit_1.py\n작성자: neha.sharma\n모듈: audit\n복잡도: 0.157\n\n# 코드 시작점:\n    def __init__(self, username: str, password: str):\n        \"\"\"\n        User class for the audit system.\n\n        :param username: string\n        :param password: string\n        \"\"\"\n        self.username = username\n        self.password = dn_password_hash(password)\n        self.audit_logs = []",
+    "output": "이 함수는 __init__로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.157,
+    "author": "neha.sharma",
+    "module": "audit"
+  },
+  {
+    "instruction": "다음 코드를 더 나은 구조로 리팩토링해주세요.",
+    "input": "파일: company_codebase/mina.kim/dn_ui_component_1.py\n작성자: mina.kim\n모듈: ui_component\n복잡도: 0.123\n\n# 코드 시작점:\n    def dn_remove_component(self, component: str) -> None:\n        \n        Remove a component from the components list.\n\n        :param component: The name of the component.\n        \n        if component in self.components:\n            self.components.remove(component)",
+    "output": "    def dn_remove_component(self, component: str) -> None:\n        \"\"\"\n        Remove a component from the components list.\n\n        :param component: The name of the component.\n        \"\"\"\n        if component in self.components:\n            self.components.remove(component)",
+    "task_type": "code_refactoring",
+    "complexity": 0.123,
+    "author": "mina.kim",
+    "module": "ui_component"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_service_1.py\n작성자: hyunwoo.park\n모듈: service\n복잡도: 0.18\n\n# 코드 시작점:\ndef dn_create_service(dn_type: str, dn_name: str, dn_provider: str) -> DNService:\n    \"\"\"\n    Factory function to create a new DNService instance.\n    \"\"\"\n    if dn_type == \"email\":\n        return DNEmailService(dn_name, dn_provider)\n    elif dn_type == \"sms\":\n        return DNSmsService(dn_name, dn_provider)\n    else:\n        raise ValueError(f\"Invalid service type: {dn_type}\")",
+    "output": "이 함수는 dn_create_service로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.18,
+    "author": "hyunwoo.park",
+    "module": "service"
+  },
+  {
+    "instruction": "다음 코드의 동작을 설명해주세요.",
+    "input": "파일: company_codebase/hyunwoo.park/dn_integration_2.py\n작성자: hyunwoo.park\n모듈: integration\n복잡도: 0.148\n\n# 코드 시작점:\n    def dn_receive_data(self) -> Any:\n        \"\"\"Receive data from the integration.\"\"\"\n        pass",
+    "output": "이 함수는 dn_receive_data로, 다음과 같은 기능을 수행합니다:\n\n[함수의 동작과 목적에 대한 상세한 설명]",
+    "task_type": "code_explanation",
+    "complexity": 0.148,
+    "author": "hyunwoo.park",
+    "module": "integration"
+  }
+]
